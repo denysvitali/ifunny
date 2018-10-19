@@ -47,7 +47,37 @@ public class Tokenizer {
                     token = new Token(Token.Type.CLSRNBRACKETS);
                     break;
                 case '<':
-
+                    //TODO: implement peek check
+                    break;
+                case '>':
+                    //TODO: implement peek check
+                    break;
+                case '*':
+                    //TODO: implement peek check
+                    break;
+                case '/':
+                    //TODO: implement peek check
+                    break;
+                case '%':
+                    //TODO: implement peek check
+                    break;
+                case '+':
+                    //TODO: implement peek check
+                    break;
+                case '-':
+                    //TODO: implement peek check
+                    break;
+                case '=':
+                    //TODO: implement peek check
+                    break;
+                case '!':
+                    //TODO: implement peek check
+                    break;
+                case '&':
+                    //TODO: implement peek check
+                    break;
+                case '|':
+                    //TODO: implement peek check
                     break;
                 case '"':
                     //TODO: implement read string
@@ -57,8 +87,9 @@ public class Tokenizer {
                     token = new Token(Token.Type.EOS);
                     break;
                 default:
+                    //TODO: implement check for id, num, unknow
                     if(!readNum())
-                        token = new Toke
+                        token = new Token();
                     break;
             }
         }
