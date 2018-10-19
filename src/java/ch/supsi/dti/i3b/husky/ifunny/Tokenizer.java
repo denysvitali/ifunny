@@ -6,7 +6,7 @@ import java.io.Reader;
 public class Tokenizer {
     Token token;
     private Reader input;
-    private int carattereAttuale;
+    private int currentChar;
     private StringBuilder stringBuilder;
 
     Tokenizer(Reader input) throws IOException {
@@ -21,6 +21,10 @@ public class Tokenizer {
         int c = input.read();
         input.reset();
         return c;
+    }
+
+    private static boolean isNumber(int c){
+        return c >= '0' && c <= '9';
     }
 
     public void next() throws IOException {
