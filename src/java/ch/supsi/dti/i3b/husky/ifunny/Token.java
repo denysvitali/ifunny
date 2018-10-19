@@ -1,4 +1,4 @@
-package com.company;
+package ch.supsi.dti.i3b.husky.ifunny;
 
 import java.math.BigDecimal;
 
