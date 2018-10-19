@@ -121,6 +121,10 @@ public class Tokenizer {
                     currentChar = r.read();
                     token = new Token(Token.Type.ASSIGNMSUB);
                 }
+                else if(peekChar() == '>'){
+                    currentChar = r.read();
+                    token = new Token(Token.Type.ARROW);
+                }
                 else{
                     token = new Token(Token.Type.SUB);
                 }
