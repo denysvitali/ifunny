@@ -27,6 +27,9 @@ public class Token {
     Token(String str){
         this(Type.STRING, -1, str);
     }
+    Token(Type type, String str){
+        this(type, -1, str);
+    }
     Token(Type type){
         this(type, -1, null);
     }

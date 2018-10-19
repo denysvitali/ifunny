@@ -11,10 +11,10 @@ public class Tokenizer {
 
     Tokenizer(Reader input) throws IOException {
         this.r = input;
-        next();
+        nextToken();
     }
 
-    public int peek() throws IOException {
+    private int peekChar() throws IOException {
 
         r.mark(1);
         int c = r.read();
@@ -26,7 +26,7 @@ public class Tokenizer {
         return c >= '0' && c <= '9';
     }
 
-    public void next() throws IOException {
+    public Token nextToken() throws IOException {
 
         currentChar = r.read();
         while(Character.isWhitespace(currentChar)){
@@ -92,21 +92,40 @@ public class Tokenizer {
                 token = new Token(Token.Type.EOS);
                 break;
             default:
-                // Number Checking
-                stringBuilder.setLength(0);
-                while(isNumber(currentChar)){
-                    stringBuilder.append(currentChar);
-                    currentChar = r.read();
-                }
-
-                if(stringBuilder.length() == 0){
-                    token = new Token(Integer.valueOf(stringBuilder.toString()));
-                    break;
-                }
+                token = new Token(Token.Type.UNKNOW);
+                readNum();
+                idOrKeyword();
                 break;
         }
+        return token;
     }
 
+    private void idOrKeyword() throws IOException{
+        if(!Character.isJavaIdentifierStart(currentChar)){
+            return;
+        }
+        stringBuilder.setLength(0);
+        while(Character.isJavaIdentifierPart(currentChar)){
+            stringBuilder.append(currentChar);
+            currentChar = r.read();
+
+            //TODO: hashmap con controllo keyword (utilizzando peek)
+        }
+        if(stringBuilder.length() != 0){
+            token = new Token(Token.Type.ID, stringBuilder.toString());
+        }
+    }
+    private void readNum() throws IOException{
+        // Number Checking
+        stringBuilder.setLength(0);
+        while(isNumber(currentChar)){
+            stringBuilder.append(currentChar);
+            currentChar = r.read();
+        }
+        if(stringBuilder.length() != 0){
+            token = new Token(Integer.valueOf(stringBuilder.toString()));
+        }
+    }
 	private void readStr() throws IOException{
         stringBuilder.setLength(0);
 		currentChar = r.read();
