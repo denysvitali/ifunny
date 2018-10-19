@@ -5,21 +5,20 @@ import java.io.Reader;
 
 public class Tokenizer {
     Token token;
-    private Reader input;
+    private Reader r;
     private int currentChar;
-    private StringBuilder stringBuilder;
+    private StringBuilder stringBuilder = new StringBuilder();
 
     Tokenizer(Reader input) throws IOException {
-        this.input = input;
-        stringBuilder = new StringBuilder();
+        this.r = input;
         next();
     }
 
     public int peek() throws IOException {
 
-        input.mark(1);
-        int c = input.read();
-        input.reset();
+        r.mark(1);
+        int c = r.read();
+        r.reset();
         return c;
     }
 
@@ -29,10 +28,12 @@ public class Tokenizer {
 
     public void next() throws IOException {
 
-        carattereAttuale = input.read();
-        while(Character.isWhitespace(carattereAttuale)) carattereAttuale = input.read();
+        currentChar = r.read();
+        while(Character.isWhitespace(currentChar)){
+            currentChar = r.read();
+        }
 
-        switch (carattereAttuale) {
+        switch (currentChar) {
             case '{':
                 token = new Token(Token.Type.OPNCRLYBRACKETS);
                 break;
@@ -92,23 +93,30 @@ public class Tokenizer {
                 token = new Token(Token.Type.EOS);
                 break;
             default:
-                //TODO: implement check for id, num, unknow
-                if(!readNum())
-                    token = new Token();
+                // Number Checking
+                stringBuilder.setLength(0);
+                while(isNumber(currentChar)){
+                    stringBuilder.append(currentChar);
+                    currentChar = r.read();
+                }
+
+                if(stringBuilder.length() == 0){
+                    token = new Token(Integer.valueOf(stringBuilder.toString()));
+                    break;
+                }
                 break;
         }
-
     }
 
-    private void readStr() throws IOException{
-        carattereAttuale = input.read();
-        while(carattereAttuale != '"' && carattereAttuale != -1){
-            stringBuilder.append(carattereAttuale);
-            carattereAttuale = input.read();
-        }
-        if(carattereAttuale != -1){
-            token = new Token(stringBuilder.toString());
-            stringBuilder.setLength(0);
-        }
-    }
+	private void readStr() throws IOException{
+		currentChar = r.read();
+		while(currentChar != '"' && currentChar != -1){
+			stringBuilder.append(currentChar);
+			currentChar = r.read();
+		}
+		if(currentChar != -1){
+			token = new Token(stringBuilder.toString());
+			stringBuilder.setLength(0);
+		}
+	}
 }
