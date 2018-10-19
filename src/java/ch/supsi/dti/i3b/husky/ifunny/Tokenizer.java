@@ -86,7 +86,6 @@ public class Tokenizer {
                 //TODO: implement peek check
                 break;
             case '"':
-                //TODO: implement read string
                 readStr();
                 break;
             case -1:
@@ -109,6 +108,7 @@ public class Tokenizer {
     }
 
 	private void readStr() throws IOException{
+        stringBuilder.setLength(0);
 		currentChar = r.read();
 		while(currentChar != '"' && currentChar != -1){
 			stringBuilder.append(currentChar);
@@ -116,7 +116,6 @@ public class Tokenizer {
 		}
 		if(currentChar != -1){
 			token = new Token(stringBuilder.toString());
-			stringBuilder.setLength(0);
 		}
 	}
 }
