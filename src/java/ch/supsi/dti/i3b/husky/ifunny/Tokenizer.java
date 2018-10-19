@@ -5,20 +5,20 @@ import java.io.Reader;
 
 public class Tokenizer {
     Token token;
-    private Reader input;
+    private Reader r;
     private int currentChar;
-    private StringBuilder stringBuilder;
+    private StringBuilder stringBuilder = new StringBuilder();
 
     Tokenizer(Reader input) throws IOException {
-        this.input = input;
+        this.r = input;
         next();
     }
 
     public int peek() throws IOException {
 
-        input.mark(1);
-        int c = input.read();
-        input.reset();
+        r.mark(1);
+        int c = r.read();
+        r.reset();
         return c;
     }
 
@@ -28,70 +28,82 @@ public class Tokenizer {
 
     public void next() throws IOException {
 
-        currentChar = input.read();
-        while(Character.isWhitespace(currentChar)) currentChar = input.read();
-        if(stringBuilder == null) {
-            switch (currentChar) {
-                case '{':
-                    token = new Token(Token.Type.OPNCRLYBRACKETS);
+        currentChar = r.read();
+        while(Character.isWhitespace(currentChar)){
+            currentChar = r.read();
+        }
+
+        switch (currentChar) {
+            case '{':
+                token = new Token(Token.Type.OPNCRLYBRACKETS);
+                break;
+            case '}':
+                token = new Token(Token.Type.CLSCRLYBRACKETS);
+                break;
+            case ',':
+                token = new Token(Token.Type.COMMA);
+                break;
+            case ';':
+                token = new Token(Token.Type.SEMICOLON);
+                break;
+            case '(':
+                token = new Token(Token.Type.OPNRNBRACKETS);
+                break;
+            case ')':
+                token = new Token(Token.Type.CLSRNBRACKETS);
+                break;
+            case '<':
+                //TODO: implement peek check
+                break;
+            case '>':
+                //TODO: implement peek check
+                break;
+            case '*':
+                //TODO: implement peek check
+                break;
+            case '/':
+                //TODO: implement peek check
+                break;
+            case '%':
+                //TODO: implement peek check
+                break;
+            case '+':
+                //TODO: implement peek check
+                break;
+            case '-':
+                //TODO: implement peek check
+                break;
+            case '=':
+                //TODO: implement peek check
+                break;
+            case '!':
+                //TODO: implement peek check
+                break;
+            case '&':
+                //TODO: implement peek check
+                break;
+            case '|':
+                //TODO: implement peek check
+                break;
+            case '"':
+                //TODO: implement read string
+                break;
+            case -1:
+                token = new Token(Token.Type.EOS);
+                break;
+            default:
+                // Number Checking
+                stringBuilder.setLength(0);
+                while(isNumber(currentChar)){
+                    stringBuilder.append(currentChar);
+                    currentChar = r.read();
+                }
+
+                if(stringBuilder.length() == 0){
+                    token = new Token(Integer.valueOf(stringBuilder.toString()));
                     break;
-                case '}':
-                    token = new Token(Token.Type.CLSCRLYBRACKETS);
-                    break;
-                case ',':
-                    token = new Token(Token.Type.COMMA);
-                    break;
-                case ';':
-                    token = new Token(Token.Type.SEMICOLON);
-                    break;
-                case '(':
-                    token = new Token(Token.Type.OPNRNBRACKETS);
-                    break;
-                case ')':
-                    token = new Token(Token.Type.CLSRNBRACKETS);
-                    break;
-                case '<':
-                    //TODO: implement peek check
-                    break;
-                case '>':
-                    //TODO: implement peek check
-                    break;
-                case '*':
-                    //TODO: implement peek check
-                    break;
-                case '/':
-                    //TODO: implement peek check
-                    break;
-                case '%':
-                    //TODO: implement peek check
-                    break;
-                case '+':
-                    //TODO: implement peek check
-                    break;
-                case '-':
-                    //TODO: implement peek check
-                    break;
-                case '=':
-                    //TODO: implement peek check
-                    break;
-                case '!':
-                    //TODO: implement peek check
-                    break;
-                case '&':
-                    //TODO: implement peek check
-                    break;
-                case '|':
-                    //TODO: implement peek check
-                    break;
-                case '"':
-                    //TODO: implement read string
-                    break;
-                case -1:
-                    token = new Token(Token.Type.EOS);
-                    break;
-                default:
-                    break;
-            }
+                }
+                break;
         }
     }
 }
