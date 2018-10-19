@@ -6,7 +6,7 @@ import java.io.Reader;
 public class Tokenizer {
     Token token;
     private Reader input;
-    private int carattereAttuale;
+    private int currentChar;
     private StringBuilder stringBuilder;
 
     Tokenizer(Reader input) throws IOException {
@@ -22,12 +22,16 @@ public class Tokenizer {
         return c;
     }
 
+    private static boolean isNumber(int c){
+        return c >= '0' && c <= '9';
+    }
+
     public void next() throws IOException {
 
-        carattereAttuale = input.read();
-        while(Character.isWhitespace(carattereAttuale)) carattereAttuale = input.read();
+        currentChar = input.read();
+        while(Character.isWhitespace(currentChar)) currentChar = input.read();
         if(stringBuilder == null) {
-            switch (carattereAttuale) {
+            switch (currentChar) {
                 case '{':
                     token = new Token(Token.Type.OPNCRLYBRACKETS);
                     break;
@@ -47,18 +51,45 @@ public class Tokenizer {
                     token = new Token(Token.Type.CLSRNBRACKETS);
                     break;
                 case '<':
-
+                    //TODO: implement peek check
+                    break;
+                case '>':
+                    //TODO: implement peek check
+                    break;
+                case '*':
+                    //TODO: implement peek check
+                    break;
+                case '/':
+                    //TODO: implement peek check
+                    break;
+                case '%':
+                    //TODO: implement peek check
+                    break;
+                case '+':
+                    //TODO: implement peek check
+                    break;
+                case '-':
+                    //TODO: implement peek check
+                    break;
+                case '=':
+                    //TODO: implement peek check
+                    break;
+                case '!':
+                    //TODO: implement peek check
+                    break;
+                case '&':
+                    //TODO: implement peek check
+                    break;
+                case '|':
+                    //TODO: implement peek check
                     break;
                 case '"':
                     //TODO: implement read string
-                    readStr();
                     break;
                 case -1:
                     token = new Token(Token.Type.EOS);
                     break;
                 default:
-                    if(!readNum())
-                        token = new Toke
                     break;
             }
         }
