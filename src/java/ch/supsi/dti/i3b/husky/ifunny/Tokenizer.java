@@ -2,17 +2,36 @@ package ch.supsi.dti.i3b.husky.ifunny;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Tokenizer {
     Token token;
     private Reader r;
     private int currentChar;
     private StringBuilder stringBuilder = new StringBuilder();
+    private Map<String, Token.Type> mapKeyWord = new HashMap<>();
 
     Tokenizer(Reader input) throws IOException {
         this.r = input;
         nextToken();
+
+        mapKeyWord.put("while",Token.Type.WHILE);
+        mapKeyWord.put("if",Token.Type.IF);
+        mapKeyWord.put("fi",Token.Type.FI);
+        mapKeyWord.put("else",Token.Type.ELSE);
+        mapKeyWord.put("whilenot",Token.Type.WHILENOT);
+        mapKeyWord.put("ifnot",Token.Type.IFNOT);
+        mapKeyWord.put("print",Token.Type.PRINT);
+        mapKeyWord.put("println",Token.Type.PRINTLN);
+        mapKeyWord.put("do",Token.Type.DO);
+        mapKeyWord.put("od",Token.Type.OD);
+        mapKeyWord.put("true",Token.Type.TRUE);
+        mapKeyWord.put("false",Token.Type.FALSE);
+        mapKeyWord.put("nil",Token.Type.NIL);
+        mapKeyWord.put("then",Token.Type.THEN);
     }
+
 
     private int peekChar() throws IOException {
 
@@ -35,10 +54,10 @@ public class Tokenizer {
 
         switch (currentChar) {
             case '{':
-                token = new Token(Token.Type.OPNCRLYBRACKETS);
+                token = new Token(Token.Type.OPNCRLYBRACKET);
                 break;
             case '}':
-                token = new Token(Token.Type.CLSCRLYBRACKETS);
+                token = new Token(Token.Type.CLSCRLYBRACKET);
                 break;
             case ',':
                 token = new Token(Token.Type.COMMA);
@@ -47,10 +66,10 @@ public class Tokenizer {
                 token = new Token(Token.Type.SEMICOLON);
                 break;
             case '(':
-                token = new Token(Token.Type.OPNRNBRACKETS);
+                token = new Token(Token.Type.OPNRNBRACKET);
                 break;
             case ')':
-                token = new Token(Token.Type.CLSRNBRACKETS);
+                token = new Token(Token.Type.CLSRNBRACKET);
                 break;
             case '<':
                 if(peekChar() == '=') {
@@ -186,6 +205,18 @@ public class Tokenizer {
         return token;
     }
 
+    private void commentLine() throws IOException {
+
+
+        nextToken();
+    }
+
+    private void commentBlock() throws IOException {
+
+
+        nextToken();
+    }
+
     private void idOrKeyword() throws IOException{
         if(!Character.isJavaIdentifierStart(currentChar)){
             return;
@@ -195,7 +226,12 @@ public class Tokenizer {
             stringBuilder.append(currentChar);
             currentChar = r.read();
 
-            //TODO: hashmap con controllo keyword (utilizzando peek)
+            if(mapKeyWord.containsKey(stringBuilder.toString())){
+                if(!Character.isJavaIdentifierPart(peekChar())){
+                    token = new Token(mapKeyWord.get(stringBuilder.toString()));
+                    return;
+                }
+            }
         }
         if(stringBuilder.length() != 0){
             token = new Token(Token.Type.ID, stringBuilder.toString());
