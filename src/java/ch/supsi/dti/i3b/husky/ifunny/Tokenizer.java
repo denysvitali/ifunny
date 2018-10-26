@@ -2,6 +2,7 @@ package ch.supsi.dti.i3b.husky.ifunny;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,6 @@ public class Tokenizer {
 
     Tokenizer(Reader input) throws IOException {
         this.r = input;
-        nextToken();
-
         mapKeyWord.put("while",Token.Type.WHILE);
         mapKeyWord.put("if",Token.Type.IF);
         mapKeyWord.put("fi",Token.Type.FI);
@@ -30,6 +29,9 @@ public class Tokenizer {
         mapKeyWord.put("false",Token.Type.FALSE);
         mapKeyWord.put("nil",Token.Type.NIL);
         mapKeyWord.put("then",Token.Type.THEN);
+
+
+        nextToken();
     }
 
 
@@ -105,12 +107,10 @@ public class Tokenizer {
                 }
                 else if(peekChar() == '/'){
                     currentChar = r.read();
-                    //TODO: create commentLine function (this should recall next after is done)
                     commentLine();
                 }
                 else if(peekChar() == '*'){
                     currentChar = r.read();
-                    //TODO: create commentBlock function (this should recall next after is done)
                     commentBlock();
                 }
                 else{
@@ -131,6 +131,9 @@ public class Tokenizer {
                     currentChar = r.read();
                     token = new Token(Token.Type.ASSIGNMSUM);
                 }
+                else if(isNumber(peekChar())){
+                    readNum();
+                }
                 else{
                     token = new Token(Token.Type.SUM);
                 }
@@ -143,6 +146,9 @@ public class Tokenizer {
                 else if(peekChar() == '>'){
                     currentChar = r.read();
                     token = new Token(Token.Type.ARROW);
+                }
+                else if(isNumber(peekChar())){
+                    readNum();
                 }
                 else{
                     token = new Token(Token.Type.SUB);
@@ -206,14 +212,19 @@ public class Tokenizer {
     }
 
     private void commentLine() throws IOException {
-
-
+        while(currentChar != '\n' && currentChar != -1){
+            currentChar = r.read();
+        }
         nextToken();
     }
 
     private void commentBlock() throws IOException {
-
-
+        do {
+            while (currentChar != '*') {
+                currentChar = r.read();
+            }
+            currentChar = r.read();
+        } while (currentChar != '/');
         nextToken();
     }
 
@@ -239,16 +250,72 @@ public class Tokenizer {
     }
     private void readNum() throws IOException{
         // Number Checking
+
+        /* Possible Values:
+            1
+            1.0
+            -1.0
+            1E-10
+            1E10
+            1.0E-10
+            1.0E+10
+         */
+
         stringBuilder.setLength(0);
-        while(isNumber(currentChar)){
-            stringBuilder.append(currentChar);
+        if(isSign(currentChar)){
+            stringBuilder.append((char) currentChar);
             currentChar = r.read();
         }
+
+        while(isNumber(currentChar)){
+            stringBuilder.append(currentChar - '0');
+            currentChar = r.read();
+        }
+
+        if(isNumericComma(currentChar)){
+            currentChar = r.read();
+            stringBuilder.append(".");
+            while(isNumber(currentChar)){
+                stringBuilder.append(currentChar - '0');
+                currentChar = r.read();
+            }
+        }
+
+        r.mark(1);
+
+        // EXP
+        if(currentChar == 'E' || currentChar == 'e'){
+            stringBuilder.append((char) currentChar);
+            currentChar = r.read();
+            if(isSign(currentChar)){
+                stringBuilder.append((char) currentChar);
+                currentChar = r.read();
+                while(isNumber(currentChar)){
+                    stringBuilder.append(currentChar - '0');
+                    currentChar = r.read();
+                }
+            } else {
+                r.reset();
+            }
+        } else {
+            r.reset();
+        }
+
+
         if(stringBuilder.length() != 0){
-            token = new Token(Integer.valueOf(stringBuilder.toString()));
+            token = new Token(new BigDecimal(stringBuilder.toString()));
         }
     }
-	private void readStr() throws IOException{
+
+    private boolean isSign(int currentChar) {
+        return currentChar == '+' || currentChar == '-';
+    }
+
+    private boolean isNumericComma(int currentChar) {
+        return currentChar == '.';
+    }
+
+    private void readStr() throws IOException{
         stringBuilder.setLength(0);
 		currentChar = r.read();
 		while(currentChar != '"' && currentChar != -1){

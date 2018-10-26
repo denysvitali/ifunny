@@ -13,38 +13,45 @@ public class Token {
     }
 
     private Type type;
-    private int num;
+    private BigDecimal num;
     private String str;
 
-    private Token(Type type, int num, String str){
+    private Token(Type type, BigDecimal num, String str){
         this.type = type;
         this.num = num;
         this.str = str;
     }
-    Token(int num){
+    Token(BigDecimal num){
         this(Type.NUM, num, null);
     }
     Token(String str){
-        this(Type.STRING, -1, str);
+        this(Type.STRING, null, str);
     }
     Token(Type type, String str){
-        this(type, -1, str);
+        this(type, null, str);
     }
     Token(Type type){
-        this(type, -1, null);
+        this(type, null, null);
     }
 
 
     public Type type(){
         return type;
     }
-    public int getNum(){
+    public BigDecimal getNum(){
         return num;
     }
     public String getStr(){
         return str;
     }
 
-
-
+    @Override
+    public String toString() {
+        switch(type){
+            case NUM:
+                return String.format("[%s]: %e", type, num);
+            default:
+                return String.format("[%s]: %s", type, str);
+        }
+    }
 }
