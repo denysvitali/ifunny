@@ -319,7 +319,7 @@ public class Tokenizer {
         stringBuilder.setLength(0);
 		currentChar = r.read();
 		while(currentChar != '"' && currentChar != -1){
-			stringBuilder.append(currentChar);
+			stringBuilder.append((char) currentChar);
 			currentChar = r.read();
 		}
 		if(currentChar != -1){

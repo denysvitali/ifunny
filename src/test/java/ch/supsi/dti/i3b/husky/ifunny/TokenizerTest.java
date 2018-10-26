@@ -111,4 +111,13 @@ class TokenizerTest {
 
 		assertEquals(Token.Type.EOS, token.type());
 	}
+
+	@Test
+	public void stringTest() throws IOException {
+		Tokenizer t = createStringTokenizer("\"I'm a String\"");
+		Token token = t.token;
+
+		assertEquals(Token.Type.STRING, token.type());
+		assertEquals("I'm a String", token.getStr());
+	}
 }
