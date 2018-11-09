@@ -44,7 +44,6 @@ pipeline {
         script {
           COMMIT_LOG = sh(script:"git log --oneline --pretty=format:'%h - %s (%an)' ${GIT_PREVIOUS_COMMIT}..HEAD", returnStdout: true)
         }
-        archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
         cleanWs()
     }
   }
