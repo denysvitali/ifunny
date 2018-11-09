@@ -22,17 +22,17 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void tokenization1() throws IOException {
+	void tokenization1() throws IOException {
 		doTokenization("1234 /* comment */ 1234\n// Hello World\n12345");
 	}
 
 	@Test
-	public void tokenization2() throws IOException {
+	void tokenization2() throws IOException {
 		doTokenization("2 <= 3");
 	}
 
 	@Test
-	public void integerTokenizer() throws IOException {
+	void integerTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("2");
 		Token dbl = t.token;
 
@@ -40,7 +40,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void negativeIntegerTokenizer() throws IOException {
+	void negativeIntegerTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("-2");
 		Token dbl = t.token;
 
@@ -48,7 +48,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void negativeDoubleTokenizer() throws IOException {
+	void negativeDoubleTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("-2.13");
 		Token dbl = t.token;
 
@@ -57,7 +57,7 @@ class TokenizerTest {
 
 
 	@Test
-	public void negativeExpTokenizer() throws IOException {
+	void negativeExpTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("-4.21E-10");
 		Token dbl = t.token;
 
@@ -65,7 +65,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void negativeExpTokenizer2() throws IOException {
+	void negativeExpTokenizer2() throws IOException {
 		Tokenizer t = createStringTokenizer("-4.21E+10");
 		Token dbl = t.token;
 
@@ -73,7 +73,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void negativeExpTokenizer3() throws IOException {
+	void negativeExpTokenizer3() throws IOException {
 		Tokenizer t = createStringTokenizer("-4.21e+10");
 		Token dbl = t.token;
 
@@ -81,7 +81,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void doubleTokenizer() throws IOException {
+	void doubleTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("2.14");
 		Token dbl = t.token;
 
@@ -89,7 +89,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void doubleExpTokenizer() throws IOException {
+	void doubleExpTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("8.1E-12");
 		Token dbl = t.token;
 
@@ -97,7 +97,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void inlineComment() throws IOException {
+	void inlineComment() throws IOException {
 		Tokenizer t = createStringTokenizer("// I'm a comment");
 		Token token = t.token;
 
@@ -105,7 +105,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void multilineComment() throws IOException {
+	void multilineComment() throws IOException {
 		Tokenizer t = createStringTokenizer("/* I'm a comment */");
 		Token token = t.token;
 
@@ -113,7 +113,7 @@ class TokenizerTest {
 	}
 
 	@Test
-	public void stringTest() throws IOException {
+	void stringTest() throws IOException {
 		Tokenizer t = createStringTokenizer("\"I'm a String\"");
 		Token token = t.token;
 

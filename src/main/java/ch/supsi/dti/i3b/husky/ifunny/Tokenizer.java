@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Tokenizer {
+class Tokenizer {
 	Token token;
 	private Reader r;
 	private int currentChar;
@@ -47,7 +47,7 @@ public class Tokenizer {
 		return c >= '0' && c <= '9';
 	}
 
-	public void nextToken() throws IOException {
+	private void nextToken() throws IOException {
 
 		currentChar = r.read();
 		while (Character.isWhitespace(currentChar)) {
@@ -190,7 +190,7 @@ public class Tokenizer {
 		}
 	}
 
-	public Token getNextToken() throws IOException {
+	Token getNextToken() throws IOException {
 		nextToken();
 		return token;
 	}

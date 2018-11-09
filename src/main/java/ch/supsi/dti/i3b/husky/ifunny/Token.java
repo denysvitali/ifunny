@@ -35,23 +35,21 @@ public class Token {
     }
 
 
-    public Type type(){
+    Type type(){
         return type;
     }
-    public BigDecimal getNum(){
+    BigDecimal getNum(){
         return num;
     }
-    public String getStr(){
+    String getStr(){
         return str;
     }
 
     @Override
     public String toString() {
-        switch(type){
-            case NUM:
-                return String.format("[%s]: %e", type, num);
-            default:
-                return String.format("[%s]: %s", type, str);
+        if (type == Type.NUM) {
+            return String.format("[%s]: %e", type, num);
         }
+        return String.format("[%s]: %s", type, str);
     }
 }
