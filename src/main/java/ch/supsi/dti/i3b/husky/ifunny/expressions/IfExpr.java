@@ -16,7 +16,7 @@ public class IfExpr extends Expr {
 	}
 
 	@Override
-	Val eval(Env env) {
+	public Val eval(Env env) {
 		if(this.ifEvaluation.eval(env).getValue().equals(true)){
 			return this.ifBody.eval(env);
 		}

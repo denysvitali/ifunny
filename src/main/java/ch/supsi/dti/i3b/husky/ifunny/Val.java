@@ -1,13 +1,20 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
-public class Val {
+import ch.supsi.dti.i3b.husky.ifunny.expressions.Expr;
+
+public class Val extends Expr {
 	private Object value = null;
 
-	public Val(boolean b) {
-		this.value = b;
+	public Val(Object o) {
+		this.value = o;
 	}
 
 	public Object getValue() {
 		return value;
+	}
+
+	@Override
+	public Val eval(Env env) {
+		return this;
 	}
 }

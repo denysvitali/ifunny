@@ -13,7 +13,7 @@ public class WhileExpr extends Expr {
 	}
 
 	@Override
-	Val eval(Env env) {
+	public Val eval(Env env) {
 		while(this.condition.eval(env).getValue().equals(true)){
 			this.body.eval(env);
 		}

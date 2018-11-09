@@ -11,7 +11,7 @@ public class FunExpr extends Expr {
 	}
 
 	@Override
-	Val eval(Env env) {
+	public Val eval(Env env) {
 		return null;
 	}
 }

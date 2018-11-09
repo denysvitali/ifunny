@@ -11,7 +11,7 @@ public class NotExpr extends Expr {
 	}
 
 	@Override
-	Val eval(Env env) {
+	public Val eval(Env env) {
 		if(origExpr.eval(env).getValue().equals(true)){
 			return new Val(false);
 		}
