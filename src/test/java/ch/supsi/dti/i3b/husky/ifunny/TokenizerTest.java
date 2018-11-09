@@ -120,4 +120,21 @@ class TokenizerTest {
 		assertEquals(Token.Type.STRING, token.type());
 		assertEquals("I'm a String", token.getStr());
 	}
+
+	@Test
+	void utf8StringTest() throws IOException {
+		Tokenizer t = createStringTokenizer("\"你好\"");
+		Token token = t.token;
+
+		assertEquals(Token.Type.STRING, token.type());
+		assertEquals("你好", token.getStr());
+	}
+	@Test
+	void emojiTest() throws IOException {
+		Tokenizer t = createStringTokenizer("\"\uD83D\uDC36\"");
+		Token token = t.token;
+
+		assertEquals(Token.Type.STRING, token.type());
+		assertEquals("\uD83D\uDC36", token.getStr());
+	}
 }
