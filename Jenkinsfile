@@ -1,7 +1,4 @@
 pipeline {
-  env {
-    PROJECT_NAME
-  }
   agent any
   stages {
     stage("Slack Notification"){
