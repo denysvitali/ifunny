@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class Tokenizer {
-	Token token;
+	private Token token;
 	private Reader r;
 	private int currentChar;
 	private StringBuilder stringBuilder = new StringBuilder();
@@ -47,7 +47,7 @@ class Tokenizer {
 		return c >= '0' && c <= '9';
 	}
 
-	private void nextToken() throws IOException {
+	public void nextToken() throws IOException {
 
 		currentChar = r.read();
 		while (Character.isWhitespace(currentChar)) {
@@ -190,7 +190,10 @@ class Tokenizer {
 		}
 	}
 
-	Token getNextToken() throws IOException {
+	public Token getToken(){
+		return token;
+	}
+	public Token getNextToken() throws IOException {
 		nextToken();
 		return token;
 	}
@@ -311,4 +314,8 @@ class Tokenizer {
 			token = new Token(stringBuilder.toString());
 		}
 	}
+
+    public boolean check(Token.Type tipo){
+        return token.type() == tipo;
+    }
 }
