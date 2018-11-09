@@ -3,9 +3,12 @@ package ch.supsi.dti.i3b.husky.ifunny;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.Expr;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.SequenceExpr;
+import ch.supsi.dti.i3b.husky.ifunny.values.NilVal;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 
 public class Parser {
 
@@ -81,7 +84,7 @@ public class Parser {
             tokenStream.nextToken();
             return sequence(scope);
         }
-        return new NilVal();
+        return Nil;
     }
 
     private Expr sequence(Scope scope) throws IOException {
@@ -96,10 +99,11 @@ public class Parser {
                 listAssignment.add(assignExpr);
             }
         }
-        return listAssignment.size() == 0 ? new NilVal() : listAssignment.size() == 1 ?
+        return listAssignment.size() == 0 ? Nil : listAssignment.size() == 1 ?
                 listAssignment.get(0) : new SequenceExpr(listAssignment);
     }
 
     private Expr optAssignment(Scope scope) {
+        return Nil;
     }
 }

@@ -19,7 +19,7 @@ public class SequenceExpr extends Expr{
         return null;
     }
     @Override
-    Val eval(Env env) {
+    public Val eval(Env env) {
         return null;
     }
 
