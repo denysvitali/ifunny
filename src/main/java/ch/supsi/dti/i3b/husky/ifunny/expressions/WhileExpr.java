@@ -1,9 +1,11 @@
 package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
+import ch.supsi.dti.i3b.husky.ifunny.Scope;
 import ch.supsi.dti.i3b.husky.ifunny.Val;
 
 public class WhileExpr extends Expr {
+	private Scope scope;
 	private Expr condition;
 	private Expr body;
 
@@ -13,7 +15,12 @@ public class WhileExpr extends Expr {
 	}
 
 	@Override
-	Val eval(Env env) {
+	public Scope getScope() {
+		return scope;
+	}
+
+	@Override
+	public Val eval(Env env) {
 		while(this.condition.eval(env).getValue().equals(true)){
 			this.body.eval(env);
 		}

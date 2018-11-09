@@ -17,7 +17,7 @@ public class Parser {
 
     public FunExpr parse() throws IOException {
 
-        FunExpr fFunc = function();
+        FunExpr fFunc = function(new Scope());
 
         if(tokenStream.check(Token.Type.EOS)){
             return fFunc;
@@ -29,12 +29,13 @@ public class Parser {
     }
 
     private FunExpr function(Scope scope) throws IOException {
-        if (tokenStream.check(Token.Type.OPNCRLYBRACKET)) {
+        if (tokenStream.check(Token.Type.OPN_CRLY_BRKT)) {
             tokenStream.nextToken();
             ArrayList<String> param = optParams();
             ArrayList<String> locals = optLocals();
+            // TODO: Implement duplicate check between lists, & scope assignment.
             Expr seqExpr = optSequence(scope);
-            if (tokenStream.check(Token.Type.CLSCRLYBRACKET)) {
+            if (tokenStream.check(Token.Type.CLS_CRLY_BRKT)) {
                 return new FunExpr(param, locals, seqExpr);
             }
             else {
@@ -72,6 +73,7 @@ public class Parser {
             listId.add(tokenStream.getToken().getStr());
             tokenStream.nextToken();
         }
+        return null;
     }
 
     private Expr optSequence(Scope scope) throws IOException {
@@ -94,7 +96,7 @@ public class Parser {
                 listAssignment.add(assignExpr);
             }
         }
-        return listAssignment.size() == 0 ? new NilVal() : listAssignment.size() == 1 ? 
+        return listAssignment.size() == 0 ? new NilVal() : listAssignment.size() == 1 ?
                 listAssignment.get(0) : new SequenceExpr(listAssignment);
     }
 

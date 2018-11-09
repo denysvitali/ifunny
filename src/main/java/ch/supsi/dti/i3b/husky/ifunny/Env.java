@@ -6,6 +6,10 @@ public class Env {
 	private Env parentEnv;
 	private HashMap<String, Val> variables;
 
+	public Env(){
+
+	}
+
 	public Env(Env parentEnv){
 		this.parentEnv = parentEnv;
 	}

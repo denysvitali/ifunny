@@ -1,6 +1,7 @@
 package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
+import ch.supsi.dti.i3b.husky.ifunny.Scope;
 import ch.supsi.dti.i3b.husky.ifunny.Val;
 
 import java.util.ArrayList;
@@ -13,6 +14,10 @@ public class SequenceExpr extends Expr{
         this.listAssignment = listAssignment;
     }
 
+    @Override
+    public Scope getScope() {
+        return null;
+    }
     @Override
     Val eval(Env env) {
         return null;
