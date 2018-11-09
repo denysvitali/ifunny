@@ -56,10 +56,10 @@ class Tokenizer {
 
 		switch (currentChar) {
 			case '{':
-				token = new Token(Token.Type.OPNCRLYBRACKET);
+				token = new Token(Token.Type.OPN_CRLY_BRKT);
 				break;
 			case '}':
-				token = new Token(Token.Type.CLSCRLYBRACKET);
+				token = new Token(Token.Type.CLS_CRLY_BRKT);
 				break;
 			case ',':
 				token = new Token(Token.Type.COMMA);

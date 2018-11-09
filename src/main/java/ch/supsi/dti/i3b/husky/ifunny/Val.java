@@ -14,6 +14,11 @@ public class Val extends Expr {
 	}
 
 	@Override
+	public Scope getScope() {
+		return null;
+	}
+
+	@Override
 	public Val eval(Env env) {
 		return this;
 	}

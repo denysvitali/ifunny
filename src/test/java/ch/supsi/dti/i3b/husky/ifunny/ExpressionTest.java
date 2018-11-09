@@ -6,9 +6,11 @@ import ch.supsi.dti.i3b.husky.ifunny.expressions.NotExpr;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.WhileExpr;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ExpressionTest {
+class ExpressionTest {
 	@Test
 	void testNotExpr(){
 		NotExpr notExpr = new NotExpr(new Val(true));
@@ -36,7 +38,9 @@ public class ExpressionTest {
 
 	@Test
 	void testFunExpr(){
-		FunExpr funExpr = new FunExpr(new Val(42));
+		FunExpr funExpr = new FunExpr(new ArrayList<>(),
+				new ArrayList<>(),
+				new Val(42));
 		assertEquals(42, funExpr.eval(new Env()).getValue());
 	}
 

@@ -1,11 +1,10 @@
 package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
+import ch.supsi.dti.i3b.husky.ifunny.Scope;
 import ch.supsi.dti.i3b.husky.ifunny.Val;
-import com.sun.source.tree.Scope;
 
 public class IfExpr extends Expr {
-
 	private Scope scope;
 	private Expr ifEvaluation;
 	private Expr ifBody;
@@ -15,6 +14,11 @@ public class IfExpr extends Expr {
 		this.ifEvaluation = eval;
 		this.ifBody = body;
 		this.elseBody = elseBody;
+	}
+
+	@Override
+	public Scope getScope() {
+		return scope;
 	}
 
 	@Override
