@@ -5,18 +5,12 @@ import ch.supsi.dti.i3b.husky.ifunny.Scope;
 import ch.supsi.dti.i3b.husky.ifunny.Val;
 
 public class WhileExpr extends Expr {
-	private Scope scope;
 	private Expr condition;
 	private Expr body;
 
 	public WhileExpr(Expr condition, Expr body){
 		this.condition = condition;
 		this.body = body;
-	}
-
-	@Override
-	public Scope getScope() {
-		return scope;
 	}
 
 	@Override

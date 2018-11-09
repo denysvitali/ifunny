@@ -5,7 +5,6 @@ import ch.supsi.dti.i3b.husky.ifunny.Scope;
 import ch.supsi.dti.i3b.husky.ifunny.Val;
 
 public class IfExpr extends Expr {
-	private Scope scope;
 	private Expr ifEvaluation;
 	private Expr ifBody;
 	private Expr elseBody;
@@ -14,11 +13,6 @@ public class IfExpr extends Expr {
 		this.ifEvaluation = eval;
 		this.ifBody = body;
 		this.elseBody = elseBody;
-	}
-
-	@Override
-	public Scope getScope() {
-		return scope;
 	}
 
 	@Override
