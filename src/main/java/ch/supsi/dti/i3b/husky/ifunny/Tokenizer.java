@@ -326,4 +326,8 @@ public class Tokenizer {
 			token = new Token(stringBuilder.toString());
 		}
 	}
+
+    public boolean check(Token.Type tipo){
+        return token.type() == tipo;
+    }
 }
