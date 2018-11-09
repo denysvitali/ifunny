@@ -39,4 +39,15 @@ public class ExpressionTest {
 		FunExpr funExpr = new FunExpr(new Val(42));
 		assertEquals(42, funExpr.eval(new Env()).getValue());
 	}
+
+	@Test
+	void multiExpressionTest1(){
+		IfExpr ifExpr = new IfExpr(
+				new NotExpr(new Val(false)),
+				new Val(5),
+				new Val(null)
+		);
+
+		assertEquals(ifExpr.eval(new Env()).getValue(), 5);
+	}
 }
