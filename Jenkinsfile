@@ -26,17 +26,8 @@ pipeline {
       steps {
         script {
           docker.image('maven:3-jdk-11').inside() {
-            sh "mvn test"
+            sh "mvn test -Dmaven.compile.skip=true"
             junit 'target/surefire-reports/**/*.xml'
-          }
-        }
-      }
-    }
-    stage("Package"){
-      steps {
-        script {
-          docker.image('maven:3-jdk-11').inside() {
-            sh "mvn assembly:single"
           }
         }
       }
