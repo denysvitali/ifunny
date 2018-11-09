@@ -2,9 +2,11 @@ package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
 import ch.supsi.dti.i3b.husky.ifunny.Val;
+import com.sun.source.tree.Scope;
 
 public class IfExpr extends Expr {
 
+	private Scope scope;
 	private Expr ifEvaluation;
 	private Expr ifBody;
 	private Expr elseBody;
