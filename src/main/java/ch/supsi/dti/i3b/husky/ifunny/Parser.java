@@ -39,6 +39,7 @@ public class Parser {
             // TODO: Implement duplicate check between lists, & scope assignment.
             Expr seqExpr = optSequence(scope);
             if (tokenStream.check(Token.Type.CLS_CRLY_BRKT)) {
+                tokenStream.nextToken();
                 return new FunExpr(param, locals, seqExpr);
             }
             else {
@@ -76,7 +77,7 @@ public class Parser {
             listId.add(tokenStream.getToken().getStr());
             tokenStream.nextToken();
         }
-        return null;
+        return listId;
     }
 
     private Expr optSequence(Scope scope) throws IOException {
@@ -103,7 +104,22 @@ public class Parser {
                 listAssignment.get(0) : new SequenceExpr(listAssignment);
     }
 
-    private Expr optAssignment(Scope scope) {
+    private Expr optAssignment(Scope scope) throws IOException {
+        if(tokenStream.check(Token.Type.ID)){
+            tokenStream.nextToken();
+            if(tokenStream.check(Token.Type.ASSIGNM)
+                    || tokenStream.check(Token.Type.ASSIGNMSUM)
+                    || tokenStream.check(Token.Type.ASSIGNMSUB)
+                    || tokenStream.check(Token.Type.ASSIGNMULT)
+                    || tokenStream.check(Token.Type.ASSIGNMDIV)
+                    || tokenStream.check(Token.Type.ASSIGNMOD)){
+                tokenStream.nextToken();
+                //TODO:finish optAssignment
+            }
+            else{
+                throw new RuntimeException("Wrong token");
+            }
+        }
         return Nil;
     }
 }
