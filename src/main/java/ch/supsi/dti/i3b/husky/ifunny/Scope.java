@@ -8,6 +8,9 @@ public class Scope {
 	private List<String> vars = new ArrayList<>();
 	private Scope parent;
 
+	Scope(){
+
+	}
 	Scope(Scope parent, ArrayList<String> param, ArrayList<String> locals) {
 		this.parent = parent;
 		vars = param;

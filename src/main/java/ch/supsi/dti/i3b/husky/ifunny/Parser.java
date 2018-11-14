@@ -101,6 +101,9 @@ public class Parser {
     }
 
     private Expr optAssignment(Scope scope) throws IOException {
+        return assignment(scope);
+    }
+    private Expr assignment(Scope scope) throws IOException {
         if(tokenStream.check(Token.Type.ID)){
             tokenStream.nextToken();
             if(tokenStream.check(Token.Type.ASSIGNM)
@@ -110,7 +113,7 @@ public class Parser {
                     || tokenStream.check(Token.Type.ASSIGNMDIV)
                     || tokenStream.check(Token.Type.ASSIGNMOD)){
                 tokenStream.nextToken();
-                //TODO:finish optAssignment
+                //TODO:finish assignment
             }
             else{
                 throw new RuntimeException("Wrong token");
@@ -118,4 +121,5 @@ public class Parser {
         }
         return Nil;
     }
+
 }
