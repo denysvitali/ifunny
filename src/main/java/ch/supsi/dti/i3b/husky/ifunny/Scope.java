@@ -6,15 +6,18 @@ import java.util.List;
 
 public class Scope {
 	private List<String> vars = new ArrayList<>();
+	private Scope parent;
 
-	public void addVar(String id){
-		vars.add(id);
+	Scope(Scope parent, ArrayList<String> param, ArrayList<String> locals) {
+		this.parent = parent;
+		vars = param;
+		vars.addAll(locals);
 		if(containsDuplicates()){
-			throw new RuntimeException("Scope: I can't add an already existing variable to the scope!");
+			throw new RuntimeException("Scope: Duplicates Found");
 		}
 	}
 
-	public boolean containsDuplicates(){
+	private boolean containsDuplicates(){
 		return (new HashSet<>(vars).size() < vars.size());
 	}
 }

@@ -85,3 +85,4 @@ fabric.properties
 
 target/
 .attach_pid*
+.idea/compiler.xml

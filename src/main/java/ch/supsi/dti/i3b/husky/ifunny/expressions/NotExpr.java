@@ -1,7 +1,6 @@
 package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
-import ch.supsi.dti.i3b.husky.ifunny.Scope;
 import ch.supsi.dti.i3b.husky.ifunny.Val;
 
 public class NotExpr extends Expr {
@@ -9,11 +8,6 @@ public class NotExpr extends Expr {
 
 	public NotExpr(Expr origExpr){
 		this.origExpr = origExpr;
-	}
-
-	@Override
-	public Scope getScope() {
-		return null;
 	}
 
 	@Override

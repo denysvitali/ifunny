@@ -3,7 +3,6 @@ package ch.supsi.dti.i3b.husky.ifunny;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.Expr;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.SequenceExpr;
-import ch.supsi.dti.i3b.husky.ifunny.values.NilVal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,8 +25,7 @@ public class Parser {
             return fFunc;
         }
         else{
-            System.out.println("Wrong token");
-            throw new RuntimeException();
+            throw new RuntimeException("Wrong token");
         }
     }
 
@@ -36,31 +34,29 @@ public class Parser {
             tokenStream.nextToken();
             ArrayList<String> param = optParams();
             ArrayList<String> locals = optLocals();
+
             // TODO: Implement duplicate check between lists, & scope assignment.
-            Expr seqExpr = optSequence(scope);
+            Expr seqExpr = optSequence(new Scope(scope, param, locals));
             if (tokenStream.check(Token.Type.CLS_CRLY_BRKT)) {
                 tokenStream.nextToken();
                 return new FunExpr(param, locals, seqExpr);
             }
             else {
-                System.out.println("Wrong token");
-                throw new RuntimeException();
+                throw new RuntimeException("Wrong token");
             }
         }
         else {
-            System.out.println("Wrong token");
-            throw new RuntimeException();
+            throw new RuntimeException("Wrong token");
         }
     }
 
     private ArrayList<String> optParams() throws IOException {
         ArrayList<String> listParams = new ArrayList<>();
-        if(tokenStream.check(Token.Type.OPNRNBRACKET)) {
+        if(tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
             tokenStream.nextToken();
             listParams = optId();
-            if(!tokenStream.check(Token.Type.CLSRNBRACKET)) {
-                System.out.println("Wrong token");
-                throw new RuntimeException();
+            if(!tokenStream.check(Token.Type.CLS_RND_BRACKET)) {
+                throw new RuntimeException("Wrong token");
             }
             tokenStream.nextToken();
         }

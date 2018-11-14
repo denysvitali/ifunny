@@ -68,10 +68,10 @@ class Tokenizer {
 				token = new Token(Token.Type.SEMICOLON);
 				break;
 			case '(':
-				token = new Token(Token.Type.OPNRNBRACKET);
+				token = new Token(Token.Type.OPN_RND_BRACKET);
 				break;
 			case ')':
-				token = new Token(Token.Type.CLSRNBRACKET);
+				token = new Token(Token.Type.CLS_RND_BRACKET);
 				break;
 			case '<':
 				if (peekChar() == '=') {
