@@ -1,8 +1,6 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
-import ch.supsi.dti.i3b.husky.ifunny.expressions.Expr;
-import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
-import ch.supsi.dti.i3b.husky.ifunny.expressions.SequenceExpr;
+import ch.supsi.dti.i3b.husky.ifunny.expressions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,25 +99,119 @@ public class Parser {
     }
 
     private Expr optAssignment(Scope scope) throws IOException {
+        //Chiedere per come riconoscere la presenza di assignment
         return assignment(scope);
     }
     private Expr assignment(Scope scope) throws IOException {
-        if(tokenStream.check(Token.Type.ID)){
+
+        if(tokenStream.check(Token.Type.ID)) {
+            String id = tokenStream.getToken().getStr();
             tokenStream.nextToken();
-            if(tokenStream.check(Token.Type.ASSIGNM)
+            if (tokenStream.check(Token.Type.ASSIGNM)
                     || tokenStream.check(Token.Type.ASSIGNMSUM)
                     || tokenStream.check(Token.Type.ASSIGNMSUB)
                     || tokenStream.check(Token.Type.ASSIGNMULT)
                     || tokenStream.check(Token.Type.ASSIGNMDIV)
-                    || tokenStream.check(Token.Type.ASSIGNMOD)){
+                    || tokenStream.check(Token.Type.ASSIGNMOD)) {
+                Token token = tokenStream.getToken();
                 tokenStream.nextToken();
-                //TODO:finish assignment
+                return new AssignmExpr(id, token.type(), assignment(scope));
             }
             else{
                 throw new RuntimeException("Wrong token");
             }
         }
+        else{
+            return logicalOr(scope);
+        }
+    }
+
+    private Expr logicalOr(Scope scope) throws IOException {
+
+        Expr expr = logicalAnd(scope);
+        if(tokenStream.check(Token.Type.OR)){
+            Token token = tokenStream.getToken();
+            tokenStream.nextToken();
+            return new BinaryExpr(expr, token.type(), logicalOr(scope));
+        }
+        return expr;
+    }
+
+    private Expr logicalAnd(Scope scope) throws IOException {
+
+        Expr expr = equality(scope);
+        if(tokenStream.check(Token.Type.AND)){
+            Token token = tokenStream.getToken();
+            tokenStream.nextToken();
+            return new BinaryExpr(expr, token.type(), logicalAnd(scope));
+        }
+        return expr;
+    }
+
+    private Expr equality(Scope scope) throws IOException {
+
+        Expr expr = comparison(scope);
+        if(tokenStream.check(Token.Type.EQ) || tokenStream.check(Token.Type.NOTEQ)){
+            Token token = tokenStream.getToken();
+            tokenStream.nextToken();
+            return new BinaryExpr(expr, token.type(), comparison(scope));
+        }
+        return expr;
+    }
+
+    private Expr comparison(Scope scope) throws IOException {
+
+        Expr expr = add(scope);
+        if(tokenStream.check(Token.Type.MAJ)
+                || tokenStream.check(Token.Type.MAJEQ)
+                || tokenStream.check(Token.Type.MIN)
+                || tokenStream.check(Token.Type.MINEQ)){
+            Token token = tokenStream.getToken();
+            tokenStream.nextToken();
+            return new BinaryExpr(expr, token.type(), add(scope));
+        }
+        return expr;
+    }
+
+    private Expr add(Scope scope) throws IOException {
+
+        Expr expr = mult(scope);
+        if(tokenStream.check(Token.Type.SUM) || tokenStream.check(Token.Type.SUB)){
+            Token token = tokenStream.getToken();
+            tokenStream.nextToken();
+            return new BinaryExpr(expr, token.type(), mult(scope));
+        }
+        return expr;
+    }
+
+    private Expr mult(Scope scope) throws IOException {
+
+        Expr expr = unary(scope);
+        if(tokenStream.check(Token.Type.MULT)
+                || tokenStream.check(Token.Type.DIV)
+                || tokenStream.check(Token.Type.MOD)){
+            Token token = tokenStream.getToken();
+            tokenStream.nextToken();
+            return new BinaryExpr(expr, token.type(), unary(scope));
+        }
+        return expr;
+    }
+
+    private Expr unary(Scope scope) throws IOException {
+
+        if(tokenStream.check(Token.Type.SUM)
+                || tokenStream.check(Token.Type.SUB)
+                || tokenStream.check(Token.Type.NOT)){
+            Token token = tokenStream.getToken();
+            tokenStream.nextToken();
+            return new UnaryExpr(token.type(), unary(scope));
+        }
+        return postFix(scope);
+    }
+
+    private Expr postFix(Scope scope) {
         return Nil;
     }
+
 
 }
