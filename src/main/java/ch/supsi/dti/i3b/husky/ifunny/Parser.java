@@ -1,6 +1,10 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
 import ch.supsi.dti.i3b.husky.ifunny.expressions.*;
+import ch.supsi.dti.i3b.husky.ifunny.values.BoolVal;
+import ch.supsi.dti.i3b.husky.ifunny.values.NilVal;
+import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
+import ch.supsi.dti.i3b.husky.ifunny.values.StringVal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -233,8 +237,97 @@ public class Parser {
 
     }
 
-    private Expr primary(Scope scope) {
-        return Nil;
+    private Expr primary(Scope scope) throws IOException {
+
+        if (tokenStream.check(Token.Type.NUM)) {
+            Val val = new NumVal(tokenStream.getToken().getNum());
+            tokenStream.nextToken();
+            return val;
+        } else if (tokenStream.check(Token.Type.TRUE)) {
+            tokenStream.nextToken();
+            return new BoolVal(true);
+        } else if (tokenStream.check(Token.Type.FALSE)) {
+            tokenStream.nextToken();
+            return new BoolVal(false);
+        } else if (tokenStream.check(Token.Type.NIL)) {
+            tokenStream.nextToken();
+            return new NilVal();
+        } else if (tokenStream.check(Token.Type.STRING)) {
+            String str = tokenStream.getToken().getStr();
+            tokenStream.nextToken();
+            return new StringVal(str);
+        } else if (tokenStream.check(Token.Type.ID)) {
+            String str = tokenStream.getToken().getStr();
+            tokenStream.nextToken();
+            return new GetVarExpr(str);
+        } else if (tokenStream.check(Token.Type.OPN_CRLY_BRKT)) {
+            return function(scope);
+        } else if (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+            tokenStream.nextToken();
+            return subSequence(scope);
+        } else if (tokenStream.check(Token.Type.IF) || tokenStream.check(Token.Type.IFNOT)) {
+            tokenStream.nextToken();
+            return cond(scope);
+        } else if (tokenStream.check(Token.Type.WHILE) || tokenStream.check(Token.Type.WHILENOT)) {
+            tokenStream.nextToken();
+            return loop(scope);
+        } else if (tokenStream.check(Token.Type.PRINT) || tokenStream.check(Token.Type.PRINTLN)) {
+            tokenStream.nextToken();
+            return print(scope);
+        } else {
+            throw new RuntimeException("Wrong token");
+        }
+    }
+
+    private Expr subSequence(Scope scope) throws IOException {
+        Expr expr = sequence(scope);
+        if(tokenStream.check(Token.Type.CLS_RND_BRACKET)){
+            tokenStream.nextToken();
+            return expr;
+        }
+        else{
+            throw new RuntimeException("Wrong token");
+        }
+    }
+
+    private Expr not(Expr expr){
+        return new UnaryExpr(Token.Type.NOT, expr);
+    }
+
+    private Expr cond(Scope scope) throws IOException {
+        Expr exprBody;
+        Expr exprElse = Nil;
+        Token.Type ifcond = tokenStream.getToken().type();
+        Expr exprEval = sequence(scope);
+        exprEval = (ifcond == Token.Type.IFNOT ? not(exprEval) : exprEval);
+        if(tokenStream.check(Token.Type.THEN)){
+            tokenStream.nextToken();
+            exprBody = sequence(scope);
+            if(tokenStream.check(Token.Type.ELSE)){
+                tokenStream.nextToken();
+                exprElse = sequence(scope);
+            }
+            if(tokenStream.check(Token.Type.FI)){
+                tokenStream.nextToken();
+                return new IfExpr(exprEval, exprBody, exprElse);
+            }
+            else{
+                throw new RuntimeException("Wrong token");
+            }
+
+        }
+        else{
+            throw new RuntimeException("Wrong token");
+        }
+
+    }
+
+    private Expr loop(Scope scope) {
+        return null;
+    }
+
+    private Expr print(Scope scope) {
+        return null;
     }
 
 

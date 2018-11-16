@@ -9,6 +9,9 @@ public class NumVal extends Val {
 
 	private BigDecimal num;
 
+	public NumVal(BigDecimal num){
+		this.num = num;
+	}
 	public NumVal(int num){
 		this.num = BigDecimal.valueOf(num);
 	}
