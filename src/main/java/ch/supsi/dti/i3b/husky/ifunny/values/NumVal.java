@@ -17,6 +17,16 @@ public class NumVal extends Val {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof NumVal)){
+			return false;
+		}
+
+		NumVal numVal = (NumVal) obj;
+		return numVal.num.equals(num);
+	}
+
+	@Override
 	public Object getValue() {
 		return null;
 	}

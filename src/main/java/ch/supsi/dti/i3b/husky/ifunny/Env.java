@@ -11,6 +11,10 @@ public class Env {
 		this.frame = frame;
 	}
 
+	public Env(){
+
+	}
+
 	public Env(Env parentEnv){
 		this.parentEnv = parentEnv;
 	}

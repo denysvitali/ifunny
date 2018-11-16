@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunExpr extends Expr {
-	private Scope scope;
 	private List<String> params;
 	private List<String> locals;
 	private Expr body;
@@ -23,9 +22,12 @@ public class FunExpr extends Expr {
 	public List<String> params() {
 		return params;
 	}
-
 	public List<String> locals() {
 		return locals;
+	}
+
+	public Expr body(){
+		return body;
 	}
 
 	@Override

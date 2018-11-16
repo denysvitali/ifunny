@@ -9,11 +9,17 @@ public class Frame {
 	private HashMap<String, Val> bindings = new HashMap<>();
 
 	public Frame(List<String> params, List<String> locals, List<Val> argVals) {
-		for(int i=0; i<= params.size(); i++){
+		if(params.size() != argVals.size()){
+			throw new RuntimeException(
+					String.format("Invalid number of parameters: %d required, %d given",
+					params.size(), argVals.size()));
+		}
+
+		for(int i=0; i< params.size(); i++){
 			bindings.put(params.get(i), argVals.get(i));
 		}
 
-		for(int i=0; i<=locals.size(); i++){
+		for(int i=0; i<locals.size(); i++){
 			bindings.put(locals.get(i), Nil);
 		}
 	}

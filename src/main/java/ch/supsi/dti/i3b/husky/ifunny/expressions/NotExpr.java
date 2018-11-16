@@ -13,7 +13,7 @@ public class NotExpr extends Expr {
 
 	@Override
 	public Val eval(Env env) {
-		if(origExpr.eval(env).getValue().equals(true)){
+		if(origExpr.eval(env).bool()){
 			return new BoolVal(false);
 		}
 		return new BoolVal(true);
