@@ -1,6 +1,6 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
-import java.util.HashMap;
+import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
 public class Env {
 	private Env parentEnv;

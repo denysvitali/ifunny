@@ -57,7 +57,7 @@ class Tokenizer {
 			return;
 		}
 		currentChar = r.read();
-		while (Character.isWhitespace(currentChar)) {
+		while (Character.isWhitespace(currentChar) || currentChar == '\n' || currentChar == '\r') {
 			currentChar = r.read();
 		}
 
@@ -243,15 +243,18 @@ class Tokenizer {
 		stringBuilder.setLength(0);
 		while (Character.isJavaIdentifierPart(currentChar)) {
 			stringBuilder.append(currentChar);
-			currentChar = r.read();
 
 			if (mapKeyWord.containsKey(stringBuilder.toString())) {
 				if (!Character.isJavaIdentifierPart(peekChar())) {
+
 					token = new Token(mapKeyWord.get(stringBuilder.toString()));
 					return;
 				}
 			}
+			r.mark(1);
+			currentChar = r.read();
 		}
+		r.reset();
 		if (stringBuilder.length() != 0) {
 			token = new Token(Token.Type.ID, stringBuilder.toString());
 		}

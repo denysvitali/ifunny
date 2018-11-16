@@ -1,7 +1,5 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
-import ch.supsi.dti.i3b.husky.ifunny.Val;
-
 public class NilVal extends Val {
 	public static final NilVal Nil = new NilVal();
 

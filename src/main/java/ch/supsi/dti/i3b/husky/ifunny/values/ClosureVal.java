@@ -2,11 +2,7 @@ package ch.supsi.dti.i3b.husky.ifunny.values;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
 import ch.supsi.dti.i3b.husky.ifunny.Frame;
-import ch.supsi.dti.i3b.husky.ifunny.Val;
-import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
-import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
-import ch.supsi.dti.i3b.husky.ifunny.values.StringVal;
 
 import java.util.List;
 

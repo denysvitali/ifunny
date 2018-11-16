@@ -1,6 +1,7 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
 import ch.supsi.dti.i3b.husky.ifunny.expressions.Expr;
+import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
 import java.util.List;
 import java.util.stream.Collectors;

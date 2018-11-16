@@ -1,10 +1,7 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
 import ch.supsi.dti.i3b.husky.ifunny.expressions.*;
-import ch.supsi.dti.i3b.husky.ifunny.values.BoolVal;
-import ch.supsi.dti.i3b.husky.ifunny.values.NilVal;
-import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
-import ch.supsi.dti.i3b.husky.ifunny.values.StringVal;
+import ch.supsi.dti.i3b.husky.ifunny.values.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,13 +100,46 @@ public class Parser {
     }
 
     private Expr optAssignment(Scope scope) throws IOException {
-        //Chiedere per come riconoscere la presenza di assignment
-        return assignment(scope);
+        if (isStartOfAssignm()){
+            return assignment(scope);
+        }
+        else{
+            return null;
+        }
     }
+
+    private boolean isStartOfAssignm() {
+        switch (tokenStream.getToken().type()){
+            case ID:
+            case NUM:
+            case NIL:
+            case STRING:
+            case TRUE:
+            case FALSE:
+            case OPN_CRLY_BRKT:
+            case OPN_RND_BRACKET:
+            case IF:
+            case IFNOT:
+            case WHILE:
+            case WHILENOT:
+            case PRINT:
+            case PRINTLN:
+            case SUM:
+            case SUB:
+            case NOT:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private Expr assignment(Scope scope) throws IOException {
 
         if(tokenStream.check(Token.Type.ID)) {
             String id = tokenStream.getToken().getStr();
+            if(!scope.containsId(id)){
+                throw new RuntimeException("Id not in the scope");
+            }
             tokenStream.nextToken();
             if (tokenStream.check(Token.Type.ASSIGNM)
                     || tokenStream.check(Token.Type.ASSIGNMSUM)
@@ -219,14 +249,13 @@ public class Parser {
 
         while (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
             tokenStream.nextToken();
-            Expr seqExpr = sequence(scope);
-            listArgs.add(seqExpr);
+            listArgs.add(sequence(scope));
             while (tokenStream.check(Token.Type.COMMA)) {
                 tokenStream.nextToken();
                 listArgs.add(sequence(scope));
             }
             if(tokenStream.check(Token.Type.CLS_RND_BRACKET)){
-                return new InvokeExpr(expr, new ExprList(listArgs));
+                expr = new InvokeExpr(expr, new ExprList(listArgs));
             }
             else{
                 throw new RuntimeException("Wrong token");
@@ -240,38 +269,47 @@ public class Parser {
     private Expr primary(Scope scope) throws IOException {
 
         if (tokenStream.check(Token.Type.NUM)) {
+
             Val val = new NumVal(tokenStream.getToken().getNum());
             tokenStream.nextToken();
             return val;
         } else if (tokenStream.check(Token.Type.TRUE)) {
+
             tokenStream.nextToken();
             return new BoolVal(true);
         } else if (tokenStream.check(Token.Type.FALSE)) {
+
             tokenStream.nextToken();
             return new BoolVal(false);
         } else if (tokenStream.check(Token.Type.NIL)) {
+
             tokenStream.nextToken();
             return new NilVal();
         } else if (tokenStream.check(Token.Type.STRING)) {
+
             String str = tokenStream.getToken().getStr();
             tokenStream.nextToken();
             return new StringVal(str);
         } else if (tokenStream.check(Token.Type.ID)) {
+
             String str = tokenStream.getToken().getStr();
             tokenStream.nextToken();
             return new GetVarExpr(str);
         } else if (tokenStream.check(Token.Type.OPN_CRLY_BRKT)) {
+
             return function(scope);
         } else if (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+
             tokenStream.nextToken();
             return subSequence(scope);
         } else if (tokenStream.check(Token.Type.IF) || tokenStream.check(Token.Type.IFNOT)) {
-            tokenStream.nextToken();
+
             return cond(scope);
         } else if (tokenStream.check(Token.Type.WHILE) || tokenStream.check(Token.Type.WHILENOT)) {
-            tokenStream.nextToken();
+
             return loop(scope);
         } else if (tokenStream.check(Token.Type.PRINT) || tokenStream.check(Token.Type.PRINTLN)) {
+
             tokenStream.nextToken();
             return print(scope);
         } else {
@@ -298,6 +336,7 @@ public class Parser {
         Expr exprBody;
         Expr exprElse = Nil;
         Token.Type ifcond = tokenStream.getToken().type();
+        tokenStream.nextToken();
         Expr exprEval = sequence(scope);
         exprEval = (ifcond == Token.Type.IFNOT ? not(exprEval) : exprEval);
         if(tokenStream.check(Token.Type.THEN)){
@@ -322,12 +361,42 @@ public class Parser {
 
     }
 
-    private Expr loop(Scope scope) {
-        return null;
+    private Expr loop(Scope scope) throws IOException {
+        Expr exprBody = Nil;
+        Token.Type ifcond = tokenStream.getToken().type();
+        tokenStream.nextToken();
+        Expr exprEval = sequence(scope);
+        exprEval = (ifcond == Token.Type.WHILENOT ? not(exprEval) : exprEval);
+        if(tokenStream.check(Token.Type.DO)){
+            tokenStream.nextToken();
+            exprBody = sequence(scope);
+            if(!tokenStream.check(Token.Type.OD)){
+                throw new RuntimeException("Wrong token");
+            }
+            tokenStream.nextToken();
+        }
+        return new WhileExpr(exprEval, exprBody);
     }
 
-    private Expr print(Scope scope) {
-        return null;
+    private Expr print(Scope scope) throws IOException {
+        ArrayList<Expr> listArgs = new ArrayList<>();
+        if (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+            tokenStream.nextToken();
+            listArgs.add(sequence(scope));
+            while (tokenStream.check(Token.Type.COMMA)) {
+                tokenStream.nextToken();
+                listArgs.add(sequence(scope));
+            }
+            if (tokenStream.check(Token.Type.CLS_RND_BRACKET)) {
+                tokenStream.nextToken();
+                return new PrintExpr(new ExprList(listArgs));
+            } else {
+                throw new RuntimeException("Wrong token");
+            }
+        }
+        else{
+            throw new RuntimeException("Wrong token");
+        }
     }
 
 

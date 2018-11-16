@@ -1,8 +1,5 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
-import ch.supsi.dti.i3b.husky.ifunny.Val;
-import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
-
 public class StringVal extends Val {
 	private String val = "";
 

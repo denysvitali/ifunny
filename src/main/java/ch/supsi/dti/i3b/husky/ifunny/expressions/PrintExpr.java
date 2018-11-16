@@ -1,14 +1,15 @@
 package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
+import ch.supsi.dti.i3b.husky.ifunny.ExprList;
 import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
-public class GetVarExpr extends Expr {
+public class PrintExpr extends Expr {
 
-    private String idVal;
+    private ExprList args;
 
-    public GetVarExpr(String idVal) {
-        this.idVal = idVal;
+    public PrintExpr(ExprList args) {
+        this.args = args;
     }
 
     @Override

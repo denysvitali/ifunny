@@ -1,11 +1,8 @@
-package ch.supsi.dti.i3b.husky.ifunny;
+package ch.supsi.dti.i3b.husky.ifunny.values;
 
+import ch.supsi.dti.i3b.husky.ifunny.Env;
 import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.Expr;
-import ch.supsi.dti.i3b.husky.ifunny.values.ClosureVal;
-import ch.supsi.dti.i3b.husky.ifunny.values.NilVal;
-import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
-import ch.supsi.dti.i3b.husky.ifunny.values.StringVal;
 
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 

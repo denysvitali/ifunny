@@ -2,11 +2,11 @@ package ch.supsi.dti.i3b.husky.ifunny;
 
 import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
 import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
+import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

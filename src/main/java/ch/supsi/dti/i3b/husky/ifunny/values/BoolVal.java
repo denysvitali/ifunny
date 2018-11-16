@@ -1,7 +1,5 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
-import ch.supsi.dti.i3b.husky.ifunny.Val;
-
 public class BoolVal extends Val {
 
 	private boolean value;
