@@ -7,13 +7,11 @@ import ch.supsi.dti.i3b.husky.ifunny.Val;
 import java.util.ArrayList;
 
 public class FunExpr extends Expr {
-	private ArrayList<String> params;
-	private ArrayList<String> locals;
+	private Scope scope;
 	private Expr body;
 
 	public FunExpr(ArrayList<String> params, ArrayList<String> locals, Expr body) {
-		this.params = params;
-		this.locals = locals;
+		this.scope = new Scope(null, params, locals);
 		this.body = body;
 	}
 

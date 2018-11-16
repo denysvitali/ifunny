@@ -11,7 +11,7 @@ public class Scope {
 	Scope(){
 
 	}
-	Scope(Scope parent, ArrayList<String> param, ArrayList<String> locals) {
+	public Scope(Scope parent, ArrayList<String> param, ArrayList<String> locals) {
 		this.parent = parent;
 		vars = param;
 		vars.addAll(locals);

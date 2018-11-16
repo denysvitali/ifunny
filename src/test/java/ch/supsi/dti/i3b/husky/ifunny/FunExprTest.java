@@ -24,6 +24,6 @@ public class FunExprTest {
 		assertEquals(2, funExpr.eval(new Env()).getValue());
 
 		params.add("lorem");
-//		assertThrows(RuntimeException.class, () -> new FunExpr(params, locals, new Val(2)));
+		assertThrows(RuntimeException.class, () -> new FunExpr(params, locals, new Val(2)));
 	}
 }
