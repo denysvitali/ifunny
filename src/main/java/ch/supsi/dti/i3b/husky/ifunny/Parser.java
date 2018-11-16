@@ -118,7 +118,7 @@ public class Parser {
                 return new AssignmExpr(id, token.type(), assignment(scope));
             }
             else{
-                //TODO: get previous token
+                tokenStream.revertToken();
             }
         }
         return logicalOr(scope);

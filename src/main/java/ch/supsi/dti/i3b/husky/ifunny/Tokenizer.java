@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 class Tokenizer {
-	private Token prevToken = null;
+	private Token prevToken;
 	private Token token;
+	private Token nextToken;
 	private Reader r;
 	private int currentChar;
 	private StringBuilder stringBuilder = new StringBuilder();
@@ -49,6 +50,12 @@ class Tokenizer {
 
 	public void nextToken() throws IOException {
 
+		prevToken = token;
+		if(nextToken != null){
+			token = nextToken;
+			nextToken = null;
+			return;
+		}
 		currentChar = r.read();
 		while (Character.isWhitespace(currentChar)) {
 			currentChar = r.read();
@@ -190,11 +197,20 @@ class Tokenizer {
 		}
 	}
 
+	public void revertToken(){
+		if(prevToken == null) {
+			throw new RuntimeException("Cannot revert token");
+		}
+
+		nextToken = token;
+		token = prevToken;
+		prevToken = null;
+	}
 	public Token getToken(){
 		return token;
 	}
+
 	public Token getNextToken() throws IOException {
-		prevToken = token;
 		nextToken();
 		return token;
 	}
