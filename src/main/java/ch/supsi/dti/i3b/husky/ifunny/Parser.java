@@ -175,10 +175,10 @@ public class Parser {
     private Expr add(Scope scope) throws IOException {
 
         Expr expr = mult(scope);
-        if(tokenStream.check(Token.Type.SUM) || tokenStream.check(Token.Type.SUB)){
+        while(tokenStream.check(Token.Type.SUM) || tokenStream.check(Token.Type.SUB)){
             Token token = tokenStream.getToken();
             tokenStream.nextToken();
-            return new BinaryExpr(expr, token.type(), mult(scope));
+            expr = new BinaryExpr(expr, token.type(), mult(scope));
         }
         return expr;
     }
@@ -186,12 +186,12 @@ public class Parser {
     private Expr mult(Scope scope) throws IOException {
 
         Expr expr = unary(scope);
-        if(tokenStream.check(Token.Type.MULT)
+        while(tokenStream.check(Token.Type.MULT)
                 || tokenStream.check(Token.Type.DIV)
                 || tokenStream.check(Token.Type.MOD)){
             Token token = tokenStream.getToken();
             tokenStream.nextToken();
-            return new BinaryExpr(expr, token.type(), unary(scope));
+            expr = new BinaryExpr(expr, token.type(), unary(scope));
         }
         return expr;
     }
@@ -212,26 +212,25 @@ public class Parser {
 
         Expr expr = primary(scope);
         ArrayList<Expr> listArgs = new ArrayList<>();
-        if(tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
-            while (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+
+        while (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+            tokenStream.nextToken();
+            Expr seqExpr = sequence(scope);
+            listArgs.add(seqExpr);
+            while (tokenStream.check(Token.Type.COMMA)) {
                 tokenStream.nextToken();
-                Expr seqExpr = sequence(scope)
-                listArgs.add(seqExpr);
-                while (tokenStream.check(Token.Type.COMMA)) {
-                    tokenStream.nextToken();
-                    listArgs.add(sequence(scope));
-                }
-                if(tokenStream.check(Token.Type.CLS_RND_BRACKET)){
-                    return new InvokeExpr(expr, listArgs);
-                }
-                else{
-                    throw new RuntimeException("Wrong token");
-                }
+                listArgs.add(sequence(scope));
+            }
+            if(tokenStream.check(Token.Type.CLS_RND_BRACKET)){
+                return new InvokeExpr(expr, new ExprList(listArgs));
+            }
+            else{
+                throw new RuntimeException("Wrong token");
             }
         }
-        else{
-            return expr;
-        }
+
+        return expr;
+
     }
 
     private Expr primary(Scope scope) {
