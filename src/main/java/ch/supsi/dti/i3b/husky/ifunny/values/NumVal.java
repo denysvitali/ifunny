@@ -1,9 +1,17 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
 import ch.supsi.dti.i3b.husky.ifunny.Val;
+import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
 
-public class NilVal extends Val {
-	public static final NilVal Nil = new NilVal();
+import java.math.BigDecimal;
+
+public class NumVal extends Val {
+
+	private BigDecimal num;
+
+	public NumVal(int num){
+		this.num = BigDecimal.valueOf(num);
+	}
 
 	@Override
 	public Object getValue() {
@@ -12,22 +20,22 @@ public class NilVal extends Val {
 
 	@Override
 	public Val sub(Val rval) {
-		return Nil;
+		return null;
 	}
 
 	@Override
 	public Val sum(Val rval) {
-		return Nil;
+		return null;
 	}
 
 	@Override
 	public Val div(Val rval) {
-		return Nil;
+		return null;
 	}
 
 	@Override
 	public Val mult(Val rval) {
-		return Nil;
+		return null;
 	}
 
 	@Override
@@ -62,21 +70,21 @@ public class NilVal extends Val {
 
 	@Override
 	public boolean bool() {
-		return false;
+		throw new InvalidTypeException("Not a bool.");
 	}
 
 	@Override
 	public NumVal num() {
-		return null;
+		return this;
 	}
 
 	@Override
 	public StringVal string() {
-		return null;
+		throw new InvalidTypeException("Not a string.");
 	}
 
 	@Override
 	public ClosureVal checkClosure() {
-		return null;
+		throw new InvalidTypeException("Not a closure.");
 	}
 }

@@ -4,10 +4,11 @@ import java.util.HashMap;
 
 public class Env {
 	private Env parentEnv;
-	private HashMap<String, Val> variables;
+	private Frame frame;
 
-	public Env(){
-
+	public Env(Env env, Frame frame){
+		this.parentEnv = env;
+		this.frame = frame;
 	}
 
 	public Env(Env parentEnv){
@@ -15,7 +16,7 @@ public class Env {
 	}
 
 	private boolean hasId(String id){
-		return variables.containsKey(id);
+		return frame.contains(id);
 	}
 
 	private Env getParent(){
@@ -24,7 +25,7 @@ public class Env {
 
 	Val getVal(String id){
 		if(hasId(id)){
-			return variables.get(id);
+			return frame.getVal(id);
 		}
 
 		Env parent = parentEnv;
@@ -40,5 +41,11 @@ public class Env {
 
 	public Env getParentEnv() {
 		return parentEnv;
+	}
+
+	@Override
+	public String toString() {
+		return (parentEnv != null ? parentEnv.toString() + "\n" : "") +
+				frame.toString();
 	}
 }

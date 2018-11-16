@@ -2,6 +2,7 @@ package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
 import ch.supsi.dti.i3b.husky.ifunny.Val;
+import ch.supsi.dti.i3b.husky.ifunny.values.BoolVal;
 
 public class NotExpr extends Expr {
 	private Expr origExpr;
@@ -13,8 +14,8 @@ public class NotExpr extends Expr {
 	@Override
 	public Val eval(Env env) {
 		if(origExpr.eval(env).getValue().equals(true)){
-			return new Val(false);
+			return new BoolVal(false);
 		}
-		return new Val(true);
+		return new BoolVal(true);
 	}
 }

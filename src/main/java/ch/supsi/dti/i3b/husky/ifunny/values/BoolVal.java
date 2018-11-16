@@ -1,9 +1,15 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
 import ch.supsi.dti.i3b.husky.ifunny.Val;
+import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
 
-public class NilVal extends Val {
-	public static final NilVal Nil = new NilVal();
+public class BoolVal extends Val {
+
+	private boolean value;
+
+	public BoolVal(boolean value){
+		this.value = value;
+	}
 
 	@Override
 	public Object getValue() {
@@ -12,22 +18,22 @@ public class NilVal extends Val {
 
 	@Override
 	public Val sub(Val rval) {
-		return Nil;
+		return null;
 	}
 
 	@Override
 	public Val sum(Val rval) {
-		return Nil;
+		return null;
 	}
 
 	@Override
 	public Val div(Val rval) {
-		return Nil;
+		return null;
 	}
 
 	@Override
 	public Val mult(Val rval) {
-		return Nil;
+		return null;
 	}
 
 	@Override
@@ -62,21 +68,11 @@ public class NilVal extends Val {
 
 	@Override
 	public boolean bool() {
-		return false;
+		return this.value;
 	}
 
 	@Override
-	public NumVal num() {
-		return null;
-	}
-
-	@Override
-	public StringVal string() {
-		return null;
-	}
-
-	@Override
-	public ClosureVal checkClosure() {
-		return null;
+	public boolean isBool() {
+		return true;
 	}
 }

@@ -1,6 +1,7 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
 import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
+import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ public class FunExprTest {
 		params.add("sit");
 		params.add("amet");
 
-		FunExpr funExpr = new FunExpr(params, locals, new Val(2));
-		assertEquals(2, funExpr.eval(new Env()).getValue());
+		FunExpr funExpr = new FunExpr(params, locals, new NumVal(2));
+		assertEquals(2, funExpr.eval(new Env(null)));
 
 		params.add("lorem");
-		assertThrows(RuntimeException.class, () -> new FunExpr(params, locals, new Val(2)));
+		assertThrows(RuntimeException.class, () -> new FunExpr(params, locals, new NumVal(2)));
 	}
 }
