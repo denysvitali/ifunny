@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class Tokenizer {
+	private Token prevToken = null;
 	private Token token;
 	private Reader r;
 	private int currentChar;
@@ -36,7 +37,6 @@ class Tokenizer {
 
 
 	private int peekChar() throws IOException {
-
 		r.mark(1);
 		int c = r.read();
 		r.reset();
@@ -194,8 +194,13 @@ class Tokenizer {
 		return token;
 	}
 	public Token getNextToken() throws IOException {
+		prevToken = token;
 		nextToken();
 		return token;
+	}
+
+	public Token getPrevToken() {
+		return prevToken;
 	}
 
 	private void commentLine() throws IOException {
