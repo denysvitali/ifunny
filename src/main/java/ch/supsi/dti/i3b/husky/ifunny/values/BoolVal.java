@@ -1,7 +1,6 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
 import ch.supsi.dti.i3b.husky.ifunny.Val;
-import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
 
 public class BoolVal extends Val {
 
@@ -9,6 +8,16 @@ public class BoolVal extends Val {
 
 	public BoolVal(boolean value){
 		this.value = value;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof BoolVal)){
+			return false;
+		}
+
+		BoolVal b = (BoolVal) obj;
+		return b.value == this.value;
 	}
 
 	@Override

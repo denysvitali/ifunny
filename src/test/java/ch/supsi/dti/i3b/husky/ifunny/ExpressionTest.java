@@ -9,6 +9,7 @@ import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +18,7 @@ class ExpressionTest {
 	@Test
 	void testNotExpr(){
 		NotExpr notExpr = new NotExpr(new BoolVal(true));
-		assertEquals(notExpr.eval(new Env(null)).getValue(), false);
+		assertEquals(new BoolVal(false), notExpr.eval(new Env(null)));
 	}
 
 	@Test
@@ -28,7 +29,7 @@ class ExpressionTest {
 				new NumVal(2)
 		);
 
-		assertEquals(1, ifExpr.eval(new Env(null)).getValue());
+		assertEquals(new NumVal(1), ifExpr.eval(new Env(null)));
 
 		ifExpr = new IfExpr(
 				new BoolVal(false),
@@ -36,7 +37,7 @@ class ExpressionTest {
 				new NumVal(2)
 		);
 
-		assertEquals(2, ifExpr.eval(new Env(null)).getValue());
+		assertEquals(new NumVal(2), ifExpr.eval(new Env(null)));
 	}
 
 	@Test
@@ -44,7 +45,14 @@ class ExpressionTest {
 		FunExpr funExpr = new FunExpr(new ArrayList<>(),
 				new ArrayList<>(),
 				new NumVal(42));
-		assertEquals(42, funExpr.eval(new Env(null)).getValue());
+		ArrayList<Val> argList = new ArrayList<>();
+		Env emptyEnv = new Env();
+		assertEquals(new NumVal(42),
+				funExpr
+						.eval(emptyEnv)
+						.checkClosure()
+						.apply(argList)
+						.eval(emptyEnv));
 	}
 
 	@Test
@@ -55,6 +63,6 @@ class ExpressionTest {
 				Nil
 		);
 
-		assertEquals(ifExpr.eval(new Env(null)).getValue(), 5);
+		assertEquals(new NumVal(5), ifExpr.eval(new Env(null)));
 	}
 }
