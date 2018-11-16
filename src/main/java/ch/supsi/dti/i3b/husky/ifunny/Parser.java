@@ -52,7 +52,7 @@ public class Parser {
         ArrayList<String> listParams = new ArrayList<>();
         if(tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
             tokenStream.nextToken();
-            listParams = optId();
+            listParams = optIds();
             if(!tokenStream.check(Token.Type.CLS_RND_BRACKET)) {
                 throw new RuntimeException("Wrong token");
             }
@@ -62,10 +62,10 @@ public class Parser {
     }
 
     private ArrayList<String> optLocals() throws IOException {
-        return optId();
+        return optIds();
     }
 
-    private ArrayList<String> optId() throws IOException {
+    private ArrayList<String> optIds() throws IOException {
         ArrayList<String> listId = new ArrayList<>();
         while(tokenStream.check(Token.Type.ID)){
             listId.add(tokenStream.getToken().getStr());
@@ -118,12 +118,11 @@ public class Parser {
                 return new AssignmExpr(id, token.type(), assignment(scope));
             }
             else{
-                throw new RuntimeException("Wrong token");
+                //TODO: get previous token
             }
         }
-        else{
-            return logicalOr(scope);
-        }
+        return logicalOr(scope);
+
     }
 
     private Expr logicalOr(Scope scope) throws IOException {
@@ -209,7 +208,33 @@ public class Parser {
         return postFix(scope);
     }
 
-    private Expr postFix(Scope scope) {
+    private Expr postFix(Scope scope) throws IOException {
+
+        Expr expr = primary(scope);
+        ArrayList<Expr> listArgs = new ArrayList<>();
+        if(tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+            while (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+                tokenStream.nextToken();
+                Expr seqExpr = sequence(scope)
+                listArgs.add(seqExpr);
+                while (tokenStream.check(Token.Type.COMMA)) {
+                    tokenStream.nextToken();
+                    listArgs.add(sequence(scope));
+                }
+                if(tokenStream.check(Token.Type.CLS_RND_BRACKET)){
+                    return new InvokeExpr(expr, listArgs);
+                }
+                else{
+                    throw new RuntimeException("Wrong token");
+                }
+            }
+        }
+        else{
+            return expr;
+        }
+    }
+
+    private Expr primary(Scope scope) {
         return Nil;
     }
 
