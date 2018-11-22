@@ -242,7 +242,7 @@ class Tokenizer {
 		}
 		stringBuilder.setLength(0);
 		while (Character.isJavaIdentifierPart(currentChar)) {
-			stringBuilder.append(currentChar);
+			stringBuilder.append(Character.valueOf((char)currentChar));
 
 			if (mapKeyWord.containsKey(stringBuilder.toString())) {
 				if (!Character.isJavaIdentifierPart(peekChar())) {
@@ -273,12 +273,43 @@ class Tokenizer {
             1.0E+10
          */
 
-		stringBuilder.setLength(0);
+        boolean once = true;
+        if(isNumber(currentChar)) {
+			stringBuilder.setLength(0);
+			while (isNumber(currentChar)) {
+				stringBuilder.append(currentChar - '0');
+				r.mark(1);
+				currentChar = r.read();
+				if (isNumericComma(currentChar) && once) {
+					once = false;
+					r.mark(1);
+					currentChar = r.read();
+					stringBuilder.append(".");
+				}
+			}
+			if (currentChar == 'E' || currentChar == 'e') {
+				stringBuilder.append((char) currentChar);
+				currentChar = r.read();
+				if (isSign(currentChar)) {
+					stringBuilder.append((char) currentChar);
+					currentChar = r.read();
+				}
+				while (isNumber(currentChar)) {
+					stringBuilder.append(currentChar - '0');
+					r.mark(1);
+					currentChar = r.read();
+				}
+			}
+			r.reset();
+			if (stringBuilder.length() != 0) {
+				token = new Token(new BigDecimal(stringBuilder.toString()));
+			}
+		}
+	/*	stringBuilder.setLength(0);
 		if (isSign(currentChar)) {
 			stringBuilder.append((char) currentChar);
 			currentChar = r.read();
 		}
-
 		while (isNumber(currentChar)) {
 			stringBuilder.append(currentChar - '0');
 			currentChar = r.read();
@@ -296,6 +327,7 @@ class Tokenizer {
 		r.mark(1);
 
 		// EXP
+		int savedCurrentChar = currentChar;
 		if (currentChar == 'E' || currentChar == 'e') {
 			stringBuilder.append((char) currentChar);
 			currentChar = r.read();
@@ -308,6 +340,8 @@ class Tokenizer {
 				}
 			} else {
 				r.reset();
+				currentChar=savedCurrentChar;
+				stringBuilder.setLength(0);
 			}
 		} else {
 			r.reset();
@@ -316,7 +350,7 @@ class Tokenizer {
 
 		if (stringBuilder.length() != 0) {
 			token = new Token(new BigDecimal(stringBuilder.toString()));
-		}
+		}*/
 	}
 
 	private boolean isSign(int currentChar) {

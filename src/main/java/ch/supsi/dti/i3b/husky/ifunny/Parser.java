@@ -141,6 +141,7 @@ public class Parser {
                 throw new RuntimeException("Id not in the scope");
             }
             tokenStream.nextToken();
+
             if (tokenStream.check(Token.Type.ASSIGNM)
                     || tokenStream.check(Token.Type.ASSIGNMSUM)
                     || tokenStream.check(Token.Type.ASSIGNMSUB)
@@ -255,6 +256,7 @@ public class Parser {
                 listArgs.add(sequence(scope));
             }
             if(tokenStream.check(Token.Type.CLS_RND_BRACKET)){
+                tokenStream.nextToken();
                 expr = new InvokeExpr(expr, new ExprList(listArgs));
             }
             else{
