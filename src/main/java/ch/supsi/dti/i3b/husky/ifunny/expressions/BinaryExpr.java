@@ -18,6 +18,18 @@ public class BinaryExpr extends Expr {
         this.lastExpr = lastExpr;
     }
 
+    public Expr getFirstExpr() {
+        return firstExpr;
+    }
+
+    public Token.Type getBinaryType() {
+        return binaryType;
+    }
+
+    public Expr getLastExpr() {
+        return lastExpr;
+    }
+
     @Override
     public Val eval(Env env) {
         Val lval = firstExpr.eval(env);

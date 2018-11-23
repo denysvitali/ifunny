@@ -11,6 +11,10 @@ public class GetVarExpr extends Expr {
         this.idVal = idVal;
     }
 
+    public String getIdVal() {
+        return idVal;
+    }
+
     @Override
     public Val eval(Env env) {
         return null;

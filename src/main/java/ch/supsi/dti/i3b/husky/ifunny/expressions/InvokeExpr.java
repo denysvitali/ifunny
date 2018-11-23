@@ -14,6 +14,14 @@ public class InvokeExpr extends Expr {
 		this.args = args;
 	}
 
+	public Expr getExpr() {
+		return expr;
+	}
+
+	public ExprList getArgs() {
+		return args;
+	}
+
 	@Override
 	public Val eval(Env env) {
 		return expr.eval(env).checkClosure().apply(args.eval(env));
