@@ -3,6 +3,7 @@ package ch.supsi.dti.i3b.husky.ifunny;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.AssignmExpr;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.SequenceExpr;
+import ch.supsi.dti.i3b.husky.ifunny.values.NilVal;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -27,8 +28,8 @@ public class ParserTest {
 		Parser parser = new Parser(tokenizer);
 		FunExpr fun = parser.parse();
 		assertNotEquals(null, fun.params());
-		assertEquals(1, fun.params().size());
-		assertEquals("fib", fun.params().get(0));
+		assertEquals(0, fun.params().size());
+		assertEquals("fib", fun.locals().get(0));
 
 		assertEquals(SequenceExpr.class, fun.body().getClass());
 		SequenceExpr sexpr = (SequenceExpr) fun.body();
@@ -41,5 +42,23 @@ public class ParserTest {
 
 		// SubExpr
 		// TODO: Continue
+	}
+	@Test
+	public void function() throws IOException {
+		Reader areader = new StringReader("{->}");
+		Tokenizer tokenizer = new Tokenizer(areader);
+		Parser parser = new Parser(tokenizer);
+		FunExpr fun = parser.parse();
+		assertEquals(0, fun.params().size());
+		assertEquals(0, fun.locals().size());
+		assertEquals(NilVal.class, fun.body().getClass());
+
+		areader = new StringReader("{(n)x->}");
+		tokenizer = new Tokenizer(areader);
+		parser = new Parser(tokenizer);
+		fun = parser.parse();
+		assertEquals("n", fun.params().get(0));
+		assertEquals("x", fun.locals().get(0));
+
 	}
 }

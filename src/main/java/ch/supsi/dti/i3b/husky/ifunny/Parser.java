@@ -31,13 +31,13 @@ public class Parser {
     private FunExpr function(Scope scope) throws IOException {
         if (tokenStream.check(Token.Type.OPN_CRLY_BRKT)) {
             tokenStream.nextToken();
-            ArrayList<String> param = optParams();
+            ArrayList<String> params = optParams();
             ArrayList<String> locals = optLocals();
 
-            Expr seqExpr = optSequence(new Scope(scope, param, locals));
+            Expr seqExpr = optSequence(new Scope(scope, params, locals));
             if (tokenStream.check(Token.Type.CLS_CRLY_BRKT)) {
                 tokenStream.nextToken();
-                return new FunExpr(param, locals, seqExpr);
+                return new FunExpr(params, locals, seqExpr);
             }
             else {
                 throw new RuntimeException("Wrong token");
