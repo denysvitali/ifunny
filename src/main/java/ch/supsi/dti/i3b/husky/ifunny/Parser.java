@@ -34,7 +34,6 @@ public class Parser {
             ArrayList<String> param = optParams();
             ArrayList<String> locals = optLocals();
 
-            // TODO: Implement duplicate check between lists, & scope assignment.
             Expr seqExpr = optSequence(new Scope(scope, param, locals));
             if (tokenStream.check(Token.Type.CLS_CRLY_BRKT)) {
                 tokenStream.nextToken();

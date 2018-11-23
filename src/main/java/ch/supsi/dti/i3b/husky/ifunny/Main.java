@@ -1,5 +1,7 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
+import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -7,29 +9,19 @@ import java.io.StringReader;
 public class Main {
 
     public static void main(String[] args) {
-	    Reader areader = new StringReader("{average sqr abs sqrt x ->\n" +
-                "    average = {(x y) -> (x + y) / 2};\n" +
-                "    sqr = {(x) -> x * x};\n" +
-                "    abs = {(x) -> if x >= 0 then x else -x fi};\n" +
-                "    sqrt = {(x) tolerance isGoodEnough improve sqrtIter ->\n" +
-                "        tolerance = 1e-30;\n" +
-                "        \n" +
-                "        isGoodEnough = {(guess) -> abs(sqr(guess) - x) < tolerance};\n" +
-                "        improve = {(guess) -> average(guess, x / guess)};\n" +
-                "        sqrtIter = {(guess) ->\n" +
-                "            if isGoodEnough(guess) then guess else sqrtIter(improve(guess)) fi\n" +
-                "        };\n" +
-                "        sqrtIter(1)\n" +
+	    Reader areader = new StringReader("{fib ->\n" +
+                "    fib = {(n) ->\n" +
+                "        if n < 2 then n else fib(n - 1) + fib(n - 2) fi\n" +
                 "    };\n" +
-                "\n" +
-                "    x = 16;\n" +
-                "    println(\"sqrt(\", x, \"): \", sqrt(x));\n" +
+                "    \n" +
+                "    println(fib(40))\n" +
                 "}");
 
         try {
             Tokenizer tokenizer = new Tokenizer(areader);
             Parser parser = new Parser(tokenizer);
-            parser.parse();
+            FunExpr fun = parser.parse();
+            System.out.println("done");
         } catch (IOException e) {
             e.printStackTrace();
         }
