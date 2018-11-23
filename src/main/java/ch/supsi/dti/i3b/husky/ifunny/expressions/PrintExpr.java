@@ -13,6 +13,7 @@ public class PrintExpr extends Expr {
 
     public PrintExpr(ExprList args, boolean addNewline){
         this.args = args;
+        this.addNewline = addNewline;
     }
 
     public PrintExpr(ExprList args) {
@@ -38,5 +39,9 @@ public class PrintExpr extends Expr {
 
     public ExprList getArgs() {
         return args;
+    }
+
+    public boolean isAddNewline() {
+        return addNewline;
     }
 }

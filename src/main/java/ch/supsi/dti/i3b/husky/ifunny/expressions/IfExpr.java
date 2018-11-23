@@ -28,10 +28,10 @@ public class IfExpr extends Expr {
 
 	@Override
 	public Val eval(Env env) {
-		if(this.ifEvaluation.eval(env).bool()){
-			return this.ifBody.eval(env);
+		if(ifEvaluation.eval(env).bool()){
+			return ifBody.eval(env);
 		}
-		return this.elseBody.eval(env);
+		return elseBody.eval(env);
 	}
 
 }

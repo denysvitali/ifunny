@@ -19,9 +19,7 @@ import java.io.StringReader;
 import java.math.BigDecimal;
 
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
 
@@ -210,5 +208,20 @@ public class ParserTest {
 		assertEquals(StringVal.class, p1.getArgs().get(0).getClass());
 		StringVal sval = (StringVal) p1.getArgs().get(0);
 		assertEquals(expectedResult, sval.getValue());
+	}
+
+	@Test
+	void println() throws IOException {
+
+		FunExpr fun = parseString("{->println(\"ciao\")}");
+
+		assertEquals(PrintExpr.class, fun.body().getClass());
+		assertTrue(((PrintExpr)fun.body()).isAddNewline());
+
+		fun = parseString("{->print(\"ciao\")}");
+
+		assertEquals(PrintExpr.class, fun.body().getClass());
+		assertFalse(((PrintExpr)fun.body()).isAddNewline());
+
 	}
 }

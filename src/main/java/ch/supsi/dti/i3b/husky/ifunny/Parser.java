@@ -313,8 +313,6 @@ public class Parser {
 
             return loop(scope);
         } else if (tokenStream.check(Token.Type.PRINT) || tokenStream.check(Token.Type.PRINTLN)) {
-
-            tokenStream.nextToken();
             return print(scope);
         } else {
             throw new RuntimeException("Wrong token");
@@ -383,6 +381,8 @@ public class Parser {
     }
 
     private Expr print(Scope scope) throws IOException {
+        Token.Type printcond = tokenStream.getToken().type();
+        tokenStream.nextToken();
         ArrayList<Expr> listArgs = new ArrayList<>();
         if (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
             tokenStream.nextToken();
@@ -393,7 +393,7 @@ public class Parser {
             }
             if (tokenStream.check(Token.Type.CLS_RND_BRACKET)) {
                 tokenStream.nextToken();
-                return new PrintExpr(new ExprList(listArgs));
+                return(printcond == Token.Type.PRINTLN ? new PrintExpr(new ExprList(listArgs),true) : new PrintExpr(new ExprList(listArgs)));
             } else {
                 throw new RuntimeException("Wrong token");
             }
