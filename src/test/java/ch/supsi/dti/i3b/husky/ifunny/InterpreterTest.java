@@ -29,4 +29,16 @@ public class InterpreterTest {
 		closureVal.apply(new ArrayList<>()).eval(new Env());
 		assertEquals("Hello, world!\n", bos.toString());
 	}
+
+	@Test
+	public void testConditional() throws IOException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(bos));
+
+		Parser p = new Parser(getTestFile("/interpreter/t2.txt"));
+		FunExpr funExpr = p.parse();
+		ClosureVal closureVal = funExpr.eval(new Env()).checkClosure();
+		closureVal.apply(new ArrayList<>()).eval(new Env());
+		assertEquals("Hello\n", bos.toString());
+	}
 }
