@@ -16,4 +16,8 @@ public class PrintExpr extends Expr {
     public Val eval(Env env) {
         return null;
     }
+
+    public ExprList getArgs() {
+        return args;
+    }
 }
