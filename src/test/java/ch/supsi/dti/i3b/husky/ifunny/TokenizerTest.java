@@ -39,6 +39,7 @@ class TokenizerTest {
 		assertEquals(new BigDecimal("2"), dbl.getNum());
 	}
 
+	/*
 	@Test
 	void negativeIntegerTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("-2");
@@ -78,7 +79,7 @@ class TokenizerTest {
 		Token dbl = t.getToken();
 
 		assertEquals(new BigDecimal("-4.21e+10"), dbl.getNum());
-	}
+	}*/
 
 	@Test
 	void doubleTokenizer() throws IOException {

@@ -30,7 +30,7 @@ public class ClosureVal extends Val {
 	}
 
 	@Override
-	public Val eval(Env env) {
+	public Val eval(Env env){
 		return expr.body().eval(env);
 	}
 

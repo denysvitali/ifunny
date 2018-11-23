@@ -17,7 +17,19 @@ public class AssignmExpr extends Expr {
     }
 
     @Override
-    public Val eval(Env env) {
-        return null;
+    public Val eval(Env env){
+        throw new RuntimeException("Not implemented");
+    }
+
+    public String getIdVal() {
+        return idVal;
+    }
+
+    public Token.Type getAssignmType() {
+        return assignmType;
+    }
+
+    public Expr getAdditionalExpr() {
+        return additionalExpr;
     }
 }

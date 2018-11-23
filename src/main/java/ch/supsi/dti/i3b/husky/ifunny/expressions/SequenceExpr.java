@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class SequenceExpr extends Expr{
 
-    private ArrayList<Expr> listAssignment;
+    private ArrayList<Expr> expressions;
 
-    public SequenceExpr(ArrayList<Expr> listAssignment){
-        this.listAssignment = listAssignment;
+    public SequenceExpr(ArrayList<Expr> expressions){
+        this.expressions = expressions;
     }
 
     @Override
@@ -18,4 +18,7 @@ public class SequenceExpr extends Expr{
         return null;
     }
 
+    public ArrayList<Expr> getExprs() {
+        return expressions;
+    }
 }
