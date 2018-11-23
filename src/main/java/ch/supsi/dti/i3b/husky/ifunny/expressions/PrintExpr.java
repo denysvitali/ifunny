@@ -9,6 +9,11 @@ import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 public class PrintExpr extends Expr {
 
     private ExprList args;
+    private boolean addNewline = false;
+
+    public PrintExpr(ExprList args, boolean addNewline){
+        this.args = args;
+    }
 
     public PrintExpr(ExprList args) {
         this.args = args;
@@ -24,6 +29,9 @@ public class PrintExpr extends Expr {
             } else if(v.isString()){
                 System.out.print(v.string().getValue());
             }
+        }
+        if(addNewline){
+            System.out.print(System.getProperties().get("line.separator"));
         }
         return Nil;
     }
