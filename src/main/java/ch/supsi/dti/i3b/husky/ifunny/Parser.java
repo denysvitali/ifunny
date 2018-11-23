@@ -141,7 +141,7 @@ public class Parser {
         if(tokenStream.check(Token.Type.ID)) {
             String id = tokenStream.getToken().getStr();
             if(!scope.containsId(id)){
-                throw new RuntimeException("Id not in the scope");
+                throw new RuntimeException("Id \""+id+"\" not in the scope");
             }
             tokenStream.nextToken();
 

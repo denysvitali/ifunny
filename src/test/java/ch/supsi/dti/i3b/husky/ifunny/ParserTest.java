@@ -128,7 +128,7 @@ public class ParserTest {
             parseString("{a->a=b}");
 
         }catch(RuntimeException e){
-            assertEquals("Id not in the scope", e.getMessage());
+            assertEquals("Id \"b\" not in the scope", e.getMessage());
         }
 
     }
