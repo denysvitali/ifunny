@@ -12,6 +12,14 @@ public class WhileExpr extends Expr {
 		this.body = body;
 	}
 
+	public Expr getCondition() {
+		return condition;
+	}
+
+	public Expr getBody() {
+		return body;
+	}
+
 	@Override
 	public Val eval(Env env) {
 		while(this.condition.eval(env).getValue().equals(true)){

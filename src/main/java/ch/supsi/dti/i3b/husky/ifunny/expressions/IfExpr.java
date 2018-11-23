@@ -14,6 +14,18 @@ public class IfExpr extends Expr {
 		this.elseBody = elseBody;
 	}
 
+	public Expr getIfEvaluation() {
+		return ifEvaluation;
+	}
+
+	public Expr getIfBody() {
+		return ifBody;
+	}
+
+	public Expr getElseBody() {
+		return elseBody;
+	}
+
 	@Override
 	public Val eval(Env env) {
 		if(this.ifEvaluation.eval(env).bool()){
@@ -21,4 +33,5 @@ public class IfExpr extends Expr {
 		}
 		return this.elseBody.eval(env);
 	}
+
 }

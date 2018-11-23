@@ -33,11 +33,12 @@ public class Scope {
 	}
 
 	public boolean containsId(String id){
-		if(parent == null){
-			return false;
-		}
+
 		if(vars.contains(id)){
 			return true;
+		}
+		if(parent == null){
+			return false;
 		}
 		else{
 			return parent.containsId(id);
