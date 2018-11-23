@@ -74,11 +74,10 @@ public class ParserTest {
 		SequenceExpr sequenceExpr = (SequenceExpr) fun.body();
 		assertEquals(3, sequenceExpr.getExprs().size());
 
-		// TODO: Convert \\n to \n
 		ArrayList<String> expectedResults = new ArrayList<>(Arrays.asList(
-				"Hello, world!\\n",
+				"Hello, world!\n",
 				"Hi!",
-				"\\n",
+				"\n",
 				"你好"
 		));
 
@@ -108,5 +107,25 @@ public class ParserTest {
 			assertEquals(expectedResults.get(idx), sval.getValue());
 			idx++;
 		}
+	}
+
+	@Test
+	void test4() throws IOException {
+		Tokenizer tokenizer = new Tokenizer(getTestFile("t4.txt"));
+		Parser parser = new Parser(tokenizer);
+		FunExpr fun = parser.parse();
+		assertNotEquals(null, fun.params());
+		assertEquals(0, fun.params().size());
+		assertEquals(0, fun.locals().size());
+		assertEquals(PrintExpr.class, fun.body().getClass());
+
+		String expectedResult = "Hello,\n world!\n";
+		PrintExpr p1 = (PrintExpr) fun.body();
+
+		assertEquals(1, p1.getArgs().size());
+
+		assertEquals(StringVal.class, p1.getArgs().get(0).getClass());
+		StringVal sval = (StringVal) p1.getArgs().get(0);
+		assertEquals(expectedResult, sval.getValue());
 	}
 }

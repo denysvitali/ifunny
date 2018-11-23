@@ -1,15 +1,54 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringVal extends Val {
-	private String val = "";
+	private String val;
 
 	public StringVal(String s){
 		this.val = s;
 	}
 
+	public static String unescape(String val){
+		Pattern p = Pattern.compile("\\\\(.)", Pattern.MULTILINE);
+		Matcher m = p.matcher(val);
+
+		int offset = 0;
+
+		while(m.find()){
+			int start = offset + m.start();
+			int end = offset + m.end();
+
+			String v = m.group(1);
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(val, 0, start);
+			switch(v.charAt(0)){
+				case 'n':
+					sb.append("\n");
+					break;
+				case 'r':
+					sb.append("\r");
+					break;
+				case '\\':
+					sb.append("\\");
+					break;
+				default:
+					sb.append(m.group());
+			}
+			offset += start - sb.length();
+			sb.append(val.substring(end));
+			val = sb.toString();
+		}
+
+		return val;
+	}
+
 	@Override
 	public String getValue() {
-		return val;
+
+		return unescape(val);
 	}
 
 	@Override

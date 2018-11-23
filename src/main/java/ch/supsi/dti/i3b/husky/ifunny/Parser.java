@@ -287,7 +287,6 @@ public class Parser {
             tokenStream.nextToken();
             return new NilVal();
         } else if (tokenStream.check(Token.Type.STRING)) {
-
             String str = tokenStream.getToken().getStr();
             tokenStream.nextToken();
             return new StringVal(str);
