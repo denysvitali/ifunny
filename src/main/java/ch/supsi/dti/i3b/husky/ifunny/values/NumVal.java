@@ -27,7 +27,7 @@ public class NumVal extends Val {
 
 	@Override
 	public Object getValue() {
-		return null;
+		return num;
 	}
 
 	@Override
