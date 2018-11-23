@@ -13,7 +13,7 @@ public class Scope {
 	}
 	public Scope(Scope parent, ArrayList<String> params, ArrayList<String> locals) {
 		this.parent = parent;
-		vars = params;
+		vars.addAll(params);
 		vars.addAll(locals);
 		if(containsDuplicates()){
 			throw new RuntimeException("Scope: Duplicates Found");

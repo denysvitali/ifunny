@@ -14,6 +14,14 @@ public class ExprList {
         this.exprList = exprList;
     }
 
+    public Expr get(int index){
+        return exprList.get(index);
+    }
+
+    public int size(){
+        return exprList.size();
+    }
+
     public List<Val> eval(Env env){
         return exprList.stream().map((e)->e.eval(env)).collect(Collectors.toList());
     }

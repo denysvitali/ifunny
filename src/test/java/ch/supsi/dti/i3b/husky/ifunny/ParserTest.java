@@ -1,34 +1,37 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
-import ch.supsi.dti.i3b.husky.ifunny.expressions.AssignmExpr;
-import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
-import ch.supsi.dti.i3b.husky.ifunny.expressions.SequenceExpr;
+import ch.supsi.dti.i3b.husky.ifunny.expressions.*;
+import ch.supsi.dti.i3b.husky.ifunny.values.StringVal;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ParserTest {
+
+	private static Reader getTestFile(String file) throws FileNotFoundException {
+		return new BufferedReader(
+				new FileReader(
+						ParserTest.class.getResource("/parser/" + file)
+								.getFile()
+				)
+		);
+	}
+
 	@Test
 	public void test1() throws IOException {
-		Reader areader = new StringReader("{fib ->\n" +
-				"    fib = {(n) ->\n" +
-				"        if n < 2 then n else fib(n - 1) + fib(n - 2) fi\n" +
-				"    };\n" +
-				"    \n" +
-				"    println(fib(40))\n" +
-				"}");
-
-		Tokenizer tokenizer = new Tokenizer(areader);
+		Tokenizer tokenizer = new Tokenizer(getTestFile("t1.txt"));
 		Parser parser = new Parser(tokenizer);
 		FunExpr fun = parser.parse();
 		assertNotEquals(null, fun.params());
-		assertEquals(1, fun.params().size());
-		assertEquals("fib", fun.params().get(0));
+		assertEquals(0, fun.params().size());
+		assertEquals(1, fun.locals().size());
+		assertEquals("fib", fun.locals().get(0));
 
 		assertEquals(SequenceExpr.class, fun.body().getClass());
 		SequenceExpr sexpr = (SequenceExpr) fun.body();
@@ -41,5 +44,69 @@ public class ParserTest {
 
 		// SubExpr
 		// TODO: Continue
+		assertEquals(FunExpr.class, expr1.getAdditionalExpr().getClass());
+		FunExpr addExpr1 = (FunExpr) expr1.getAdditionalExpr();
+		assertEquals(0, addExpr1.locals().size());
+		assertEquals(1, addExpr1.params().size());
+		assertEquals("n", addExpr1.params().get(0));
+	}
+
+	@Test
+	void test2() throws IOException {
+		Tokenizer tokenizer = new Tokenizer(getTestFile("t2.txt"));
+		Parser parser = new Parser(tokenizer);
+		FunExpr fun = parser.parse();
+		assertNotEquals(null, fun.params());
+		assertEquals(0, fun.params().size());
+		assertEquals(1, fun.locals().size());
+		assertEquals("fib", fun.locals().get(0));
+	}
+
+	@Test
+	void test3() throws IOException {
+		Tokenizer tokenizer = new Tokenizer(getTestFile("t3.txt"));
+		Parser parser = new Parser(tokenizer);
+		FunExpr fun = parser.parse();
+		assertNotEquals(null, fun.params());
+		assertEquals(0, fun.params().size());
+		assertEquals(0, fun.locals().size());
+		assertEquals(SequenceExpr.class, fun.body().getClass());
+		SequenceExpr sequenceExpr = (SequenceExpr) fun.body();
+		assertEquals(3, sequenceExpr.getExprs().size());
+
+		// TODO: Convert \\n to \n
+		ArrayList<String> expectedResults = new ArrayList<>(Arrays.asList(
+				"Hello, world!\\n",
+				"Hi!",
+				"\\n",
+				"你好"
+		));
+
+		for(Expr e : sequenceExpr.getExprs()){
+			assertEquals(PrintExpr.class, e.getClass());
+		}
+
+		PrintExpr p1 = (PrintExpr) sequenceExpr.getExprs().get(0);
+		PrintExpr p2 = (PrintExpr) sequenceExpr.getExprs().get(1);
+		PrintExpr p3 = (PrintExpr) sequenceExpr.getExprs().get(2);
+
+		assertEquals(1, p1.getArgs().size());
+		assertEquals(2, p2.getArgs().size());
+		assertEquals(1, p3.getArgs().size());
+
+		List<Expr> svals = Arrays.asList(
+				p1.getArgs().get(0),
+				p2.getArgs().get(0),
+				p2.getArgs().get(1),
+				p3.getArgs().get(0)
+		);
+
+		int idx = 0;
+		for(Expr stringVal : svals){
+			assertEquals(StringVal.class, stringVal.getClass());
+			StringVal sval = (StringVal) stringVal;
+			assertEquals(expectedResults.get(idx), sval.getValue());
+			idx++;
+		}
 	}
 }
