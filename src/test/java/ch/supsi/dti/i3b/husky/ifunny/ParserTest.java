@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ParserTest {
 
-	private static Reader getTestFile(String file) throws FileNotFoundException {
+	public static Reader getTestFile(String file) throws FileNotFoundException {
 		return new BufferedReader(
 				new FileReader(
 						ParserTest.class.getResource("/parser/" + file)

@@ -26,8 +26,8 @@ public class NumVal extends Val {
 	}
 
 	@Override
-	public Object getValue() {
-		return null;
+	public BigDecimal getValue() {
+		return num;
 	}
 
 	@Override

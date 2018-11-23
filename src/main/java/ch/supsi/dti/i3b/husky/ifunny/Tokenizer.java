@@ -1,5 +1,7 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -15,8 +17,7 @@ class Tokenizer {
 	private StringBuilder stringBuilder = new StringBuilder();
 	private Map<String, Token.Type> mapKeyWord = new HashMap<>();
 
-	Tokenizer(Reader input) throws IOException {
-		this.r = input;
+	private void initKeywords(){
 		mapKeyWord.put("while", Token.Type.WHILE);
 		mapKeyWord.put("if", Token.Type.IF);
 		mapKeyWord.put("fi", Token.Type.FI);
@@ -31,9 +32,23 @@ class Tokenizer {
 		mapKeyWord.put("false", Token.Type.FALSE);
 		mapKeyWord.put("nil", Token.Type.NIL);
 		mapKeyWord.put("then", Token.Type.THEN);
+	}
 
-
+	private void init() throws IOException {
+		initKeywords();
 		nextToken();
+	}
+
+	Tokenizer(String filePath) throws IOException {
+		this.r = new BufferedReader(new FileReader(
+				filePath
+		));
+		init();
+	}
+
+	Tokenizer(Reader input) throws IOException {
+		this.r = input;
+		init();
 	}
 
 

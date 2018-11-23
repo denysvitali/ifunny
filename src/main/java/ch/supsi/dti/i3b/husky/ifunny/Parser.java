@@ -12,6 +12,10 @@ public class Parser {
 
     Tokenizer tokenStream;
 
+    Parser(String filePath) throws IOException {
+        this.tokenStream = new Tokenizer(filePath);
+    }
+
     Parser(Tokenizer tokenStream){
         this.tokenStream = tokenStream;
     }
