@@ -11,6 +11,7 @@ public class StringVal extends Val {
 	}
 
 	public static String unescape(String val){
+		// TODO: Backtick syntax (Java 12?)
 		Pattern p = Pattern.compile("\\\\(.)", Pattern.MULTILINE);
 		Matcher m = p.matcher(val);
 
@@ -31,6 +32,10 @@ public class StringVal extends Val {
 				case 'r':
 					sb.append("\r");
 					break;
+				case 'u':
+					// Unicode
+					sb.append("\\u");
+					break;
 				case '\\':
 					sb.append("\\");
 					break;
@@ -47,7 +52,6 @@ public class StringVal extends Val {
 
 	@Override
 	public String getValue() {
-
 		return unescape(val);
 	}
 

@@ -37,4 +37,12 @@ public class Frame {
 	public void setVal(String var, Val value){
 		bindings.put(var, value);
 	}
+
+	@Override
+	public String toString() {
+		return bindings.entrySet()
+				.stream()
+				.map(a->String.format("K: %s\tV: %s", a.getKey(), a.getValue()))
+				.reduce(String::concat).orElse("[Empty Set]");
+	}
 }

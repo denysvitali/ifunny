@@ -1,0 +1,13 @@
+{makeCounter myCounter yourCounter n ->
+
+    makeCounter = {(balance) ->
+        {(amount) -> balance += amount}
+    };
+
+    myCounter = makeCounter(100);
+    yourCounter = makeCounter(50);
+
+    println("myCounter: ", myCounter(0));
+    println("yourCounter: ", yourCounter(0));
+    println();
+}

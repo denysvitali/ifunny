@@ -8,6 +8,14 @@ public class BoolVal extends Val {
 		this.value = value;
 	}
 
+	public static BoolVal True(){
+		return new BoolVal(true);
+	}
+
+	public static BoolVal False() {
+		return new BoolVal(false);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if(!(obj instanceof BoolVal)){

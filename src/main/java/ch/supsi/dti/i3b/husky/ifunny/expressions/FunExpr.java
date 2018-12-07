@@ -6,6 +6,8 @@ import ch.supsi.dti.i3b.husky.ifunny.values.ClosureVal;
 
 import java.util.List;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
+
 public class FunExpr extends Expr {
 	private List<String> params;
 	private List<String> locals;

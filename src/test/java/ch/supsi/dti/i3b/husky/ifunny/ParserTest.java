@@ -18,6 +18,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigDecimal;
 
+import static ch.supsi.dti.i3b.husky.ifunny.Utils.parseString;
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,12 +32,7 @@ public class ParserTest {
 				)
 		);
 	}
-	private static FunExpr parseString(String str) throws IOException {
-		Reader areader = new StringReader(str);
-		Tokenizer tokenizer = new Tokenizer(areader);
-		Parser parser = new Parser(tokenizer);
-		return parser.parse();
-	}
+
 
 	@Test
 	void print() throws IOException {
@@ -108,6 +104,17 @@ public class ParserTest {
 		assertEquals(Token.Type.ASSIGNM, ((AssignmExpr)fun.body()).getAssignmType());
 		assertEquals(NumVal.class, ((AssignmExpr)fun.body()).getAdditionalExpr().getClass());
 		assertEquals(BigDecimal.valueOf(5), ((NumVal)((AssignmExpr)fun.body()).getAdditionalExpr()).getValue());
+	}
+
+	@Test
+	public void negativeAssignm() throws IOException {
+
+		FunExpr fun = parseString("{a->a=-5}");
+		assertEquals(AssignmExpr.class, fun.body().getClass());
+		assertEquals("a", ((AssignmExpr)fun.body()).getIdVal());
+		assertEquals(Token.Type.ASSIGNM, ((AssignmExpr)fun.body()).getAssignmType());
+		assertEquals(NumVal.class, ((AssignmExpr)fun.body()).getAdditionalExpr().getClass());
+		assertEquals(BigDecimal.valueOf(-5), ((NumVal)((AssignmExpr)fun.body()).getAdditionalExpr()).getValue());
 	}
 
     @Test

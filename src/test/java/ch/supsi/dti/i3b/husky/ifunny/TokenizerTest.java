@@ -1,5 +1,6 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
+import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -39,12 +40,11 @@ class TokenizerTest {
 		assertEquals(new BigDecimal("2"), dbl.getNum());
 	}
 
-	/*
 	@Test
 	void negativeIntegerTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("-2");
 		Token dbl = t.getToken();
-
+		assertEquals(Token.Type.NUM, dbl.type());
 		assertEquals(new BigDecimal("-2"), dbl.getNum());
 	}
 
@@ -54,6 +54,14 @@ class TokenizerTest {
 		Token dbl = t.getToken();
 
 		assertEquals(new BigDecimal("-2.13"), dbl.getNum());
+	}
+
+	@Test
+	void fractionalNumberTokenizer() throws IOException {
+		Tokenizer t = createStringTokenizer("-.13");
+		Token dbl = t.getToken();
+
+		assertEquals(new BigDecimal("-.13"), dbl.getNum());
 	}
 
 
@@ -79,7 +87,7 @@ class TokenizerTest {
 		Token dbl = t.getToken();
 
 		assertEquals(new BigDecimal("-4.21e+10"), dbl.getNum());
-	}*/
+	}
 
 	@Test
 	void doubleTokenizer() throws IOException {

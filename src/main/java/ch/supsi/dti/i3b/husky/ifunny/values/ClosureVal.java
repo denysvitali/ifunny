@@ -15,13 +15,14 @@ public class ClosureVal extends Val {
 		this.env = env;
 	}
 
-	public Val apply(List<Val> argVals){
-		return expr.eval(new Env(env,
+	public ClosureVal apply(List<Val> argVals){
+		this.env = new Env(env,
 				new Frame(
 						expr.params(),
 						expr.locals(),
 						argVals
-				)));
+				));
+		return this;
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class ClosureVal extends Val {
 
 	@Override
 	public Val eval(Env env){
-		return expr.body().eval(env);
+		return expr.body().eval(this.env);
 	}
 
 	@Override

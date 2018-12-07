@@ -4,6 +4,10 @@ import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
 
 import java.math.BigDecimal;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
+import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
+
 public class NumVal extends Val {
 
 	private BigDecimal num;
@@ -26,53 +30,102 @@ public class NumVal extends Val {
 	}
 
 	@Override
+	public boolean isNum() {
+		return true;
+	}
+
+	@Override
 	public BigDecimal getValue() {
 		return num;
 	}
 
 	@Override
 	public Val sub(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return new NumVal(this.num.subtract(rval.num().num));
+		}
+		return Nil;
 	}
 
 	@Override
 	public Val sum(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return new NumVal(this.num.add(rval.num().num));
+		}
+
+		if(rval.isString()){
+			return new StringVal(
+					String.format("%f%s", this.num, rval.string().getValue())
+			);
+		}
+
+		return Nil;
+	}
+
+	@Override
+	public Val mod(Val rval) {
+		if(rval.isNum()){
+			return new NumVal(this.num.remainder(rval.num().num));
+		}
+		return Nil;
 	}
 
 	@Override
 	public Val div(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return new NumVal(this.num.divide(rval.num().num));
+		}
+		return Nil;
 	}
 
 	@Override
 	public Val mult(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return new NumVal(this.num.multiply(rval.num().num));
+		}
+
+		return Nil;
 	}
 
 	@Override
 	public Val maj(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return (this.num.compareTo(rval.num().num) > 0 ? True() : False());
+		}
+
+		return Nil;
 	}
 
 	@Override
 	public Val min(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return (this.num.compareTo(rval.num().num) < 0 ? True() : False());
+		}
+
+		return Nil;
 	}
 
 	@Override
 	public Val majeq(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return (this.num.compareTo(rval.num().num) >= 0 ? True() : False());
+		}
+
+		return Nil;
 	}
 
 	@Override
 	public Val mineq(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return (this.num.compareTo(rval.num().num) <= 0 ? True() : False());
+		}
+
+		return Nil;
 	}
 
 	@Override
 	public Val or(Val rval) {
-		return null;
+		return Nil;
 	}
 
 	@Override
@@ -98,5 +151,10 @@ public class NumVal extends Val {
 	@Override
 	public ClosureVal checkClosure() {
 		throw new InvalidTypeException("Not a closure.");
+	}
+
+	@Override
+	public String toString(){
+		return this.num.toString();
 	}
 }

@@ -186,7 +186,7 @@ class Tokenizer {
 					token = new Token(Token.Type.AND);
 				} else {
 					//TODO: not a valid token exception
-					token = new Token(Token.Type.UNKNOW);
+					token = new Token(Token.Type.UNKNOWN);
 				}
 				break;
 			case '|':
@@ -195,7 +195,7 @@ class Tokenizer {
 					token = new Token(Token.Type.OR);
 				} else {
 					//TODO: not a valid token exception
-					token = new Token(Token.Type.UNKNOW);
+					token = new Token(Token.Type.UNKNOWN);
 				}
 				break;
 			case '"':
@@ -205,7 +205,7 @@ class Tokenizer {
 				token = new Token(Token.Type.EOS);
 				break;
 			default:
-				token = new Token(Token.Type.UNKNOW);
+				token = new Token(Token.Type.UNKNOWN);
 				readNum();
 				idOrKeyword();
 				break;
@@ -289,8 +289,18 @@ class Tokenizer {
          */
 
         boolean once = true;
+        boolean negative = false;
+
+        if(currentChar == '-'){
+        	negative = true;
+        	currentChar = r.read();
+		}
+
         if(isNumber(currentChar)) {
 			stringBuilder.setLength(0);
+			if(negative){
+				stringBuilder.append("-");
+			}
 			while (isNumber(currentChar)) {
 				stringBuilder.append(currentChar - '0');
 				r.mark(1);

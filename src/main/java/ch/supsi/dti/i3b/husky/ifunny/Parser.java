@@ -1,5 +1,6 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
+import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTokenException;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.*;
 import ch.supsi.dti.i3b.husky.ifunny.values.*;
 
@@ -28,7 +29,7 @@ public class Parser {
             return fFunc;
         }
         else{
-            throw new RuntimeException("Wrong token");
+            throw new InvalidTokenException(tokenStream.getToken());
         }
     }
 
@@ -44,11 +45,11 @@ public class Parser {
                 return new FunExpr(params, locals, seqExpr);
             }
             else {
-                throw new RuntimeException("Wrong token");
+                throw new InvalidTokenException(tokenStream.getToken());
             }
         }
         else {
-            throw new RuntimeException("Wrong token");
+            throw new InvalidTokenException(tokenStream.getToken());
         }
     }
 
@@ -58,7 +59,7 @@ public class Parser {
             tokenStream.nextToken();
             listParams = optIds();
             if(!tokenStream.check(Token.Type.CLS_RND_BRACKET)) {
-                throw new RuntimeException("Wrong token");
+                throw new InvalidTokenException(tokenStream.getToken());
             }
             tokenStream.nextToken();
         }
@@ -263,7 +264,7 @@ public class Parser {
                 expr = new InvokeExpr(expr, new ExprList(listArgs));
             }
             else{
-                throw new RuntimeException("Wrong token");
+                throw new InvalidTokenException(tokenStream.getToken());
             }
         }
 
@@ -272,50 +273,51 @@ public class Parser {
     }
 
     private Expr primary(Scope scope) throws IOException {
-
         if (tokenStream.check(Token.Type.NUM)) {
-
             Val val = new NumVal(tokenStream.getToken().getNum());
             tokenStream.nextToken();
             return val;
-        } else if (tokenStream.check(Token.Type.TRUE)) {
 
+        } else if (tokenStream.check(Token.Type.TRUE)) {
             tokenStream.nextToken();
             return new BoolVal(true);
-        } else if (tokenStream.check(Token.Type.FALSE)) {
 
+        } else if (tokenStream.check(Token.Type.FALSE)) {
             tokenStream.nextToken();
             return new BoolVal(false);
-        } else if (tokenStream.check(Token.Type.NIL)) {
 
+        } else if (tokenStream.check(Token.Type.NIL)) {
             tokenStream.nextToken();
             return new NilVal();
+
         } else if (tokenStream.check(Token.Type.STRING)) {
             String str = tokenStream.getToken().getStr();
             tokenStream.nextToken();
             return new StringVal(str);
-        } else if (tokenStream.check(Token.Type.ID)) {
 
+        } else if (tokenStream.check(Token.Type.ID)) {
             String str = tokenStream.getToken().getStr();
             tokenStream.nextToken();
             return new GetVarExpr(str);
+
         } else if (tokenStream.check(Token.Type.OPN_CRLY_BRKT)) {
-
             return function(scope);
-        } else if (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
 
+        } else if (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
             tokenStream.nextToken();
             return subSequence(scope);
+
         } else if (tokenStream.check(Token.Type.IF) || tokenStream.check(Token.Type.IFNOT)) {
-
             return cond(scope);
-        } else if (tokenStream.check(Token.Type.WHILE) || tokenStream.check(Token.Type.WHILENOT)) {
 
+        } else if (tokenStream.check(Token.Type.WHILE) || tokenStream.check(Token.Type.WHILENOT)) {
             return loop(scope);
+
         } else if (tokenStream.check(Token.Type.PRINT) || tokenStream.check(Token.Type.PRINTLN)) {
             return print(scope);
+
         } else {
-            throw new RuntimeException("Wrong token");
+            throw new InvalidTokenException(tokenStream.getToken());
         }
     }
 
@@ -326,7 +328,7 @@ public class Parser {
             return expr;
         }
         else{
-            throw new RuntimeException("Wrong token");
+            throw new InvalidTokenException(tokenStream.getToken());
         }
     }
 
@@ -353,12 +355,12 @@ public class Parser {
                 return new IfExpr(exprEval, exprBody, exprElse);
             }
             else{
-                throw new RuntimeException("Wrong token");
+                throw new InvalidTokenException(tokenStream.getToken());
             }
 
         }
         else{
-            throw new RuntimeException("Wrong token");
+            throw new InvalidTokenException(tokenStream.getToken());
         }
 
     }
@@ -373,7 +375,7 @@ public class Parser {
             tokenStream.nextToken();
             exprBody = sequence(scope);
             if(!tokenStream.check(Token.Type.OD)){
-                throw new RuntimeException("Wrong token");
+                throw new InvalidTokenException(tokenStream.getToken());
             }
             tokenStream.nextToken();
         }
@@ -395,11 +397,11 @@ public class Parser {
                 tokenStream.nextToken();
                 return(printcond == Token.Type.PRINTLN ? new PrintExpr(new ExprList(listArgs),true) : new PrintExpr(new ExprList(listArgs)));
             } else {
-                throw new RuntimeException("Wrong token");
+                throw new InvalidTokenException(tokenStream.getToken());
             }
         }
         else{
-            throw new RuntimeException("Wrong token");
+            throw new InvalidTokenException(tokenStream.getToken());
         }
     }
 

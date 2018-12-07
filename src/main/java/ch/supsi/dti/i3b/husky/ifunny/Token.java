@@ -9,7 +9,7 @@ public class Token {
         PRINT, PRINTLN, ID, NUM, STRING, SEMICOLON, COMMA, ARROW, OPN_RND_BRACKET,
         CLS_RND_BRACKET, OPN_CRLY_BRKT, CLS_CRLY_BRKT, NOT, MULT, DIV, MOD,
         SUM, SUB, MIN, MINEQ, MAJ, MAJEQ, EQ, NOTEQ, AND, OR, ASSIGNM, ASSIGNMSUM,
-        ASSIGNMSUB, ASSIGNMULT, ASSIGNMDIV, ASSIGNMOD, EOS, UNKNOW
+        ASSIGNMSUB, ASSIGNMULT, ASSIGNMDIV, ASSIGNMOD, EOS, UNKNOWN
     }
 
     private Type type;
@@ -35,7 +35,7 @@ public class Token {
     }
 
 
-    Type type(){
+    public Type type(){
         return type;
     }
     BigDecimal getNum(){

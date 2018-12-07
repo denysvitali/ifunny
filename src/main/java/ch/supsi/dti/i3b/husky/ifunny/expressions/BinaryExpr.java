@@ -48,6 +48,8 @@ public class BinaryExpr extends Expr {
                 return lval.maj(rval);
             case MIN:
                 return lval.min(rval);
+            case MOD:
+                return lval.mod(rval);
             case MAJEQ:
                 return lval.majeq(rval);
             case MINEQ:

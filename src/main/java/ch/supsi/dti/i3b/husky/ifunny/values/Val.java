@@ -18,6 +18,10 @@ public abstract class Val extends Expr {
 		return Nil;
 	}
 
+	public Val mod(Val rval) {
+		return Nil;
+	}
+
 	public Val sum(Val rval) {
 		return Nil;
 	}
@@ -54,32 +58,35 @@ public abstract class Val extends Expr {
 		return Nil;
 	}
 
-	public boolean bool(){
+	public boolean bool() {
 		throw new InvalidTypeException(this + " is not a boolean");
 	}
-	public NumVal num(){
+
+	public NumVal num() {
 		throw new InvalidTypeException(this + " is not a number");
 	}
+
 	public StringVal string() {
 		throw new InvalidTypeException(this + " is not a string");
 	}
-	public ClosureVal checkClosure(){
+
+	public ClosureVal checkClosure() {
 		throw new InvalidTypeException(this + " is not a boolean");
 	}
 
-	public boolean isNum(){
+	public boolean isNum() {
 		return false;
 	}
 
-	public boolean isBool(){
+	public boolean isBool() {
 		return false;
 	}
 
-	public boolean isString(){
+	public boolean isString() {
 		return false;
 	}
 
-	public boolean isClosure(){
+	public boolean isClosure() {
 		return false;
 	}
 
