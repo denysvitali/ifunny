@@ -10,7 +10,7 @@ import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 
 public class Parser {
 
-    Tokenizer tokenStream;
+    private Tokenizer tokenStream;
 
     Parser(String filePath) throws IOException {
         this.tokenStream = new Tokenizer(filePath);

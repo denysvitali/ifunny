@@ -320,52 +320,6 @@ class Tokenizer {
 				token = new Token(new BigDecimal(stringBuilder.toString()));
 			}
 		}
-	/*	stringBuilder.setLength(0);
-		if (isSign(currentChar)) {
-			stringBuilder.append((char) currentChar);
-			currentChar = r.read();
-		}
-		while (isNumber(currentChar)) {
-			stringBuilder.append(currentChar - '0');
-			currentChar = r.read();
-		}
-
-		if (isNumericComma(currentChar)) {
-			currentChar = r.read();
-			stringBuilder.append(".");
-			while (isNumber(currentChar)) {
-				stringBuilder.append(currentChar - '0');
-				currentChar = r.read();
-			}
-		}
-
-		r.mark(1);
-
-		// EXP
-		int savedCurrentChar = currentChar;
-		if (currentChar == 'E' || currentChar == 'e') {
-			stringBuilder.append((char) currentChar);
-			currentChar = r.read();
-			if (isSign(currentChar)) {
-				stringBuilder.append((char) currentChar);
-				currentChar = r.read();
-				while (isNumber(currentChar)) {
-					stringBuilder.append(currentChar - '0');
-					currentChar = r.read();
-				}
-			} else {
-				r.reset();
-				currentChar=savedCurrentChar;
-				stringBuilder.setLength(0);
-			}
-		} else {
-			r.reset();
-		}
-
-
-		if (stringBuilder.length() != 0) {
-			token = new Token(new BigDecimal(stringBuilder.toString()));
-		}*/
 	}
 
 	private boolean isSign(int currentChar) {
