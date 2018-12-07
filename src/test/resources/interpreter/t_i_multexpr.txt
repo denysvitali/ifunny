@@ -1,0 +1,5 @@
+{ ->
+	print("Hello, world!\n");
+	print("Hi!", "\n");
+	println("你好");
+}
