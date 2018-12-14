@@ -1,22 +1,15 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
 import ch.supsi.dti.i3b.husky.ifunny.expressions.*;
-import ch.supsi.dti.i3b.husky.ifunny.values.StringVal;
-import ch.supsi.dti.i3b.husky.ifunny.expressions.AssignmExpr;
-import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
-import ch.supsi.dti.i3b.husky.ifunny.expressions.SequenceExpr;
-import ch.supsi.dti.i3b.husky.ifunny.values.NilVal;
 import ch.supsi.dti.i3b.husky.ifunny.values.NumVal;
+import ch.supsi.dti.i3b.husky.ifunny.values.StringVal;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.math.BigDecimal;
 
 import static ch.supsi.dti.i3b.husky.ifunny.Utils.parseString;
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
