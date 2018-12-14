@@ -143,7 +143,37 @@ public class InterpreterTest {
 	}
 
 	@Test
+	public void intMod2() throws IOException {
+		testExprS("{->print(6 % 2);}", "0");
+	}
+
+	@Test
 	public void intMult() throws IOException {
 		testExprS("{->print(1 * 2);}", "2");
+	}
+
+	@Test
+	public void intDiv() throws IOException {
+		testExprS("{->print(1 / 2);}", "0.5");
+	}
+
+	@Test
+	public void intDiv2() throws IOException {
+		testExprS("{->print(1 / 3);}", "0.3333333333333333");
+	}
+
+	@Test
+	public void intPrintFalse() throws IOException {
+		testExprS("{->print(false);}", "false");
+	}
+
+	@Test
+	public void intPrintTrue() throws IOException {
+		testExprS("{->print(true);}", "true");
+	}
+
+	@Test
+	public void intPrintNil() throws IOException {
+		testExprS("{->print(nil);}", "nil");
 	}
 }

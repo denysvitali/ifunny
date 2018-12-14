@@ -30,51 +30,36 @@ public class NilVal extends Val {
 
 	@Override
 	public Val maj(Val rval) {
-		return null;
+		return Nil;
 	}
 
 	@Override
 	public Val min(Val rval) {
-		return null;
+		return Nil;
 	}
 
 	@Override
 	public Val majeq(Val rval) {
-		return null;
+		return Nil;
 	}
 
 	@Override
 	public Val mineq(Val rval) {
-		return null;
+		return Nil;
 	}
 
 	@Override
 	public Val or(Val rval) {
-		return null;
+		return Nil;
 	}
 
 	@Override
 	public Val and(Val rval) {
-		return null;
+		return Nil;
 	}
 
 	@Override
-	public boolean bool() {
-		return false;
-	}
-
-	@Override
-	public NumVal num() {
-		return null;
-	}
-
-	@Override
-	public StringVal string() {
-		return null;
-	}
-
-	@Override
-	public ClosureVal checkClosure() {
-		return null;
+	public boolean isNil() {
+		return true;
 	}
 }

@@ -29,6 +29,8 @@ public class PrintExpr extends Expr {
                 System.out.print(v.num().getValue());
             } else if(v.isString()){
                 System.out.print(v.string().getValue());
+            } else if (v.isNil()){
+                System.out.print("nil");
             }
         }
         if(addNewline){

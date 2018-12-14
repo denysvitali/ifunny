@@ -90,4 +90,5 @@ public abstract class Val extends Expr {
 		return false;
 	}
 
+	public boolean isNil() { return false; }
 }

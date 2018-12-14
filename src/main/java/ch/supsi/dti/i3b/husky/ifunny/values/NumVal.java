@@ -3,6 +3,7 @@ package ch.supsi.dti.i3b.husky.ifunny.values;
 import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
 import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
@@ -13,10 +14,10 @@ public class NumVal extends Val {
 	private BigDecimal num;
 
 	public NumVal(BigDecimal num){
-		this.num = num;
+		this.num = num.setScale(16, RoundingMode.HALF_EVEN);
 	}
 	public NumVal(int num){
-		this.num = BigDecimal.valueOf(num);
+		this.num = BigDecimal.valueOf(num).setScale(16, RoundingMode.HALF_EVEN);
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class NumVal extends Val {
 	@Override
 	public Val div(Val rval) {
 		if(rval.isNum()){
-			return new NumVal(this.num.divide(rval.num().num));
+			return new NumVal(this.num.divide(rval.num().num, RoundingMode.HALF_EVEN));
 		}
 		return Nil;
 	}
