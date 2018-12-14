@@ -52,8 +52,8 @@ public class InterpreterTest {
 	@Test
 	public void intCounterSimple() throws IOException {
 		testExprF(getTestFile("/interpreter/t_i_countersimple.txt"),
-				"myCounter: " + NL + "" +
-				"yourCounter: " + NL + "" +
+				"myCounter: 100" + NL + "" +
+				"yourCounter: 50" + NL + "" +
 				"" + NL + "");
 	}
 
