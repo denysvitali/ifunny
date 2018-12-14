@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InterpreterTest {
 
+	private static String NL = System.getProperty("line.separator");
+
 	public static String getTestFile(String resPath){
 		return InterpreterTest.class.getResource(resPath).getPath();
 	}
@@ -26,7 +28,7 @@ public class InterpreterTest {
 		FunExpr funExpr = p.parse();
 		ClosureVal closureVal = funExpr.eval(new Env()).checkClosure();
 		closureVal.apply(new ArrayList<>()).eval(new Env());
-		assertEquals("Hello, world!\n", bos.toString());
+		assertEquals("Hello, world!" + NL + "", bos.toString());
 	}
 
 	@Test
@@ -38,21 +40,21 @@ public class InterpreterTest {
 		FunExpr funExpr = p.parse();
 		ClosureVal closureVal = funExpr.eval(new Env()).checkClosure();
 		closureVal.apply(new ArrayList<>()).eval(new Env());
-		assertEquals("Hello, world!\nHi!\n你好\n", bos.toString());
+		assertEquals("Hello, world!" + NL + "Hi!" + NL + "你好" + NL + "", bos.toString());
 	}
 
 	@Test
 	public void intConditional() throws IOException {
 		testExprF(getTestFile("/interpreter/t_i_conditional.txt"),
-				"Hello\n");
+				"Hello" + NL + "");
 	}
 
 	@Test
 	public void intCounterSimple() throws IOException {
 		testExprF(getTestFile("/interpreter/t_i_countersimple.txt"),
-				"myCounter: \n" +
-				"yourCounter: \n" +
-				"\n");
+				"myCounter: " + NL + "" +
+				"yourCounter: " + NL + "" +
+				"" + NL + "");
 	}
 
 	private static void testExprF(String path, String ev) throws IOException {
@@ -74,62 +76,62 @@ public class InterpreterTest {
 
 	@Test
 	public void intTestMajor() throws IOException {
-		testExprS("{val ->\nval = 1; if val > 0 then print(\"OK\"); else println(\"This shouldn't happen.\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = 1; if val > 0 then print(\"OK\"); else println(\"This shouldn't happen.\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMajor2() throws IOException {
-		testExprS("{val ->\nval = 0; if val > 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = 0; if val > 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMajor3() throws IOException {
-		testExprS("{val ->\nval = -1; if val > 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = -1; if val > 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMinor() throws IOException {
-		testExprS("{val ->\nval = -1; if val < 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = -1; if val < 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMinor2() throws IOException {
-		testExprS("{val ->\nval = 0; if val < 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = 0; if val < 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMinor3() throws IOException {
-		testExprS("{val ->\nval = 1; if val < 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = 1; if val < 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMinorEq() throws IOException {
-		testExprS("{val ->\nval = 0; if val <= 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = 0; if val <= 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMinorEq2() throws IOException {
-		testExprS("{val ->\nval = 1; if val <= 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = 1; if val <= 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMinorEq3() throws IOException {
-		testExprS("{val ->\nval = -1; if val <= 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = -1; if val <= 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMajorEq() throws IOException {
-		testExprS("{val ->\nval = 0; if val >= 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = 0; if val >= 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMajorEq2() throws IOException {
-		testExprS("{val ->\nval = 1; if val >= 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = 1; if val >= 0 then print(\"OK\"); else print(\"KO\"); fi }", "OK");
 	}
 
 	@Test
 	public void intTestMajorEq3() throws IOException {
-		testExprS("{val ->\nval = -1; if val >= 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
+		testExprS("{val ->" + NL + "val = -1; if val >= 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
 	}
 
 	@Test
@@ -148,6 +150,11 @@ public class InterpreterTest {
 	}
 
 	@Test
+	public void intMod3() throws IOException {
+		testExprS("{->print(3.27 % 0.7);}", "0.47");
+	}
+
+	@Test
 	public void intMult() throws IOException {
 		testExprS("{->print(1 * 2);}", "2");
 	}
@@ -159,7 +166,7 @@ public class InterpreterTest {
 
 	@Test
 	public void intDiv2() throws IOException {
-		testExprS("{->print(1 / 3);}", "0.3333333333333333");
+		testExprS("{->print(1 / 3);}", "0.33333333333333333333333333333333");
 	}
 
 	@Test

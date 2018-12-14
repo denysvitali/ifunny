@@ -90,10 +90,10 @@ class Tokenizer {
 				token = new Token(Token.Type.SEMICOLON);
 				break;
 			case '(':
-				token = new Token(Token.Type.OPN_RND_BRACKET);
+				token = new Token(Token.Type.OPN_RND_BRKT);
 				break;
 			case ')':
-				token = new Token(Token.Type.CLS_RND_BRACKET);
+				token = new Token(Token.Type.CLS_RND_BRKT);
 				break;
 			case '<':
 				if (peekChar() == '=') {
@@ -352,7 +352,7 @@ class Tokenizer {
 		}
 	}
 
-    public boolean check(Token.Type tipo){
-        return token.type() == tipo;
+    public boolean check(Token.Type il_tipo_del_token_che_dice_filippo){
+        return token.type() == il_tipo_del_token_che_dice_filippo;
     }
 }

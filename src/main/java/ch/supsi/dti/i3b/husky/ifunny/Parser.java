@@ -55,10 +55,10 @@ public class Parser {
 
     private ArrayList<String> optParams() throws IOException {
         ArrayList<String> listParams = new ArrayList<>();
-        if(tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+        if(tokenStream.check(Token.Type.OPN_RND_BRKT)) {
             tokenStream.nextToken();
             listParams = optIds();
-            if(!tokenStream.check(Token.Type.CLS_RND_BRACKET)) {
+            if(!tokenStream.check(Token.Type.CLS_RND_BRKT)) {
                 throw new InvalidTokenException(tokenStream.getToken());
             }
             tokenStream.nextToken();
@@ -82,7 +82,8 @@ public class Parser {
     private Expr optSequence(Scope scope) throws IOException {
         if(tokenStream.check(Token.Type.ARROW)){
             tokenStream.nextToken();
-            return sequence(scope);
+            Expr seq = sequence(scope);
+            return seq == null ? Nil : seq;
         }
         return Nil;
     }
@@ -99,8 +100,8 @@ public class Parser {
                 listAssignment.add(assignExpr);
             }
         }
-        return listAssignment.size() == 0 ? Nil : listAssignment.size() == 1 ?
-                listAssignment.get(0) : new SequenceExpr(listAssignment);
+        return listAssignment.size() == 0 ? null : (listAssignment.size() == 1 ?
+                listAssignment.get(0) : new SequenceExpr(listAssignment));
     }
 
     private Expr optAssignment(Scope scope) throws IOException {
@@ -121,7 +122,7 @@ public class Parser {
             case TRUE:
             case FALSE:
             case OPN_CRLY_BRKT:
-            case OPN_RND_BRACKET:
+            case OPN_RND_BRKT:
             case IF:
             case IFNOT:
             case WHILE:
@@ -252,14 +253,14 @@ public class Parser {
         Expr expr = primary(scope);
         ArrayList<Expr> listArgs = new ArrayList<>();
 
-        while (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+        while (tokenStream.check(Token.Type.OPN_RND_BRKT)) {
             tokenStream.nextToken();
             listArgs.add(sequence(scope));
             while (tokenStream.check(Token.Type.COMMA)) {
                 tokenStream.nextToken();
                 listArgs.add(sequence(scope));
             }
-            if(tokenStream.check(Token.Type.CLS_RND_BRACKET)){
+            if(tokenStream.check(Token.Type.CLS_RND_BRKT)){
                 tokenStream.nextToken();
                 expr = new InvokeExpr(expr, new ExprList(listArgs));
             }
@@ -303,7 +304,7 @@ public class Parser {
         } else if (tokenStream.check(Token.Type.OPN_CRLY_BRKT)) {
             return function(scope);
 
-        } else if (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
+        } else if (tokenStream.check(Token.Type.OPN_RND_BRKT)) {
             tokenStream.nextToken();
             return subSequence(scope);
 
@@ -323,7 +324,7 @@ public class Parser {
 
     private Expr subSequence(Scope scope) throws IOException {
         Expr expr = sequence(scope);
-        if(tokenStream.check(Token.Type.CLS_RND_BRACKET)){
+        if(tokenStream.check(Token.Type.CLS_RND_BRKT)){
             tokenStream.nextToken();
             return expr;
         }
@@ -382,27 +383,33 @@ public class Parser {
         return new WhileExpr(exprEval, exprBody);
     }
 
+    private ArrayList<Expr> args(Scope scope) throws IOException {
+        ArrayList<Expr> args = new ArrayList<>();
+        if(tokenStream.check(Token.Type.OPN_RND_BRKT)){
+            tokenStream.nextToken();
+            if(!tokenStream.check(Token.Type.CLS_RND_BRKT)){
+                args.add(sequence(scope));
+                while(tokenStream.check(Token.Type.COMMA)){
+                    tokenStream.nextToken();
+                    args.add(sequence(scope));
+                }
+
+                if(!tokenStream.check(Token.Type.CLS_RND_BRKT)){
+                    throw new InvalidTokenException(tokenStream.getToken());
+                }
+            }
+            tokenStream.nextToken();
+        } else{
+            throw new InvalidTokenException(tokenStream.getToken());
+        }
+        return args;
+    }
+
     private Expr print(Scope scope) throws IOException {
         Token.Type printcond = tokenStream.getToken().type();
         tokenStream.nextToken();
-        ArrayList<Expr> listArgs = new ArrayList<>();
-        if (tokenStream.check(Token.Type.OPN_RND_BRACKET)) {
-            tokenStream.nextToken();
-            listArgs.add(sequence(scope));
-            while (tokenStream.check(Token.Type.COMMA)) {
-                tokenStream.nextToken();
-                listArgs.add(sequence(scope));
-            }
-            if (tokenStream.check(Token.Type.CLS_RND_BRACKET)) {
-                tokenStream.nextToken();
-                return(printcond == Token.Type.PRINTLN ? new PrintExpr(new ExprList(listArgs),true) : new PrintExpr(new ExprList(listArgs)));
-            } else {
-                throw new InvalidTokenException(tokenStream.getToken());
-            }
-        }
-        else{
-            throw new InvalidTokenException(tokenStream.getToken());
-        }
+        ArrayList<Expr> listArgs = args(scope);
+        return(printcond == Token.Type.PRINTLN ? new PrintExpr(listArgs,true) : new PrintExpr(listArgs));
     }
 
 

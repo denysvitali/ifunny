@@ -4,25 +4,28 @@ import ch.supsi.dti.i3b.husky.ifunny.Env;
 import ch.supsi.dti.i3b.husky.ifunny.ExprList;
 import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
+import java.util.ArrayList;
+
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 
 public class PrintExpr extends Expr {
 
-    private ExprList args;
+    private ArrayList<Expr> args;
     private boolean addNewline = false;
 
-    public PrintExpr(ExprList args, boolean addNewline){
+    public PrintExpr(ArrayList<Expr> args, boolean addNewline){
         this.args = args;
         this.addNewline = addNewline;
     }
 
-    public PrintExpr(ExprList args) {
+    public PrintExpr(ArrayList<Expr> args) {
         this.args = args;
     }
 
     @Override
     public Val eval(Env env) {
-        for(Val v : args.eval(env)){
+        for(Expr e : args){
+            Val v = e.eval(env);
             if(v.isBool()) {
                 System.out.print(v.bool());
             } else if(v.isNum()){
@@ -39,7 +42,7 @@ public class PrintExpr extends Expr {
         return Nil;
     }
 
-    public ExprList getArgs() {
+    public ArrayList<Expr> getArgs() {
         return args;
     }
 

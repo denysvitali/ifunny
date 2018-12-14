@@ -23,11 +23,12 @@ public class SequenceExpr extends Expr{
             - return Nil (multiple expressions return Nil), or
             - return last's function value
 
-            I'm choosing the first option here. -D
+            As per Slide 32/51 of "Course Notes"
          */
-
-        expressions.forEach(expr -> expr.eval(env));
-        return Nil;
+        return expressions.stream()
+                .map(expr -> expr.eval(env))
+                .reduce((a,b) -> b)
+                .orElse(Nil);
     }
 
     public ArrayList<Expr> getExprs() {
