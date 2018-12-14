@@ -40,13 +40,13 @@ public class InterpreterTest {
 		FunExpr funExpr = p.parse();
 		ClosureVal closureVal = funExpr.eval(new Env()).checkClosure();
 		closureVal.apply(new ArrayList<>()).eval(new Env());
-		assertEquals("Hello, world!" + NL + "Hi!" + NL + "你好" + NL + "", bos.toString());
+		assertEquals("Hello, world!\nHi!\n你好" + NL, bos.toString());
 	}
 
 	@Test
 	public void intConditional() throws IOException {
 		testExprF(getTestFile("/interpreter/t_i_conditional.txt"),
-				"Hello" + NL + "");
+				"Hello\n");
 	}
 
 	@Test
@@ -172,6 +172,17 @@ public class InterpreterTest {
 	@Test
 	public void intPrintFalse() throws IOException {
 		testExprS("{->print(false);}", "false");
+	}
+
+	@Test
+	public void intPrintConcat() throws IOException {
+		testExprS("{->print(1.0 + \"ciao\");}", "1.0ciao");
+	}
+
+	// TODO: Implement String Concatenation
+	//@Test
+	public void intPrintConcat2() throws IOException {
+		testExprS("{->print(\"ciao\" + 1.0);}", "ciao1.0");
 	}
 
 	@Test

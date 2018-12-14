@@ -60,7 +60,7 @@ public class NumVal extends Val {
 
 		if(rval.isString()){
 			return new StringVal(
-					String.format("%f%s", this.num, rval.string().getValue())
+					String.format("%s%s", this.num, rval.string().getValue())
 			);
 		}
 
