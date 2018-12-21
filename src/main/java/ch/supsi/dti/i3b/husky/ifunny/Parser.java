@@ -253,22 +253,9 @@ public class Parser {
     private Expr postFix(Scope scope) throws IOException {
 
         Expr expr = primary(scope);
-        ArrayList<Expr> listArgs = new ArrayList<>();
-
-        while (tokenStream.check(Token.Type.OPN_RND_BRKT)) {
-            tokenStream.nextToken();
-            listArgs.add(sequence(scope));
-            while (tokenStream.check(Token.Type.COMMA)) {
-                tokenStream.nextToken();
-                listArgs.add(sequence(scope));
-            }
-            if(tokenStream.check(Token.Type.CLS_RND_BRKT)){
-                tokenStream.nextToken();
-                expr = new InvokeExpr(expr, new ExprList(listArgs));
-            }
-            else{
-                throw new InvalidTokenException(tokenStream.getToken());
-            }
+        while(tokenStream.check(Token.Type.OPN_RND_BRKT)) {
+            ArrayList<Expr> args = args(scope);
+            expr = new InvokeExpr(expr, new ExprList(args));
         }
 
         return expr;

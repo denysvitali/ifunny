@@ -100,6 +100,15 @@ public class InterpreterTest {
 				"false" + NL);
 	}
 
+	@Test
+	void intClosureInClosure() throws IOException {
+		testExprS("{sqr x -> " +
+				"sqr = {(x) -> x * x};" +
+				"x = {(z) -> sqr};" +
+				"print(x(2)(3));" +
+				"}", "9");
+	}
+
 	private static void testExprF(String path, String ev) throws IOException {
 		testExpr(parseFile(path), ev);
 	}

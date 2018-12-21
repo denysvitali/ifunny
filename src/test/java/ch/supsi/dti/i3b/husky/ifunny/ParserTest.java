@@ -79,11 +79,10 @@ public class ParserTest {
 		FunExpr fun = parseString("{sqr x -> " +
 				"sqr = {(x) -> x * x};" +
 				"x = {(z) -> sqr};" +
-				"x(2)(3);" +
+				"print(x(2)(3));" +
 				"}");
 
 		fun.eval(new Env());
-
 	}
 
 	@Test
