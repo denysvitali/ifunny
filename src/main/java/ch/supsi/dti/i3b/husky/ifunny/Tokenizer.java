@@ -291,8 +291,11 @@ class Tokenizer {
         boolean once = true;
         boolean negative = false;
 
-        if(currentChar == '-'){
+		stringBuilder.setLength(0);
+
+		if(currentChar == '-'){
         	negative = true;
+        	stringBuilder.append("-");
         	currentChar = r.read();
 		}
 
@@ -304,11 +307,6 @@ class Tokenizer {
 		}
 
         if(isNumber(currentChar)) {
-			stringBuilder.setLength(0);
-			if(negative){
-				stringBuilder.append("-");
-			}
-
 			while (isNumber(currentChar)) {
 				stringBuilder.append(currentChar - '0');
 				r.mark(1);
