@@ -58,10 +58,28 @@ public class InterpreterTest {
 	}
 
 	// TODO: Test CoinChange
-	//@Test
+	@Test
 	public void intCoinChange() throws IOException {
 		testExprF(getTestFile("/interpreter/t_i_coinchange.txt"),
-				"TODO!");
+				"13" + NL);
+	}
+
+	@Test
+	public void intCoinChange2() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_coinchange_2.txt"),
+				"0" + NL);
+	}
+
+	@Test
+	public void intCoinChange3() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_coinchange_3.txt"),
+				"1" + NL);
+	}
+
+	@Test
+	void intFibonacci() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_fibonacci.txt"),
+				"354224848179261915075" + NL);
 	}
 
 	@Test

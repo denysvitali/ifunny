@@ -20,9 +20,13 @@ public class WhileExpr extends Expr {
 		return body;
 	}
 
+	private Val evalCond(Env env){
+		return this.condition.eval(env);
+	}
+
 	@Override
 	public Val eval(Env env) {
-		while(this.condition.eval(env).getValue().equals(true)){
+		while(evalCond(env).bool()){
 			this.body.eval(env);
 		}
 		return null;

@@ -1,0 +1,15 @@
+{fib ->
+    fib = {(n) fib0 fib1 fib ->
+        fib0 = 1;
+        fib1 = 0;
+        while n > 0 do
+            fib = fib0 + fib1;
+            fib0 = fib1;
+            fib1 = fib;
+            n -= 1
+        od;
+        fib1
+    };
+
+    println(fib(100))
+}
