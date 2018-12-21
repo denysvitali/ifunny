@@ -88,6 +88,6 @@ public class StringVal extends Val {
 
 	@Override
 	public String toString() {
-		return this.val;
+		return unescape(this.val);
 	}
 }
