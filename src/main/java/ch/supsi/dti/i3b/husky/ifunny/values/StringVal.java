@@ -3,6 +3,8 @@ package ch.supsi.dti.i3b.husky.ifunny.values;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
+
 public class StringVal extends Val {
 	private String val;
 
@@ -62,7 +64,15 @@ public class StringVal extends Val {
 
 	@Override
 	public Val sum(Val rval) {
-		return null;
+		if(rval.isNum()){
+			return new StringVal(val + rval.num());
+		}
+
+		if(rval.isString()){
+			return new StringVal(val + rval.string().val);
+		}
+
+		return Nil;
 	}
 
 	@Override

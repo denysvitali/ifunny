@@ -15,12 +15,12 @@ public class InterpreterTest {
 
 	private static String NL = System.getProperty("line.separator");
 
-	public static String getTestFile(String resPath){
+	static String getTestFile(String resPath){
 		return InterpreterTest.class.getResource(resPath).getPath();
 	}
 
 	@Test
-	public void intTest1() throws IOException {
+	void intTest1() throws IOException {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(bos));
 
@@ -179,10 +179,14 @@ public class InterpreterTest {
 		testExprS("{->print(1.0 + \"ciao\");}", "1.0ciao");
 	}
 
-	// TODO: Implement String Concatenation
-	//@Test
+	@Test
 	public void intPrintConcat2() throws IOException {
 		testExprS("{->print(\"ciao\" + 1.0);}", "ciao1.0");
+	}
+
+	@Test
+	public void intPrintConcat3() throws IOException {
+		testExprS("{->print(\"hello \" + \"world\");}", "hello world");
 	}
 
 	@Test
