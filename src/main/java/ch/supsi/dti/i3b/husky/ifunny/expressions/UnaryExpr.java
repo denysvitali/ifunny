@@ -4,6 +4,8 @@ import ch.supsi.dti.i3b.husky.ifunny.Env;
 import ch.supsi.dti.i3b.husky.ifunny.Token;
 import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
+
 public class UnaryExpr extends Expr {
 
     private Token.Type unaryType;
@@ -16,6 +18,6 @@ public class UnaryExpr extends Expr {
 
     @Override
     public Val eval(Env env) {
-        return null;
+        return Nil;
     }
 }

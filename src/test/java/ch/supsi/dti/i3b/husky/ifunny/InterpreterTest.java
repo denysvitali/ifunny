@@ -57,6 +57,44 @@ public class InterpreterTest {
 				"" + NL + "");
 	}
 
+	@Test
+	public void intCounterComplex() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_countercomplex.txt"),
+				"myCounter: 100" + NL +
+						"yourCounter: 50" + NL +
+						NL +
+						"myCounter[0]: 150" + NL +
+						"yourCounter[0]: 40" + NL +
+						NL +
+						"myCounter[1]: 200" + NL +
+						"yourCounter[1]: 30" + NL +
+						NL +
+						"myCounter[2]: 250" + NL +
+						"yourCounter[2]: 20" + NL +
+						NL +
+						"myCounter[3]: 300" + NL +
+						"yourCounter[3]: 10" + NL +
+						NL +
+						"myCounter[4]: 350" + NL +
+						"yourCounter[4]: 0" + NL +
+						NL +
+						"myCounter[5]: 400" + NL +
+						"yourCounter[5]: -10" + NL +
+						NL +
+						"myCounter[6]: 450" + NL +
+						"yourCounter[6]: -20" + NL +
+						NL +
+						"myCounter[7]: 500" + NL +
+						"yourCounter[7]: -30" + NL +
+						NL +
+						"myCounter[8]: 550" + NL +
+						"yourCounter[8]: -40" + NL +
+						NL +
+						"myCounter[9]: 600" + NL +
+						"yourCounter[9]: -50" + NL +
+						NL);
+	}
+
 	// TODO: Test CoinChange
 	@Test
 	public void intCoinChange() throws IOException {
@@ -97,7 +135,15 @@ public class InterpreterTest {
 	@Test
 	public void intGeneralTest1() throws IOException {
 		testExprF(getTestFile("/interpreter/t_i_generaltest1.txt"),
-				"false" + NL);
+				"9" + NL +
+						"3.3333333333333333333333333333333" + NL +
+						"6.6666666666666666666666666666667" + NL +
+						"4" + NL  +
+						"1237940039285380274899124224" + NL  +
+						"8.07793566946316088741610050849573099185363389551639556884765625E-28" + NL  +
+						"1.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" + NL  +
+						"true" + NL  +
+						"0.47" + NL);
 	}
 
 	@Test

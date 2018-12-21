@@ -22,61 +22,6 @@ public class BoolVal extends Val {
 	}
 
 	@Override
-	public Object getValue() {
-		return null;
-	}
-
-	@Override
-	public Val sub(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val sum(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val div(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val mult(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val maj(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val min(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val majeq(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val mineq(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val or(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val and(Val rval) {
-		return null;
-	}
-
-	@Override
 	public boolean bool() {
 		return this.value;
 	}

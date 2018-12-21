@@ -1,63 +1,65 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
+import ch.supsi.dti.i3b.husky.ifunny.exceptions.FunnyRuntimeException;
+import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidOperationException;
 import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidTypeException;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.Expr;
 
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 
 public abstract class Val extends Expr {
-	public abstract Object getValue();
-
 	@Override
 	public Val eval(Env env) {
 		return this;
 	}
 
 	public Val sub(Val rval) {
-		return Nil;
+		throw new InvalidOperationException("-", this, rval);
 	}
 
-	public Val eq(Val rval) { return Nil; }
+	public Val eq(Val rval) {
+		throw new InvalidOperationException("=", this, rval);
+	}
 
 	public Val mod(Val rval) {
-		return Nil;
+		throw new InvalidOperationException("%", this, rval);
 	}
 
 	public Val sum(Val rval) {
-		return Nil;
+		throw new InvalidOperationException("+", this, rval);
 	}
 
 	public Val div(Val rval) {
-		return Nil;
+		throw new InvalidOperationException("/", this, rval);
 	}
 
 	public Val mult(Val rval) {
-		return Nil;
+		throw new InvalidOperationException("*", this, rval);
 	}
 
-	public Val maj(Val rval) {
-		return Nil;
+	public Val gt(Val rval) {
+		throw new InvalidOperationException(">", this, rval);
 	}
 
-	public Val min(Val rval) {
-		return Nil;
+	public Val lt(Val rval) {
+		throw new InvalidOperationException("<", this, rval);
 	}
 
-	public Val majeq(Val rval) {
-		return Nil;
+	public Val gteq(Val rval) {
+		throw new InvalidOperationException(">=", this, rval);
 	}
 
-	public Val mineq(Val rval) {
-		return Nil;
+	public Val lteq(Val rval) {
+		throw new InvalidOperationException("<=", this, rval);
 	}
 
 	public Val or(Val rval) {
-		return Nil;
+		throw new InvalidOperationException("||", this, rval);
 	}
 
 	public Val and(Val rval) {
-		return Nil;
+		throw new InvalidOperationException("&&", this, rval);
 	}
 
 	public boolean bool() {
@@ -92,5 +94,7 @@ public abstract class Val extends Expr {
 		return false;
 	}
 
-	public boolean isNil() { return false; }
+	public boolean isNil() {
+		return false;
+	}
 }

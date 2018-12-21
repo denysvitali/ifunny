@@ -40,12 +40,6 @@ public class NumVal extends Val {
 	}
 
 	@Override
-	public BigDecimal getValue() {
-		return num;
-	}
-
-
-	@Override
 	public Val eq(Val rval){
 		if(!rval.isNum()){
 			return False;
@@ -70,7 +64,7 @@ public class NumVal extends Val {
 
 		if(rval.isString()){
 			return new StringVal(
-					String.format("%s%s", this.num, rval.string().getValue())
+					String.format("%s%s", this.num, rval.string())
 			);
 		}
 
@@ -107,7 +101,7 @@ public class NumVal extends Val {
 	}
 
 	@Override
-	public Val maj(Val rval) {
+	public Val gt(Val rval) {
 		if(rval.isNum()){
 			return (this.num.compareTo(rval.num().num) > 0 ? True : False);
 		}
@@ -116,7 +110,7 @@ public class NumVal extends Val {
 	}
 
 	@Override
-	public Val min(Val rval) {
+	public Val lt(Val rval) {
 		if(rval.isNum()){
 			return (this.num.compareTo(rval.num().num) < 0 ? True : False);
 		}
@@ -125,7 +119,7 @@ public class NumVal extends Val {
 	}
 
 	@Override
-	public Val majeq(Val rval) {
+	public Val gteq(Val rval) {
 		if(rval.isNum()){
 			return (this.num.compareTo(rval.num().num) >= 0 ? True : False);
 		}
@@ -134,7 +128,7 @@ public class NumVal extends Val {
 	}
 
 	@Override
-	public Val mineq(Val rval) {
+	public Val lteq(Val rval) {
 		if(rval.isNum()){
 			return (this.num.compareTo(rval.num().num) <= 0 ? True : False);
 		}

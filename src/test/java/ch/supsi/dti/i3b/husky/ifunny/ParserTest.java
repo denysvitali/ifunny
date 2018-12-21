@@ -69,7 +69,7 @@ public class ParserTest {
 		for(Expr stringVal : svals){
 			assertEquals(StringVal.class, stringVal.getClass());
 			StringVal sval = (StringVal) stringVal;
-			assertEquals(expectedResults.get(idx), sval.getValue());
+			assertEquals(expectedResults.get(idx), sval.toString());
 			idx++;
 		}
 	}
@@ -107,7 +107,7 @@ public class ParserTest {
 		assertEquals("a", ((AssignmExpr)fun.body()).getIdVal());
 		assertEquals(Token.Type.ASSIGNM, ((AssignmExpr)fun.body()).getAssignmType());
 		assertEquals(NumVal.class, ((AssignmExpr)fun.body()).getAdditionalExpr().getClass());
-		assertEquals(BigDecimal.valueOf(5), ((NumVal)((AssignmExpr)fun.body()).getAdditionalExpr()).getValue());
+		assertEquals(BigDecimal.valueOf(5), ((AssignmExpr)fun.body()).getAdditionalExpr().toString());
 	}
 
 	@Test
@@ -118,7 +118,7 @@ public class ParserTest {
 		assertEquals("a", ((AssignmExpr)fun.body()).getIdVal());
 		assertEquals(Token.Type.ASSIGNM, ((AssignmExpr)fun.body()).getAssignmType());
 		assertEquals(NumVal.class, ((AssignmExpr)fun.body()).getAdditionalExpr().getClass());
-		assertEquals(BigDecimal.valueOf(-5), ((NumVal)((AssignmExpr)fun.body()).getAdditionalExpr()).getValue());
+		assertEquals(BigDecimal.valueOf(-5), ((AssignmExpr)fun.body()).getAdditionalExpr().toString());
 	}
 
     @Test
@@ -128,7 +128,7 @@ public class ParserTest {
         assertEquals(BinaryExpr.class, fun.body().getClass());
         assertEquals("a", ((GetVarExpr)((BinaryExpr)fun.body()).getFirstExpr()).getIdVal());
         assertEquals(Token.Type.MAJ, ((BinaryExpr)fun.body()).getBinaryType());
-        assertEquals(BigDecimal.valueOf(5), ((NumVal)((BinaryExpr)fun.body()).getLastExpr()).getValue());
+        assertEquals(BigDecimal.valueOf(5), ((BinaryExpr)fun.body()).getLastExpr().toString());
     }
 
     @Test
@@ -197,7 +197,7 @@ public class ParserTest {
         InvokeExpr invoke = (InvokeExpr) expr1.getArgs().get(0);
         assertEquals("fib", ((GetVarExpr)invoke.getExpr()).getIdVal());
         assertEquals(1, invoke.getArgs().size());
-        assertEquals(BigDecimal.valueOf(40), ((NumVal)invoke.getArgs().get(0)).getValue());
+        assertEquals(BigDecimal.valueOf(40), invoke.getArgs().get(0).toString());
 
     }
 
@@ -218,7 +218,7 @@ public class ParserTest {
 
 		assertEquals(StringVal.class, p1.getArgs().get(0).getClass());
 		StringVal sval = (StringVal) p1.getArgs().get(0);
-		assertEquals(expectedResult, sval.getValue());
+		assertEquals(expectedResult, sval.toString());
 	}
 
 	@Test

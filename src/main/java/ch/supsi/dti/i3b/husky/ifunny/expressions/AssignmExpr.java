@@ -2,7 +2,6 @@ package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
 import ch.supsi.dti.i3b.husky.ifunny.Token;
-import ch.supsi.dti.i3b.husky.ifunny.exceptions.FunnyRuntimeException;
 import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
 public class AssignmExpr extends Expr {
@@ -24,13 +23,13 @@ public class AssignmExpr extends Expr {
 
         switch(assignmType){
             case MAJ:
-                return left.maj(right);
+                return left.gt(right);
             case MIN:
-                return left.min(right);
+                return left.lt(right);
             case MINEQ:
-                return left.mineq(right);
+                return left.lteq(right);
             case MAJEQ:
-                return left.majeq(right);
+                return left.gteq(right);
             case MOD:
                 return left.mod(right);
 

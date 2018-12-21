@@ -47,15 +47,15 @@ public class BinaryExpr extends Expr {
             case MULT:
                 return lval.mult(rval);
 			case MAJ:
-                return lval.maj(rval);
+                return lval.gt(rval);
             case MIN:
-                return lval.min(rval);
+                return lval.lt(rval);
             case MOD:
                 return lval.mod(rval);
             case MAJEQ:
-                return lval.majeq(rval);
+                return lval.gteq(rval);
             case MINEQ:
-                return lval.mineq(rval);
+                return lval.lteq(rval);
             case OR:
                 return lval.or(rval);
             case AND:

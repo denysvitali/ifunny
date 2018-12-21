@@ -29,11 +29,6 @@ public class ClosureVal extends Val {
 	}
 
 	@Override
-	public Object getValue() {
-		return null;
-	}
-
-	@Override
 	public Val eval(Env env){
 		return expr
 				.body()

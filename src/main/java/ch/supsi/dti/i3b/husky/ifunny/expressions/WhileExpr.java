@@ -3,6 +3,8 @@ package ch.supsi.dti.i3b.husky.ifunny.expressions;
 import ch.supsi.dti.i3b.husky.ifunny.Env;
 import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
+
 public class WhileExpr extends Expr {
 	private Expr condition;
 	private Expr body;
@@ -29,6 +31,6 @@ public class WhileExpr extends Expr {
 		while(evalCond(env).bool()){
 			this.body.eval(env);
 		}
-		return null;
+		return Nil;
 	}
 }

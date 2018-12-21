@@ -7,11 +7,6 @@ public class NilVal extends Val {
 	public static final NilVal Nil = new NilVal();
 
 	@Override
-	public Object getValue() {
-		return null;
-	}
-
-	@Override
 	public Val eq(Val rval) {
 		return rval.isNil() ? True : False;
 	}
@@ -37,22 +32,22 @@ public class NilVal extends Val {
 	}
 
 	@Override
-	public Val maj(Val rval) {
+	public Val gt(Val rval) {
 		return Nil;
 	}
 
 	@Override
-	public Val min(Val rval) {
+	public Val lt(Val rval) {
 		return Nil;
 	}
 
 	@Override
-	public Val majeq(Val rval) {
+	public Val gteq(Val rval) {
 		return Nil;
 	}
 
 	@Override
-	public Val mineq(Val rval) {
+	public Val lteq(Val rval) {
 		return Nil;
 	}
 

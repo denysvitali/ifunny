@@ -55,11 +55,6 @@ public class StringVal extends Val {
 	}
 
 	@Override
-	public String getValue() {
-		return unescape(val);
-	}
-
-	@Override
 	public Val eq(Val rval) {
 		if(!rval.isString()){
 			return False;
@@ -93,6 +88,6 @@ public class StringVal extends Val {
 
 	@Override
 	public String toString() {
-		return getValue();
+		return this.val;
 	}
 }

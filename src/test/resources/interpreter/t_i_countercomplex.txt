@@ -1,0 +1,21 @@
+{makeCounter myCounter yourCounter n ->
+
+    makeCounter = {(balance) ->
+        {(amount) -> balance += amount}
+    };
+
+    myCounter = makeCounter(100);
+    yourCounter = makeCounter(50);
+
+    println("myCounter: ", myCounter(0));
+    println("yourCounter: ", yourCounter(0));
+    println();
+
+    n = 0;
+    while n < 10 do
+        println("myCounter[", n, "]: ", myCounter(50));
+        println("yourCounter[", n, "]: ", yourCounter(-10));
+        println();
+        n += 1
+    od
+}
