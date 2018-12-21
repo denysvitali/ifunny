@@ -36,6 +36,8 @@ public class BinaryExpr extends Expr {
         Val rval = lastExpr.eval(env);
 
         switch(binaryType){
+            case EQ:
+                return lval.eq(rval);
             case SUB:
                 return lval.sub(rval);
             case SUM:

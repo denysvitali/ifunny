@@ -44,6 +44,16 @@ public class NumVal extends Val {
 		return num;
 	}
 
+
+	@Override
+	public Val eq(Val rval){
+		if(!rval.isNum()){
+			return False;
+		}
+
+		return (this.num.equals(rval.num().num) ? True : False);
+	}
+
 	@Override
 	public Val sub(Val rval) {
 		if(rval.isNum()){

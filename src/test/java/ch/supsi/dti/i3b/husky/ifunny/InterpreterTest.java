@@ -57,6 +57,25 @@ public class InterpreterTest {
 				"" + NL + "");
 	}
 
+	// TODO: Test CoinChange
+	//@Test
+	public void intCoinChange() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_coinchange.txt"),
+				"TODO!");
+	}
+
+	@Test
+	public void intIsEven() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_iseven.txt"),
+				"true" + NL);
+	}
+
+	@Test
+	public void intIsEvenFake() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_iseven_fake.txt"),
+				"false" + NL);
+	}
+
 	private static void testExprF(String path, String ev) throws IOException {
 		testExpr(parseFile(path), ev);
 	}

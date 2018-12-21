@@ -18,6 +18,8 @@ public abstract class Val extends Expr {
 		return Nil;
 	}
 
+	public Val eq(Val rval) { return Nil; }
+
 	public Val mod(Val rval) {
 		return Nil;
 	}

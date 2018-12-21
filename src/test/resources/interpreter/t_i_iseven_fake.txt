@@ -1,0 +1,6 @@
+{isOdd isEven ->
+	isOdd = {(n) -> if n == 0 then false else isEven(n - 1) fi};
+	isEven = {(n) -> if n == 0 then true else isOdd(n - 1) fi};
+
+	println(isEven(1001));
+}
