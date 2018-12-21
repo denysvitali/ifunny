@@ -1,11 +1,19 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
+
 public class NilVal extends Val {
 	public static final NilVal Nil = new NilVal();
 
 	@Override
 	public Object getValue() {
 		return null;
+	}
+
+	@Override
+	public Val eq(Val rval) {
+		return rval.isNil() ? True : False;
 	}
 
 	@Override
@@ -61,5 +69,10 @@ public class NilVal extends Val {
 	@Override
 	public boolean isNil() {
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "nil";
 	}
 }

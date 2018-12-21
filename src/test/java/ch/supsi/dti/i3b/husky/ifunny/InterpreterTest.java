@@ -94,6 +94,12 @@ public class InterpreterTest {
 				"false" + NL);
 	}
 
+	@Test
+	public void intGeneralTest1() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_generaltest1.txt"),
+				"false" + NL);
+	}
+
 	private static void testExprF(String path, String ev) throws IOException {
 		testExpr(parseFile(path), ev);
 	}
@@ -185,6 +191,32 @@ public class InterpreterTest {
 	public void intMod2() throws IOException {
 		testExprS("{->print(6 % 2);}", "0");
 	}
+
+	@Test
+	public void intEq() throws IOException {
+		testExprS("{->print(3.0 == 3.00);}", "true");
+	}
+
+	@Test
+	public void intEq2() throws IOException {
+		testExprS("{->print(\"a\" == \"a\");}", "true");
+	}
+
+	@Test
+	public void intEq3() throws IOException {
+		testExprS("{->print(nil == nil);}", "true");
+	}
+
+	@Test
+	public void intEq4() throws IOException {
+		testExprS("{->print({} == {});}", "false");
+	}
+
+	@Test
+	public void intEq5() throws IOException {
+		testExprS("{a->a = {}; print(a == a);}", "true");
+	}
+
 
 	@Test
 	public void intMod3() throws IOException {

@@ -1,0 +1,20 @@
+{a sqr x ->
+
+	sqr = {(x) -> x * x};
+	x = {(z) -> sqr};
+
+	println(x(2)(3));
+
+    println(10 / 3);
+    println(20 / 3);
+
+	println({(x)->{() -> x}}(4)());
+
+    a = 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
+    println(a);
+    println(1 / a);
+    println(1 / a * a);
+    println(1 / a * a == 1);
+
+    println(3.27 % .7);
+}

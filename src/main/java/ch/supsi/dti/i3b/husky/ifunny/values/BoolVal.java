@@ -85,4 +85,9 @@ public class BoolVal extends Val {
 	public boolean isBool() {
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(value);
+	}
 }

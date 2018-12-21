@@ -26,15 +26,7 @@ public class PrintExpr extends Expr {
     public Val eval(Env env) {
         for(Expr e : args){
             Val v = e.eval(env);
-            if(v.isBool()) {
-                System.out.print(v.bool());
-            } else if(v.isNum()){
-                System.out.print(v.num().getValue());
-            } else if(v.isString()){
-                System.out.print(v.string().getValue());
-            } else if (v.isNil()){
-                System.out.print("nil");
-            }
+            System.out.print(v);
         }
         if(addNewline){
             System.out.print(System.getProperties().get("line.separator"));

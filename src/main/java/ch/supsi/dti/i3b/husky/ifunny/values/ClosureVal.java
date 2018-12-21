@@ -6,6 +6,9 @@ import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
 
 import java.util.List;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
+
 public class ClosureVal extends Val {
 	private FunExpr expr;
 	private Env env;
@@ -45,5 +48,10 @@ public class ClosureVal extends Val {
 	@Override
 	public ClosureVal checkClosure() {
 		return this;
+	}
+
+	@Override
+	public Val eq(Val rval) {
+		return this == rval ? True : False;
 	}
 }

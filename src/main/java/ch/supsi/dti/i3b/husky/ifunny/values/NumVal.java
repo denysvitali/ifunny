@@ -51,7 +51,7 @@ public class NumVal extends Val {
 			return False;
 		}
 
-		return (this.num.equals(rval.num().num) ? True : False);
+		return (this.num.compareTo(rval.num().num) == 0 ? True : False);
 	}
 
 	@Override

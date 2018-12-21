@@ -3,6 +3,8 @@ package ch.supsi.dti.i3b.husky.ifunny.values;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 
 public class StringVal extends Val {
@@ -58,8 +60,12 @@ public class StringVal extends Val {
 	}
 
 	@Override
-	public Val sub(Val rval) {
-		return null;
+	public Val eq(Val rval) {
+		if(!rval.isString()){
+			return False;
+		}
+
+		return (val.equals(rval.string().val) ? True : False);
 	}
 
 	@Override
@@ -76,46 +82,6 @@ public class StringVal extends Val {
 	}
 
 	@Override
-	public Val div(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val mult(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val maj(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val min(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val majeq(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val mineq(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val or(Val rval) {
-		return null;
-	}
-
-	@Override
-	public Val and(Val rval) {
-		return null;
-	}
-
-	@Override
 	public boolean isString() {
 		return true;
 	}
@@ -123,5 +89,10 @@ public class StringVal extends Val {
 	@Override
 	public StringVal string() {
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		return getValue();
 	}
 }

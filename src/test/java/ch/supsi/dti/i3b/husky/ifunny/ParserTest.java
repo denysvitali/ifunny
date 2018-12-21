@@ -75,6 +75,18 @@ public class ParserTest {
 	}
 
 	@Test
+	public void closureInClosure() throws IOException {
+		FunExpr fun = parseString("{sqr x -> " +
+				"sqr = {(x) -> x * x};" +
+				"x = {(z) -> sqr};" +
+				"x(2)(3);" +
+				"}");
+
+		fun.eval(new Env());
+
+	}
+
+	@Test
 	public void function() throws IOException {
 
 		FunExpr fun = parseString("{->}");
