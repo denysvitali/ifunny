@@ -158,7 +158,7 @@ class Tokenizer {
 				} else if (peekChar() == '>') {
 					currentChar = r.read();
 					token = new Token(Token.Type.ARROW);
-				} else if (isNumber(peekChar())) {
+				} else if (isNumber(peekChar()) || isNumericComma(peekChar())) {
 					readNum();
 				} else {
 					token = new Token(Token.Type.SUB);
@@ -296,11 +296,19 @@ class Tokenizer {
         	currentChar = r.read();
 		}
 
+		if (isNumericComma(currentChar)) {
+			once = false;
+			r.mark(1);
+			currentChar = r.read();
+			stringBuilder.append(".");
+		}
+
         if(isNumber(currentChar)) {
 			stringBuilder.setLength(0);
 			if(negative){
 				stringBuilder.append("-");
 			}
+
 			while (isNumber(currentChar)) {
 				stringBuilder.append(currentChar - '0');
 				r.mark(1);

@@ -56,8 +56,7 @@ class TokenizerTest {
 		assertEquals(new BigDecimal("-2.13"), dbl.getNum());
 	}
 
-	// TODO: Fix!
-	//@Test
+	@Test
 	void fractionalNumberTokenizer() throws IOException {
 		Tokenizer t = createStringTokenizer("-.13");
 		Token dbl = t.getToken();
