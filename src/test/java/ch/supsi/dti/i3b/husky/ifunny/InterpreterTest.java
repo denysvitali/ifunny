@@ -28,7 +28,7 @@ public class InterpreterTest {
 		FunExpr funExpr = p.parse();
 		ClosureVal closureVal = funExpr.eval(new Env()).checkClosure();
 		closureVal.apply(new ArrayList<>()).eval(new Env());
-		assertEquals("Hello, world!" + NL + "", bos.toString());
+		assertEquals("Hello, world!\n", bos.toString());
 	}
 
 	@Test
