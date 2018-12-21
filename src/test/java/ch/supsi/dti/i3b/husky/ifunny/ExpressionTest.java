@@ -10,20 +10,22 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ExpressionTest {
 	@Test
 	void testNotExpr(){
-		NotExpr notExpr = new NotExpr(new BoolVal(true));
-		assertEquals(new BoolVal(false), notExpr.eval(new Env(null)));
+		NotExpr notExpr = new NotExpr(True);
+		assertEquals(False, notExpr.eval(new Env(null)));
 	}
 
 	@Test
 	void testIfExpr(){
 		IfExpr ifExpr = new IfExpr(
-				new BoolVal(true),
+				True,
 				new NumVal(1),
 				new NumVal(2)
 		);
@@ -31,7 +33,7 @@ class ExpressionTest {
 		assertEquals(new NumVal(1), ifExpr.eval(new Env(null)));
 
 		ifExpr = new IfExpr(
-				new BoolVal(false),
+				False,
 				new NumVal(1),
 				new NumVal(2)
 		);
@@ -57,7 +59,7 @@ class ExpressionTest {
 	@Test
 	void multiExpressionTest1(){
 		IfExpr ifExpr = new IfExpr(
-				new NotExpr(new BoolVal(false)),
+				new NotExpr(False),
 				new NumVal(5),
 				Nil
 		);

@@ -7,6 +7,8 @@ import ch.supsi.dti.i3b.husky.ifunny.values.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
+import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 
 public class Parser {
@@ -281,11 +283,11 @@ public class Parser {
 
         } else if (tokenStream.check(Token.Type.TRUE)) {
             tokenStream.nextToken();
-            return new BoolVal(true);
+            return True;
 
         } else if (tokenStream.check(Token.Type.FALSE)) {
             tokenStream.nextToken();
-            return new BoolVal(false);
+            return False;
 
         } else if (tokenStream.check(Token.Type.NIL)) {
             tokenStream.nextToken();

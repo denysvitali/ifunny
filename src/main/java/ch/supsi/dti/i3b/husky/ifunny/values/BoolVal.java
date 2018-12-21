@@ -4,17 +4,12 @@ public class BoolVal extends Val {
 
 	private boolean value;
 
-	public BoolVal(boolean value){
+	private BoolVal(boolean value){
 		this.value = value;
 	}
 
-	public static BoolVal True(){
-		return new BoolVal(true);
-	}
-
-	public static BoolVal False() {
-		return new BoolVal(false);
-	}
+	public static BoolVal True = new BoolVal(true);
+	public static BoolVal False = new BoolVal(false);
 
 	@Override
 	public boolean equals(Object obj) {

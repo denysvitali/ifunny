@@ -99,7 +99,7 @@ public class NumVal extends Val {
 	@Override
 	public Val maj(Val rval) {
 		if(rval.isNum()){
-			return (this.num.compareTo(rval.num().num) > 0 ? True() : False());
+			return (this.num.compareTo(rval.num().num) > 0 ? True : False);
 		}
 
 		return Nil;
@@ -108,7 +108,7 @@ public class NumVal extends Val {
 	@Override
 	public Val min(Val rval) {
 		if(rval.isNum()){
-			return (this.num.compareTo(rval.num().num) < 0 ? True() : False());
+			return (this.num.compareTo(rval.num().num) < 0 ? True : False);
 		}
 
 		return Nil;
@@ -117,7 +117,7 @@ public class NumVal extends Val {
 	@Override
 	public Val majeq(Val rval) {
 		if(rval.isNum()){
-			return (this.num.compareTo(rval.num().num) >= 0 ? True() : False());
+			return (this.num.compareTo(rval.num().num) >= 0 ? True : False);
 		}
 
 		return Nil;
@@ -126,7 +126,7 @@ public class NumVal extends Val {
 	@Override
 	public Val mineq(Val rval) {
 		if(rval.isNum()){
-			return (this.num.compareTo(rval.num().num) <= 0 ? True() : False());
+			return (this.num.compareTo(rval.num().num) <= 0 ? True : False);
 		}
 
 		return Nil;
