@@ -24,6 +24,10 @@ public class NumVal extends Val {
 		this.num = BigDecimal.valueOf(num);
 	}
 
+	public BigDecimal getNum(){
+		return num;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if(!(obj instanceof NumVal)){
