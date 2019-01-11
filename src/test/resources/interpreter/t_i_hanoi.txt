@@ -1,0 +1,10 @@
+{hanoi ->
+    hanoi = {(n from to via) ->
+        if n > 0 then
+            hanoi(n - 1, from, via, to);
+            println(from, " -> ", to);
+            hanoi(n - 1, via, to, from)
+        fi
+    };
+    hanoi(3, "left", "right", "center")
+}

@@ -1,0 +1,8 @@
+{ pair head tail tree ->
+    pair = {(h t) -> {(p) -> p(h, t)}};
+    head = {(p) -> p({(h t) -> h})};
+    tail = {(p) -> p({(h t) -> t})};
+
+    tree = pair(1, pair(pair("two", 42), pair(true, nil)));
+    println(head(head(tail(tree))));
+}

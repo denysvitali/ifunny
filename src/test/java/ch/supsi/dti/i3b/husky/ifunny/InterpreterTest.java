@@ -153,6 +153,23 @@ public class InterpreterTest {
 	}
 
 	@Test
+	public void intTree() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_tree.txt"),
+				"two" + NL);
+	}
+	@Test
+	public void intHanoi() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_hanoi.txt"),
+				"left -> right" + NL +
+						"left -> center" + NL +
+						"right -> center" + NL +
+						"left -> right" + NL +
+						"center -> left" + NL +
+						"center -> right" + NL  +
+						"left -> right" + NL);
+	}
+
+	@Test
 	public void intGeneralTest1() throws IOException {
 		testExprF(getTestFile("/interpreter/t_i_generaltest1.txt"),
 				"9" + NL +
