@@ -73,7 +73,7 @@ public class StringVal extends Val {
 			return new StringVal(val + rval.string().val);
 		}
 
-		return Nil;
+		return new StringVal(val + rval.toString());
 	}
 
 	@Override
