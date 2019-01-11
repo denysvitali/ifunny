@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
 import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
-import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 
 public class StringVal extends Val {
 	private String val;
@@ -15,7 +14,7 @@ public class StringVal extends Val {
 	}
 
 	public static String unescape(String val){
-		// TODO: Backtick syntax (Java 12?)
+		// TODO: Backtick syntax (Java 13?)
 		Pattern p = Pattern.compile("\\\\(.)", Pattern.MULTILINE);
 		Matcher m = p.matcher(val);
 
