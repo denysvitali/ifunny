@@ -27,6 +27,9 @@ public abstract class Val extends Expr {
 	}
 
 	public Val sum(Val rval) {
+		if(rval.isString()){
+			return new StringVal(toString() + rval.string());
+		}
 		throw new InvalidOperationException("+", this, rval);
 	}
 

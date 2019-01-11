@@ -10,8 +10,7 @@ import java.util.ArrayList;
 
 import static ch.supsi.dti.i3b.husky.ifunny.Utils.parseFile;
 import static ch.supsi.dti.i3b.husky.ifunny.Utils.parseString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InterpreterTest {
 
@@ -204,13 +203,31 @@ public class InterpreterTest {
 		testExprT(parseString(expr), throwable);
 	}
 
-	private static void testExpr(FunExpr fexpr, String ev) throws IOException {
+	private static void testExprSSW(String fexpr, String ev) throws IOException {
+		assertTrue(testOutput(parseString(fexpr)).startsWith(ev));
+	}
+
+	private static void testExprSWaEW(String fexpr, String sw, String ew) throws IOException {
+		String output = testOutput(parseString(fexpr));
+		assertTrue(output.startsWith(sw));
+		assertTrue(output.endsWith(ew));
+	}
+
+	private static void testExprSEW(String fexpr, String ev) throws IOException {
+		assertTrue(testOutput(parseString(fexpr)).endsWith(ev));
+	}
+
+	private static void testExpr(FunExpr fexpr, String ev) {
+		assertEquals(ev, testOutput(fexpr));
+	}
+
+	private static String testOutput(FunExpr fexpr) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(bos));
 		Env debuggableEnv = new Env();
 		ClosureVal closure = fexpr.eval(debuggableEnv).checkClosure();
 		closure.apply(new ArrayList<>()).eval(debuggableEnv);
-		assertEquals(ev, bos.toString());
+		return bos.toString();
 	}
 
 	private static <T extends Throwable> void testExprT(FunExpr fexpr, Class<T> throwable) throws IOException {
@@ -296,6 +313,25 @@ public class InterpreterTest {
 	@Test
 	public void intNot3() throws IOException {
 		testExprST("{x->x=1; print(!x);}", InvalidOperationException.class);
+	}
+
+	@Test
+	public void intClosPlusString() throws IOException {
+		testExprSWaEW("{x->x={(z)->z}; print(x + \"hello\");}",
+				"ch.supsi.dti.i3b.husky.ifunny.values.ClosureVal@",
+				"hello");
+	}
+
+	@Test
+	public void intStringPlusClos() throws IOException {
+		testExprSSW("{x->x={(z)->z}; print(\"hello\" + x);}",
+				"helloch.supsi.dti.i3b.husky.ifunny.values.ClosureVal@");
+	}
+
+	@Test
+	public void intClosPlusClos() throws IOException {
+		testExprST("{x->x={(z)->z}; print(x + x);}",
+				InvalidOperationException.class);
 	}
 
 	@Test
