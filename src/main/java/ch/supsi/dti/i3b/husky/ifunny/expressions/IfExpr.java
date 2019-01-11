@@ -1,6 +1,7 @@
 package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
+import ch.supsi.dti.i3b.husky.ifunny.exceptions.FunnyRuntimeException;
 import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
 public class IfExpr extends Expr {
@@ -28,6 +29,13 @@ public class IfExpr extends Expr {
 
 	@Override
 	public Val eval(Env env) {
+
+		Val ifEval = ifEvaluation.eval(env);
+
+		if(ifEval.isClosure()){
+			ifEval = ifEval.checkClosure().eval(env);
+		}
+
 		if(ifEvaluation.eval(env).bool()){
 			return ifBody.eval(env);
 		}

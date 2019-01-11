@@ -10,4 +10,10 @@ public class InvalidOperationException extends FunnyRuntimeException {
 				" and " +
 				v2.getClass());
 	}
+
+	public InvalidOperationException(String operation, Val v1) {
+		super(
+				"Invalid operation " + operation + " on " +
+						v1.getClass());
+	}
 }

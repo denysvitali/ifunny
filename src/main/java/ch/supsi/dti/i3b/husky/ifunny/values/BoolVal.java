@@ -22,6 +22,11 @@ public class BoolVal extends Val {
 	}
 
 	@Override
+	public Val not() {
+		return new BoolVal(!value);
+	}
+
+	@Override
 	public boolean bool() {
 		return this.value;
 	}

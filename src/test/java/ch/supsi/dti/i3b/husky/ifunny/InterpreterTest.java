@@ -1,5 +1,6 @@
 package ch.supsi.dti.i3b.husky.ifunny;
 
+import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidOperationException;
 import ch.supsi.dti.i3b.husky.ifunny.expressions.FunExpr;
 import ch.supsi.dti.i3b.husky.ifunny.values.ClosureVal;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import static ch.supsi.dti.i3b.husky.ifunny.Utils.parseFile;
 import static ch.supsi.dti.i3b.husky.ifunny.Utils.parseString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class InterpreterTest {
 
@@ -41,6 +43,18 @@ public class InterpreterTest {
 		ClosureVal closureVal = funExpr.eval(new Env()).checkClosure();
 		closureVal.apply(new ArrayList<>()).eval(new Env());
 		assertEquals("Hello, world!\nHi!\n你好" + NL, bos.toString());
+	}
+
+	@Test
+	public void intSingleUTF8Expr() throws IOException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(bos));
+
+		Parser p = new Parser(getTestFile("/interpreter/t_i_emoji.txt"));
+		FunExpr funExpr = p.parse();
+		ClosureVal closureVal = funExpr.eval(new Env()).checkClosure();
+		closureVal.apply(new ArrayList<>()).eval(new Env());
+		assertEquals("Hello\uD83D\uDD25!", bos.toString());
 	}
 
 	@Test
@@ -133,6 +147,12 @@ public class InterpreterTest {
 	}
 
 	@Test
+	public void intSqrtTest1() throws IOException {
+		testExprF(getTestFile("/interpreter/t_i_sqrt.txt"),
+				"sqrt(16): 3.99999999999999999999999999999998515625" + NL);
+	}
+
+	@Test
 	public void intGeneralTest1() throws IOException {
 		testExprF(getTestFile("/interpreter/t_i_generaltest1.txt"),
 				"9" + NL +
@@ -163,6 +183,10 @@ public class InterpreterTest {
 		testExpr(parseString(expr), ev);
 	}
 
+	private static <T extends Throwable> void testExprST(String expr, Class<T> throwable) throws IOException {
+		testExprT(parseString(expr), throwable);
+	}
+
 	private static void testExpr(FunExpr fexpr, String ev) throws IOException {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(bos));
@@ -170,6 +194,16 @@ public class InterpreterTest {
 		ClosureVal closure = fexpr.eval(debuggableEnv).checkClosure();
 		closure.apply(new ArrayList<>()).eval(debuggableEnv);
 		assertEquals(ev, bos.toString());
+	}
+
+	private static <T extends Throwable> void testExprT(FunExpr fexpr, Class<T> throwable) throws IOException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(bos));
+		Env debuggableEnv = new Env();
+		ClosureVal closure = fexpr.eval(debuggableEnv).checkClosure();
+		assertThrows(throwable, ()->{
+			closure.apply(new ArrayList<>()).eval(debuggableEnv);
+		});
 	}
 
 	@Test
@@ -230,6 +264,26 @@ public class InterpreterTest {
 	@Test
 	public void intTestMajorEq3() throws IOException {
 		testExprS("{val ->" + NL + "val = -1; if val >= 0 then print(\"KO\"); else print(\"OK\"); fi }", "OK");
+	}
+
+	@Test
+	public void intNot() throws IOException {
+		testExprS("{->print(!true);}", "false");
+	}
+
+	@Test
+	public void intNot2() throws IOException {
+		testExprS("{->print(!false);}", "true");
+	}
+
+	@Test
+	public void intNot3() throws IOException {
+		testExprST("{x->x=1; print(!x);}", InvalidOperationException.class);
+	}
+
+	@Test
+	public void intMinusVar() throws IOException {
+		testExprS("{x->x=1; print(-x);}", "-1");
 	}
 
 	@Test

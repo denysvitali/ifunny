@@ -1,0 +1,18 @@
+{average sqr abs sqrt x ->
+    average = {(x y) -> (x + y) / 2};
+    sqr = {(x) -> x * x};
+    abs = {(x) -> if x >= 0 then x else -x fi};
+    sqrt = {(x) tolerance isGoodEnough improve sqrtIter ->
+        tolerance = 1e-30;
+
+        isGoodEnough = {(guess) -> abs(sqr(guess) - x) < tolerance};
+        improve = {(guess) -> average(guess, x / guess)};
+        sqrtIter = {(guess) ->
+            if isGoodEnough(guess) then guess else sqrtIter(improve(guess)) fi
+        };
+        sqrtIter(1)
+    };
+
+    x = 16;
+    println("sqrt(", x, "): ", sqrt(x));
+}

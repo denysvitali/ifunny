@@ -62,6 +62,10 @@ public abstract class Val extends Expr {
 		throw new InvalidOperationException("&&", this, rval);
 	}
 
+	public Val not() {
+		throw new InvalidOperationException("!", this);
+	}
+
 	public boolean bool() {
 		throw new InvalidTypeException(this + " is not a boolean");
 	}
