@@ -33,6 +33,20 @@ public class BinaryExpr extends Expr {
     @Override
     public Val eval(Env env) {
         Val lval = firstExpr.eval(env);
+
+        switch(binaryType){
+            case AND:
+                if(lval.isBool() && lval.bool()){
+                    return lastExpr.eval(env);
+                }
+                return lval;
+            case OR:
+                if(lval.isBool() && !lval.bool()){
+                    return lastExpr.eval(env);
+                }
+                return lval;
+        }
+
         Val rval = lastExpr.eval(env);
 
         switch(binaryType){
@@ -56,10 +70,6 @@ public class BinaryExpr extends Expr {
                 return lval.gteq(rval);
             case MINEQ:
                 return lval.lteq(rval);
-            case OR:
-                return lval.or(rval);
-            case AND:
-                return lval.and(rval);
         }
 
         return Nil;

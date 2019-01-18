@@ -141,16 +141,6 @@ public class NumVal extends Val {
 	}
 
 	@Override
-	public Val or(Val rval) {
-		return Nil;
-	}
-
-	@Override
-	public Val and(Val rval) {
-		return null;
-	}
-
-	@Override
 	public boolean bool() {
 		throw new InvalidTypeException("Not a bool.");
 	}

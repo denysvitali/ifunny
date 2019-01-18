@@ -1,5 +1,7 @@
 package ch.supsi.dti.i3b.husky.ifunny.values;
 
+import ch.supsi.dti.i3b.husky.ifunny.exceptions.InvalidOperationException;
+
 public class BoolVal extends Val {
 
 	private boolean value;
@@ -13,7 +15,7 @@ public class BoolVal extends Val {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(!(obj instanceof BoolVal)){
+		if (!(obj instanceof BoolVal)) {
 			return false;
 		}
 

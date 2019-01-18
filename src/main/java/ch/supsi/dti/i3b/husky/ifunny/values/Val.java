@@ -57,14 +57,6 @@ public abstract class Val extends Expr {
 		throw new InvalidOperationException("<=", this, rval);
 	}
 
-	public Val or(Val rval) {
-		throw new InvalidOperationException("||", this, rval);
-	}
-
-	public Val and(Val rval) {
-		throw new InvalidOperationException("&&", this, rval);
-	}
-
 	public Val not() {
 		throw new InvalidOperationException("!", this);
 	}

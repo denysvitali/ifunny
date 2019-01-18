@@ -379,6 +379,52 @@ public class InterpreterTest {
 		testExprS("{a->a = {}; print(a == a);}", "true");
 	}
 
+	@Test
+	public void intAnd() throws IOException {
+		testExprS("{-> print(true && true)}", "true");
+	}
+
+	@Test
+	public void intAnd2() throws IOException {
+		testExprS("{-> false && print(\"I won't print anything\")}", "");
+	}
+
+	@Test
+	public void intAnd3() throws IOException {
+		testExprS("{-> true && print(\":)\")}", ":)");
+	}
+
+	@Test
+	public void intAnd4() throws IOException {
+		testExprS("{-> print(true && true)}", "true");
+	}
+
+	@Test
+	public void intAnd5() throws IOException {
+		testExprS("{-> print(true && false)}", "false");
+	}
+
+	@Test
+	public void intOr() throws IOException {
+		testExprS("{-> true || print(\"I won\'t print anything.\")}", "");
+	}
+
+	@Test
+	public void intOr2() throws IOException {
+		testExprS("{-> false || print(\":)\")}", ":)");
+	}
+
+	@Test
+	public void intOr3() throws IOException {
+		testExprS("{-> print(false || true)}", "true");
+	}
+
+	@Test
+	public void intOr4() throws IOException {
+		testExprS("{-> print(false || false)}", "false");
+	}
+
+
 
 	@Test
 	public void intMod3() throws IOException {
