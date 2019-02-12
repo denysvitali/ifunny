@@ -1,7 +1,6 @@
 package ch.supsi.dti.i3b.husky.ifunny.expressions;
 
 import ch.supsi.dti.i3b.husky.ifunny.Env;
-import ch.supsi.dti.i3b.husky.ifunny.values.NilVal;
 import ch.supsi.dti.i3b.husky.ifunny.values.Val;
 
 import java.util.ArrayList;

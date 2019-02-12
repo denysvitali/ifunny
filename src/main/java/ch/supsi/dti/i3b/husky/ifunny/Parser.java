@@ -11,7 +11,7 @@ import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.False;
 import static ch.supsi.dti.i3b.husky.ifunny.values.BoolVal.True;
 import static ch.supsi.dti.i3b.husky.ifunny.values.NilVal.Nil;
 
-public class Parser {
+class Parser {
 
     private Tokenizer tokenStream;
 
@@ -23,7 +23,7 @@ public class Parser {
         this.tokenStream = tokenStream;
     }
 
-    public FunExpr parse() throws IOException {
+    FunExpr parse() throws IOException {
 
         FunExpr fFunc = function(new Scope());
 
@@ -398,7 +398,9 @@ public class Parser {
         Token.Type printcond = tokenStream.getToken().type();
         tokenStream.nextToken();
         ArrayList<Expr> listArgs = args(scope);
-        return(printcond == Token.Type.PRINTLN ? new PrintExpr(listArgs,true) : new PrintExpr(listArgs));
+        return(printcond == Token.Type.PRINTLN ?
+                new PrintExpr(listArgs,true) :
+                new PrintExpr(listArgs));
     }
 
 

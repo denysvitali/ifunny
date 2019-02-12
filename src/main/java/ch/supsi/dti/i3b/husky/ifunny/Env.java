@@ -45,17 +45,9 @@ public class Env {
 			parent = parent.getParent();
 		}
 
-		throw new FunnyRuntimeException(String.format("Variable \"%s\" not found.", id));
-	}
-
-	public Val addVal(String id, Val val){
-		if(hasId(id)){
-			throw new FunnyRuntimeException(String.format("Variable \"%s\" cannot be reassigned!",
-					id));
-		}
-
-		frame.setVal(id, val);
-		return val;
+		throw new FunnyRuntimeException(
+				String.format("Variable \"%s\" not found.", id)
+		);
 	}
 
 	public Val setVal(String id, Val val){
@@ -72,7 +64,9 @@ public class Env {
 			parent = parent.getParent();
 		}
 
-		throw new FunnyRuntimeException(String.format("Variable \"%s\" not found.", id));
+		throw new FunnyRuntimeException(
+				String.format("Variable \"%s\" not found.", id)
+		);
 	}
 
 	@Override
